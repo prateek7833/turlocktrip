@@ -1,0 +1,3012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚗 Road Trip Master Planner: Nashville → Turlock (Streamlined Route)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#2563eb',
+              foreground: '#ffffff',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-foreground: #ffffff;
+    }
+    .tab-active {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px -1px rgba(37, 99, 235, 0.3);
+    }
+    .route-btn-active {
+      background-color: #ffffff !important;
+      color: #1e3a8a !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+      border-color: #ffffff !important;
+    }
+    html.dark .route-btn-active {
+      background-color: #38bdf8 !important;
+      color: #0f172a !important;
+      border-color: #38bdf8 !important;
+    }
+    .hotel-selected {
+      border-color: #2563eb !important;
+      background-color: #eff6ff !important;
+      box-shadow: 0 0 0 2px #2563eb;
+    }
+    html.dark .hotel-selected {
+      border-color: #3b82f6 !important;
+      background-color: rgba(37, 99, 235, 0.18) !important;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+    details > summary {
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Comprehensive Dark Mode Overrides for Effortless Readability */
+    html.dark body {
+      background-color: #0b0f19 !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark .bg-white {
+      background-color: #111827 !important;
+    }
+    html.dark .bg-slate-50 {
+      background-color: #1e293b !important;
+    }
+    html.dark .bg-slate-100 {
+      background-color: #334155 !important;
+    }
+    html.dark .text-slate-900 {
+      color: #f8fafc !important;
+    }
+    html.dark .text-slate-800 {
+      color: #e2e8f0 !important;
+    }
+    html.dark .text-slate-700 {
+      color: #cbd5e1 !important;
+    }
+    html.dark .text-slate-600 {
+      color: #94a3b8 !important;
+    }
+    html.dark .text-slate-500 {
+      color: #94a3b8 !important;
+    }
+    html.dark .border-slate-200,
+    html.dark .border-slate-200\/80,
+    html.dark .border-slate-100,
+    html.dark .border-slate-300 {
+      border-color: #334155 !important;
+    }
+    html.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+      border-color: #1e293b !important;
+    }
+    html.dark .bg-rose-50,
+    html.dark .bg-rose-50\/70 {
+      background-color: rgba(225, 29, 72, 0.14) !important;
+      border-color: rgba(244, 63, 94, 0.3) !important;
+    }
+    html.dark .text-rose-950,
+    html.dark .text-rose-900,
+    html.dark .text-rose-800,
+    html.dark .text-rose-700 {
+      color: #fda4af !important;
+    }
+    html.dark .bg-emerald-50,
+    html.dark .bg-emerald-50\/70,
+    html.dark .from-emerald-50 {
+      background-color: rgba(16, 185, 129, 0.14) !important;
+      background-image: none !important;
+      border-color: rgba(16, 185, 129, 0.35) !important;
+    }
+    html.dark .text-emerald-950,
+    html.dark .text-emerald-800,
+    html.dark .text-emerald-700 {
+      color: #6ee7b7 !important;
+    }
+    html.dark .bg-emerald-100 {
+      background-color: rgba(16, 185, 129, 0.25) !important;
+    }
+    html.dark .bg-amber-50,
+    html.dark .bg-amber-100 {
+      background-color: rgba(245, 158, 11, 0.16) !important;
+      border-color: rgba(245, 158, 11, 0.35) !important;
+    }
+    html.dark .text-amber-900,
+    html.dark .text-amber-800,
+    html.dark .text-amber-700 {
+      color: #fcd34d !important;
+    }
+    html.dark .bg-blue-50,
+    html.dark .bg-blue-50\/50 {
+      background-color: rgba(37, 99, 235, 0.15) !important;
+    }
+    html.dark .text-blue-700,
+    html.dark .text-blue-600 {
+      color: #60a5fa !important;
+    }
+    html.dark .text-indigo-700,
+    html.dark .text-indigo-600 {
+      color: #818cf8 !important;
+    }
+    html.dark tr.hover\:bg-slate-50:hover {
+      background-color: #1e293b !important;
+    }
+
+    @media print {
+      body { background: white !important; padding: 0 !important; color: black !important; }
+      .no-print { display: none !important; }
+      details { break-inside: avoid; }
+      details[open] summary { border-bottom: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased p-3 sm:p-5 md:p-8 transition-colors duration-200">
+
+  <div class="max-w-6xl mx-auto space-y-5">
+    
+    <!-- Top Hero Banner with Route Option Toggle & Light/Dark Toggle -->
+    <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-rose-700 rounded-3xl p-5 sm:p-7 md:p-8 text-white shadow-lg relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none text-9xl">
+        🚗
+      </div>
+      <div class="relative z-10 space-y-4">
+        
+        <!-- Top Row: Badges + Light/Dark Toggle -->
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold">
+            <span>💖 Easy-Navigate Trip Guide</span>
+            <span>•</span>
+            <span id="hero-dates-badge">📅 Sat, Oct 31 – Tue, Nov 10, 2026</span>
+            <span>•</span>
+            <span>⚡ 50 MPG Hybrid</span>
+            <span>•</span>
+            <span>⭐ Spotless 3-Star Chains Only</span>
+          </div>
+
+          <div class="flex items-center gap-2 no-print">
+            <button onclick="toggleTheme()" id="theme-toggle-btn"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/20 hover:bg-white/30 border border-white/40 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer shadow-xs">
+              <span id="theme-icon">🌙</span>
+              <span id="theme-label">Dark Mode</span>
+            </button>
+            <button onclick="window.print()" 
+                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer">
+              🖨️ Print / PDF
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+            Nashville, TN → Turlock, CA Road Trip Guide
+          </h1>
+          <p class="text-blue-100 text-sm md:text-base max-w-3xl leading-relaxed mt-1">
+            <strong>Streamlined Southern Route (Grand Canyon & Sedona Removed!):</strong> After Saguaro National Park in Tucson on Saturday, Nov 7, you head directly west to California—saving 2 full nights of mountain detours and ~$350! Use the switcher below to compare <strong>Option A (With Joshua Tree NP)</strong> vs. <strong>Option B (Skip Joshua Tree Direct to La Jolla)</strong>.
+          </p>
+        </div>
+
+        <!-- INTERACTIVE ROUTE OPTION SWITCHER (OPTION A vs OPTION B) -->
+        <div class="bg-black/25 backdrop-blur-md border border-white/25 rounded-2xl p-3.5 sm:p-4 space-y-2.5 no-print">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-black uppercase tracking-wider text-amber-300">
+              🔀 Choose Your Western California Route (Click to Switch Everything Live):
+            </span>
+            <span class="text-xs font-bold text-emerald-300">
+              💡 Skipping Joshua Tree saves $159.28 & gets you home 1 day earlier!
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+            <button onclick="setRouteOption('A')" id="route-btn-A"
+                    class="route-btn-active text-left p-3 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 transition cursor-pointer flex items-center justify-between gap-2">
+              <div>
+                <div class="text-xs sm:text-sm font-black">🌵 Option A: Include Joshua Tree NP (11 Days / 10 Nights)</div>
+                <div class="text-[11px] opacity-85 mt-0.5">Tucson ➔ 29 Palms (1 nt) ➔ Joshua Tree ➔ La Jolla (2 nts) ➔ Turlock (Tue Nov 10)</div>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-sm font-black">$1,913.62</div>
+                <div class="text-[10px] font-bold opacity-80">2,810 Mi</div>
+              </div>
+            </button>
+
+            <button onclick="setRouteOption('B')" id="route-btn-B"
+                    class="text-left p-3 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 transition cursor-pointer flex items-center justify-between gap-2">
+              <div>
+                <div class="text-xs sm:text-sm font-black">🌊 Option B: Skip Joshua Tree — Direct to La Jolla (10 Days / 9 Nights)</div>
+                <div class="text-[11px] opacity-85 mt-0.5">Tucson ➔ Direct I-8 W to La Jolla (2 nts) ➔ Hwy 1 to Turlock (Mon Nov 9)</div>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-sm font-black text-emerald-300">$1,754.34</div>
+                <div class="text-[10px] font-bold opacity-80">Saves $159.28!</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Master Google Maps Links -->
+        <div class="flex flex-wrap gap-2.5 pt-1 no-print">
+          <a href="https://www.google.com/maps/dir/Nashville,+TN/Memphis,+TN/Hot+Springs,+AR/Waxahachie,+TX/Henry+B.+Gonz%C3%A1lez+Convention+Center,+San+Antonio,+TX/Carlsbad,+NM/Carlsbad+Caverns+National+Park,+NM/Guadalupe+Mountains+National+Park,+TX/Alamogordo,+NM" 
+             target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-blue-700 text-xs font-bold shadow-sm hover:bg-blue-50 transition">
+            🗺️ Google Maps Part 1: Nashville → Alamogordo, NM ↗
+          </a>
+          <a id="master-map-part2"
+             href="https://www.google.com/maps/dir/Alamogordo,+NM/White+Sands+National+Park,+NM/Tucson,+AZ/Saguaro+National+Park,+AZ/Twentynine+Palms,+CA/Joshua+Tree+National+Park,+CA/La+Jolla,+CA/Turlock,+CA" 
+             target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition">
+            🗺️ Google Maps Part 2: NM → Tucson → Joshua Tree → La Jolla → Turlock ↗
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Top 5 Peace-of-Mind KPI Ribbon -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" id="kpi-hotel-label">10-Night Hotels (w/ Tax)</div>
+        <div class="text-xl font-black text-slate-900 mt-1" id="kpi-hotel-tax">$1,124.44</div>
+        <div class="text-xs text-emerald-600 font-bold mt-0.5" id="kpi-hotel-breakfast">🍳 10 Free Hot Breakfasts!</div>
+        <div class="text-[11px] text-slate-400 mt-0.5" id="kpi-hotel-avg">Avg $98.10/nt pre-tax</div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">50 MPG Car Gas</div>
+        <div class="text-xl font-black text-slate-900 mt-1" id="kpi-gas-total">$245.18</div>
+        <div class="text-xs text-emerald-600 font-bold mt-0.5" id="kpi-gas-sub">⚡ 2,810 Total Miles</div>
+        <div class="text-[11px] text-slate-400 mt-0.5" id="kpi-gas-gal">~56.2 gallons @ 50 MPG</div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide" id="kpi-food-label">Food & Snacks (1 Person)</div>
+        <div class="text-xl font-black text-slate-900 mt-1" id="kpi-food-total">$376.00</div>
+        <div class="text-xs text-indigo-600 font-bold mt-0.5" id="kpi-food-sub">🌱 $314 Meals + $62 Cooler</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">Breakfast is $0 at all hotels!</div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Parks & Admissions (1 Person)</div>
+        <div class="text-xl font-black text-slate-900 mt-1" id="kpi-parks-total">$168.00</div>
+        <div class="text-xs text-emerald-600 font-bold mt-0.5" id="kpi-parks-sub">🎟️ $80 Pass + Cave/Sled/Parking</div>
+        <div class="text-[11px] text-slate-400 mt-0.5">1-Person tickets & vehicle parking</div>
+      </div>
+
+      <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-500/30 rounded-2xl p-4 shadow-xs col-span-2 sm:col-span-1">
+        <div class="text-xs font-black text-emerald-700 uppercase tracking-wide" id="kpi-grand-label">All-In Total (Option A)</div>
+        <div class="text-2xl font-black text-emerald-700 mt-1" id="kpi-grand-total">$1,913.62</div>
+        <div class="text-xs font-bold text-emerald-800 mt-0.5" id="kpi-grand-diff">Option B is $1,754.34 (-$159.28)</div>
+        <div class="text-[11px] text-emerald-600 mt-0.5">Saves $350+ after cutting Sedona!</div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs Bar (7 Intuitive Tabs) -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-2 shadow-xs no-print">
+      <div class="flex flex-wrap gap-1 sm:gap-1.5" role="tablist">
+        <button onclick="switchTab('timeline')" id="tab-btn-timeline" 
+                class="tab-active px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 cursor-pointer">
+          ⏱️ Simplified Timeline
+        </button>
+        <button onclick="switchTab('walkthrough')" id="tab-btn-walkthrough" 
+                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+          📸 Visual Walkthrough & Drive Care
+        </button>
+        <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" 
+                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+          📅 Daily Guide & Food
+        </button>
+        <button onclick="switchTab('summary')" id="tab-btn-summary" 
+                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+          💰 Price Comparison & Budget
+        </button>
+        <button onclick="switchTab('hotels')" id="tab-btn-hotels" 
+                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+          🏨 3-Star Hotel Selector
+        </button>
+        <button onclick="switchTab('parks')" id="tab-btn-parks" 
+                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+          🌵 Parks & Pass Math
+        </button>
+        <button onclick="switchTab('checklist')" id="tab-btn-checklist" 
+                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+          ✅ Checklist (<span id="tab-chk-count">0/12</span>)
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: SIMPLIFIED TIMELINE (AT A GLANCE)   -->
+    <!-- ========================================== -->
+    <div id="tab-timeline" class="space-y-5">
+      
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-1.5">
+              <span>✨ Easy Summary for Quick Navigation</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-black text-slate-900" id="timeline-main-title">
+              Trip At A Glance: Timeline, Driving Distances & Stops
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              With both Grand Canyon and Sedona removed, your route stays on the warm, flat southern highway corridor (I-10 / I-8) straight from Tucson to Southern California!
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
+              🟢 Easy Drive (&lt;4 hrs)
+            </span>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 font-semibold border border-amber-200">
+              🟡 Moderate Drive (4–6.5 hrs)
+            </span>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 font-semibold border border-rose-200">
+              🟠 Big Drive Day (&gt;7 hrs)
+            </span>
+          </div>
+        </div>
+
+        <!-- Option A vs Option B Quick Box inside Timeline -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black uppercase text-blue-600">🌵 Option A: With Joshua Tree NP</span>
+              <span class="text-xs font-black px-2 py-0.5 rounded bg-blue-100 text-blue-800">11 Days • $1,913.62</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+              <strong>Sat Nov 7:</strong> Saguaro NP ➔ Drive 5 hrs to Twentynine Palms (sleep 1 nt).<br/>
+              <strong>Sun Nov 8 – Tue Nov 10:</strong> Explore Joshua Tree NP Sunday morning ➔ Drive 2.5 hrs to La Jolla (sleep 2 nts: Sun & Mon).<br/>
+              <strong>Tue Nov 10:</strong> Highway 1 Coastline drive home to Turlock!
+            </p>
+          </div>
+          <div class="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black uppercase text-emerald-700">🌊 Option B: Skip Joshua Tree (Direct to La Jolla)</span>
+              <span class="text-xs font-black px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">10 Days • $1,754.34 (Saves $159.28!)</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+              <strong>Sat Nov 7 – Mon Nov 9:</strong> Saguaro NP ➔ Drive 5 hrs 45 mins direct via I-8 W to La Jolla (sleep 2 nts: Sat & Sun; full beach day Sunday!).<br/>
+              <strong>Mon Nov 9:</strong> Highway 1 Coastline drive home to Turlock (arrive home 1 full day earlier!).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chronological Stepper Timeline Container -->
+      <div id="timeline-stepper-container" class="space-y-4"></div>
+
+      <!-- Printable Route Cheat-Sheet Table -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <h3 class="text-base sm:text-lg font-black text-slate-900">
+          🚗 Printable Route, Mileage & Stops Cheat Sheet
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider">
+                <th class="py-2.5 px-3">Day & Date</th>
+                <th class="py-2.5 px-3">From → To</th>
+                <th class="py-2.5 px-3">Driving Time & Miles</th>
+                <th class="py-2.5 px-3">Main Stops</th>
+                <th class="py-2.5 px-3">Where We Sleep</th>
+              </tr>
+            </thead>
+            <tbody id="timeline-table-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 2: VISUAL WALKTHROUGH & DRIVE CARE GUIDE (NEW!)       -->
+    <!-- ========================================================= -->
+    <div id="tab-walkthrough" class="hidden space-y-5">
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-3">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-xs font-bold mb-1">
+              <span>📸 Picture Book & Road Companion</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-black text-slate-900">
+              Visual Walkthrough of Every Stop & What to Care About Along the Drive
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Browse photos of every destination in chronological order, what makes each stop special, and important highway tips (where to fill up gas, cell service dead zones, border checkpoints, and parking secrets).
+            </p>
+          </div>
+          <button onclick="switchTab('itinerary')" class="shrink-0 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition cursor-pointer">
+            📅 Go to Daily Schedules & Food ➔
+          </button>
+        </div>
+      </div>
+
+      <!-- Visual Walkthrough Cards Container -->
+      <div id="walkthrough-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: DETAILED DAILY GUIDE & FOOD         -->
+    <!-- ========================================== -->
+    <div id="tab-itinerary" class="hidden space-y-5">
+      
+      <!-- Day Quick-Jump Pills -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs space-y-2 no-print">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">⚡ Quick Jump to Any Day:</span>
+          <div class="flex items-center gap-2">
+            <button onclick="toggleAllDays(true)" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+              Expand All
+            </button>
+            <button onclick="toggleAllDays(false)" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+              Collapse All
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-1.5" id="day-pills-bar"></div>
+      </div>
+
+      <!-- Detailed Day Cards Container -->
+      <div id="days-container" class="space-y-4"></div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 4: PRICE COMPARISON (OPT A vs OPT B) & FOOD MATH      -->
+    <!-- ========================================================= -->
+    <div id="tab-summary" class="hidden space-y-6">
+      
+      <!-- Side-by-Side Comparison Card: Option A (With Joshua Tree) vs Option B (Without Joshua Tree) -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-1">
+              <span>⚖️ Side-by-Side Cost Comparison</span>
+            </div>
+            <h2 class="text-xl font-black text-slate-900">
+              Joshua Tree Price Difference: Option A vs. Option B
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Sedona and Grand Canyon have both been removed. Here is the exact dollar-for-dollar comparison between keeping <strong>Joshua Tree NP (Option A)</strong> vs. driving <strong>straight from Tucson/Saguaro to La Jolla (Option B)</strong>:
+            </p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 flex items-center gap-3">
+            <div>
+              <label for="mpg-slider" class="block text-xs font-bold text-slate-700">Car Fuel Economy: <span id="mpg-val" class="text-emerald-600 font-black">50 MPG</span></label>
+              <input id="mpg-slider" type="range" min="18" max="55" value="50" oninput="updateMpg(this.value)" class="w-44 mt-1 cursor-pointer accent-blue-600" />
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b-2 border-slate-200 text-slate-500 font-bold uppercase">
+                <th class="py-2.5 px-3">Expense Category</th>
+                <th class="py-2.5 px-3">🌵 Option A: With Joshua Tree (11 Days / 10 Nights)</th>
+                <th class="py-2.5 px-3">🌊 Option B: Skip Joshua Tree (10 Days / 9 Nights)</th>
+                <th class="py-2.5 px-3 text-right">Savings in Option B</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="py-3 px-3 font-bold text-slate-900">🏨 3-Star Chain Hotels (With Exact Taxes)</td>
+                <td class="py-3 px-3"><strong class="text-slate-900" id="cmp-hotel-a">$1,124.44</strong> (10 nights; includes $109.76 w/ tax in 29 Palms)</td>
+                <td class="py-3 px-3"><strong class="text-emerald-600" id="cmp-hotel-b">$1,021.44</strong> (9 nights; skips 29 Palms, Sat/Sun in La Jolla)</td>
+                <td class="py-3 px-3 text-right font-black text-emerald-600" id="cmp-hotel-diff">-$103.00</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-slate-900">🍽️ Local Dining & Cooler Snacks (1 Person)</td>
+                <td class="py-3 px-3"><strong class="text-slate-900">$376.00</strong> (22 local meals $314 + 11-day cooler $62)</td>
+                <td class="py-3 px-3"><strong class="text-emerald-600">$335.00</strong> (20 local meals $279 + 10-day cooler $56)</td>
+                <td class="py-3 px-3 text-right font-black text-emerald-600">-$41.00</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-slate-900">⛽ Vehicle Fuel (<span id="cmp-mpg-label">50</span> MPG Hybrid)</td>
+                <td class="py-3 px-3"><strong class="text-slate-900" id="cmp-fuel-a">$245.18</strong> (2,810 total miles • 56.2 gal)</td>
+                <td class="py-3 px-3"><strong class="text-emerald-600" id="cmp-fuel-b">$234.90</strong> (2,720 total miles • 54.4 gal — 90 fewer CA miles)</td>
+                <td class="py-3 px-3 text-right font-black text-emerald-600" id="cmp-fuel-diff">-$10.28</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-slate-900">🎟️ National Parks, Cave, Sled & Parking (1 Person)</td>
+                <td class="py-3 px-3"><strong class="text-slate-900">$168.00</strong> ($80 Pass covers $105 entries + $23 tickets + $65 parking)</td>
+                <td class="py-3 px-3"><strong class="text-emerald-600">$163.00</strong> ($75 individual park fees + $23 tickets + $65 parking)</td>
+                <td class="py-3 px-3 text-right font-black text-emerald-600">-$5.00</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="border-t-2 border-slate-300 bg-slate-50 font-black text-sm">
+                <td class="py-3.5 px-3 text-slate-900">ALL-IN GRAND TOTAL (1 PERSON FOOD/FUN + ROOM/CAR)</td>
+                <td class="py-3.5 px-3 text-blue-600 text-base" id="cmp-total-a">$1,913.62 (Arrive Home Tue Nov 10)</td>
+                <td class="py-3.5 px-3 text-emerald-600 text-base" id="cmp-total-b">$1,754.34 (Arrive Home Mon Nov 9)</td>
+                <td class="py-3.5 px-3 text-right text-emerald-600 text-base" id="cmp-total-diff">Saves $159.28!</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Detailed Itemized Table for Currently Active Option -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <h3 class="text-lg font-black text-slate-900" id="active-budget-table-title">
+            📊 Itemized Master Budget Table (Active Route: Option A)
+          </h3>
+          <div class="flex gap-2">
+            <button onclick="setRouteOption('A')" class="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">Show Option A</button>
+            <button onclick="setRouteOption('B')" class="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 cursor-pointer">Show Option B</button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500 font-bold uppercase">
+                <th class="py-2.5 px-3">Category</th>
+                <th class="py-2.5 px-3">Item / Stop</th>
+                <th class="py-2.5 px-3">Date(s)</th>
+                <th class="py-2.5 px-3">Calculation / Notes</th>
+                <th class="py-2.5 px-3 text-right">Pre-Tax Base</th>
+                <th class="py-2.5 px-3 text-right">All-In Total</th>
+              </tr>
+            </thead>
+            <tbody id="master-cost-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Local Vegetarian-Friendly Restaurant Guide -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <div>
+          <h2 class="text-xl font-black text-slate-900">🌱 Complete Local-Favorite Restaurant Guide (1-Person Pricing)</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            Every spot below is a beloved local institution (4.5★–4.9★) in the low-to-mid price tier ($13–$22/meal w/ tip) with explicitly vetted vegetarian specialties plus delicious options for meat & seafood lovers.
+          </p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500 font-bold uppercase">
+                <th class="py-2.5 px-3">Day & Meal</th>
+                <th class="py-2.5 px-3">City / Stop</th>
+                <th class="py-2.5 px-3">Restaurant & Rating</th>
+                <th class="py-2.5 px-3">Must-Order Vegetarian Dish (🌱) & Other Favorites</th>
+                <th class="py-2.5 px-3 text-right">Cost for 1 (w/ Tip)</th>
+                <th class="py-2.5 px-3 text-right">Map Link</th>
+              </tr>
+            </thead>
+            <tbody id="food-table-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: HOTEL SELECTOR & STAYS              -->
+    <!-- ========================================== -->
+    <div id="tab-hotels" class="hidden space-y-4">
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <h2 class="text-xl font-black text-slate-900">3-Star Reliable Chain Hotels (Date-Specific Rates)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Every hotel is vetted for high cleanliness scores (8.8–9.2/10), part of a reputable national chain (Holiday Inn Express, Best Western Plus, Hampton, Fairfield, La Quinta), and includes free hot breakfast and free parking. Click any option to swap it into your active budget!
+            </p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-right">
+            <div class="text-xs text-slate-500 font-semibold" id="builder-nights-label">Active 10-Night Hotel Total</div>
+            <div class="text-lg font-black text-emerald-600" id="builder-total">$981 Base ($1,124.44 w/ Tax)</div>
+          </div>
+        </div>
+        <div id="hotel-matrix-container" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 6: PARKS & FUN ACTIVITIES              -->
+    <!-- ========================================== -->
+    <div id="tab-parks" class="hidden space-y-4">
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <h2 class="text-xl font-black text-slate-900">National Parks & Pass Math (Updated Without Sedona!)</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Removing Sedona changes the National Park Pass math! See below how <strong>Option A (With Joshua Tree)</strong> compares to <strong>Option B (Without Joshua Tree)</strong> for 1 person:
+            </p>
+          </div>
+          <a href="https://www.nps.gov/planyourvisit/passes.htm" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-xs hover:bg-blue-700 transition">
+            🎟️ Official NPS $80 Pass Info ↗
+          </a>
+        </div>
+
+        <!-- Smart Pass Recommendation Callout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-blue-50/60 border border-blue-200 rounded-2xl p-4">
+            <div class="text-xs font-black uppercase text-blue-700">🌵 If You Choose Option A (With Joshua Tree):</div>
+            <div class="text-sm font-bold text-slate-900 mt-1">Buy the $80 America the Beautiful Pass (Saves $25!)</div>
+            <p class="text-xs text-slate-600 mt-1">
+              Individual entry fees for Carlsbad Caverns ($15) + Guadalupe Mts ($10) + White Sands ($25) + Saguaro ($25) + Joshua Tree ($30) = <strong>$105.00</strong>. Buying the $80 Annual Pass at Carlsbad Caverns saves you $25.00!
+            </p>
+          </div>
+          <div class="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-4">
+            <div class="text-xs font-black uppercase text-emerald-700">🌊 If You Choose Option B (Skip Joshua Tree):</div>
+            <div class="text-sm font-bold text-slate-900 mt-1">Pay Per Park ($75 Total) OR Buy Pass for $80 (+$5)</div>
+            <p class="text-xs text-slate-600 mt-1">
+              Without Sedona and Joshua Tree, your remaining 4 paid parks (Carlsbad $15 + Guadalupe $10 + White Sands $25 + Saguaro $25) total <strong>$75.00</strong>—making individual entry <strong>$5 cheaper</strong> than the $80 pass! (Or pay $5 more for the $80 pass to get free entry to Yosemite & Sequoia near Turlock for the next 12 months!).
+            </p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500 font-bold uppercase">
+                <th class="py-2.5 px-3">Date</th>
+                <th class="py-2.5 px-3">Park / Experience</th>
+                <th class="py-2.5 px-3">Standard Solo Fee</th>
+                <th class="py-2.5 px-3">Option A Cost (w/ $80 Pass)</th>
+                <th class="py-2.5 px-3">Option B Cost (No Joshua Tree)</th>
+                <th class="py-2.5 px-3">Official Link</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Sat, Oct 31</td>
+                <td class="py-2.5 px-3 font-bold">Hot Springs National Park (AR)</td>
+                <td class="py-2.5 px-3">$0.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$0.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$0.00</td>
+                <td class="py-2.5 px-3"><a href="https://www.nps.gov/hosp/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Thu, Nov 5</td>
+                <td class="py-2.5 px-3 font-bold">America the Beautiful Annual Pass (Opt A Only)</td>
+                <td class="py-2.5 px-3">$80.00</td>
+                <td class="py-2.5 px-3 font-bold text-slate-900">$80.00</td>
+                <td class="py-2.5 px-3 text-slate-400">Not Needed ($0)</td>
+                <td class="py-2.5 px-3"><a href="https://www.nps.gov/planyourvisit/passes.htm" target="_blank" class="underline text-blue-600 font-semibold">Pass Info ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Thu, Nov 5</td>
+                <td class="py-2.5 px-3 font-bold">Carlsbad Caverns NP ($15) + Timed Slot ($1)</td>
+                <td class="py-2.5 px-3">$16.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$1.00 (Slot Fee)</td>
+                <td class="py-2.5 px-3 font-bold">$16.00 ($15 + $1 slot)</td>
+                <td class="py-2.5 px-3"><a href="https://www.recreation.gov/timed-entry/10086910" target="_blank" class="underline text-blue-600 font-semibold">Book Slot ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Thu, Nov 5</td>
+                <td class="py-2.5 px-3 font-bold">Guadalupe Mountains National Park (TX)</td>
+                <td class="py-2.5 px-3">$10.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$0.00 (Covered!)</td>
+                <td class="py-2.5 px-3 font-bold">$10.00</td>
+                <td class="py-2.5 px-3"><a href="https://www.nps.gov/gumo/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Fri, Nov 6</td>
+                <td class="py-2.5 px-3 font-bold">White Sands NP ($25) + 1 Dune Sled & Wax ($12 net)</td>
+                <td class="py-2.5 px-3">$37.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$12.00 (Sled net)</td>
+                <td class="py-2.5 px-3 font-bold">$37.00 ($25 + $12 sled)</td>
+                <td class="py-2.5 px-3"><a href="https://www.nps.gov/whsa/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Sat, Nov 7</td>
+                <td class="py-2.5 px-3 font-bold">Saguaro National Park West (AZ)</td>
+                <td class="py-2.5 px-3">$25.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$0.00 (Covered!)</td>
+                <td class="py-2.5 px-3 font-bold">$25.00</td>
+                <td class="py-2.5 px-3"><a href="https://www.nps.gov/sagu/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">Sun, Nov 8</td>
+                <td class="py-2.5 px-3 font-bold">Joshua Tree National Park (CA) [Option A Only]</td>
+                <td class="py-2.5 px-3">$30.00</td>
+                <td class="py-2.5 px-3 text-emerald-600 font-bold">$0.00 (Covered!)</td>
+                <td class="py-2.5 px-3 text-slate-400">Skipped ($0)</td>
+                <td class="py-2.5 px-3"><a href="https://www.nps.gov/jotr/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold">La Jolla Day</td>
+                <td class="py-2.5 px-3 font-bold">Sunny Jim's Sea Cave Tunnel (1 Adult) + Trip Parking</td>
+                <td class="py-2.5 px-3">$75.00 ($10 + $65)</td>
+                <td class="py-2.5 px-3 font-bold text-slate-900">$75.00</td>
+                <td class="py-2.5 px-3 font-bold text-slate-900">$75.00</td>
+                <td class="py-2.5 px-3"><a href="https://www.cavestore.com/" target="_blank" class="underline text-blue-600 font-semibold">Cave Store ↗</a></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="border-t-2 border-slate-300 font-bold text-sm bg-slate-50">
+                <td colspan="2" class="py-3 px-3">TOTAL PARKS, ADMISSIONS & PARKING (1 PERSON)</td>
+                <td class="py-3 px-3 line-through text-rose-500 font-bold">$193.00 (w/o Pass)</td>
+                <td class="py-3 px-3 text-blue-600 font-black">$168.00 (Option A)</td>
+                <td class="py-3 px-3 text-emerald-600 font-black">$163.00 (Option B)</td>
+                <td class="py-3 px-3 text-xs font-normal text-slate-500">All fees included</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 7: TRIP CHECKLIST                      -->
+    <!-- ========================================== -->
+    <div id="tab-checklist" class="hidden space-y-4">
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+        <div>
+          <h2 class="text-xl font-black text-slate-900">Trip Booking & Preparation Checklist</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            Check items off as you book them! Your progress is saved automatically in your web browser. Direct links take you straight to official reservation pages.
+          </p>
+        </div>
+        <div id="checklist-container" class="space-y-2.5"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentMpg = 50;
+    let currentOption = 'A'; // 'A' = With Joshua Tree (11 Days/10 Nights), 'B' = Skip Joshua Tree (10 Days/9 Nights)
+
+    const sharedDays = [
+  {
+    "dayNum": "1",
+    "dayId": "day-1",
+    "date": "Saturday, Oct 31, 2026",
+    "checkIn": "2026-10-31",
+    "checkOut": "2026-11-01",
+    "nights": 1,
+    "taxRate": 0.15,
+    "taxLabel": "15% TX/City Tax",
+    "title": "Nashville, TN \u2192 Memphis \u2192 Hot Springs NP, AR \u2192 South Dallas (Waxahachie), TX",
+    "routeSummary": "Nashville \u2794 Memphis \u2794 Hot Springs \u2794 Waxahachie",
+    "miles": "685 mi",
+    "driveTime": "~10 hrs 15 mins total driving",
+    "driveCategory": "long",
+    "driveBadge": "\ud83d\udfe0 Big Road Trip Kickoff Drive",
+    "sleepLocation": "Waxahachie, TX (25 mins south of Dallas on I-35E)",
+    "vibe": "\ud83c\udfb8 Southern Kickoff \u2022 Hot Springs Soak \u2022 Historic Bathhouse Stroll",
+    "outfitTip": "\ud83d\udc5f Comfy car travel clothes + walking sneakers for strolling Hot Springs Bathhouse Row. Tonight in Dallas: cozy up for a good night's rest!",
+    "timeZoneNote": "\u23f0 Central Time Zone all day. Plus tonight is Daylight Saving 'Fall Back' (+1 extra hour of sleep!)",
+    "driveAlert": "Park for free at the Exchange St garage in Hot Springs; sleeping 25 mins south of Dallas in Waxahachie skips all Dallas morning traffic on Sunday.",
+    "keyStops": [
+      "Memphis, TN: RP Tracks early lunch (legendary BBQ tofu nachos)",
+      "Hot Springs National Park, AR: Thermal spring fountains & Bathhouse Row",
+      "Superior Bathhouse Brewery / Cafe 1217: Local brews & artisan bakery bites",
+      "Waxahachie, TX: Spotless 3-star hotel stop south of Dallas"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Nashville,+TN/RP+Tracks,+Memphis,+TN/Superior+Bathhouse+Brewery,+Hot+Springs,+AR/Waxahachie,+TX",
+    "schedule": [
+      {
+        "time": "6:30 AM",
+        "label": "Depart Nashville, TN via I-40 West",
+        "detail": "Eat a quick breakfast at home before leaving so your timing lands perfectly in Memphis for lunch!"
+      },
+      {
+        "time": "9:45 AM \u2013 10:45 AM",
+        "label": "Memphis Pit Stop & Early Lunch at RP Tracks",
+        "detail": "Midtown Memphis favorite right across from the university. Incredibly tasty BBQ Pulled Tofu Nachos & BBQ Tofu Sandwiches (plus burgers & tenders for meat lovers)."
+      },
+      {
+        "time": "1:45 PM \u2013 3:30 PM",
+        "label": "Hot Springs National Park, AR + Historic Bathhouse Row",
+        "detail": "Stroll the gorgeous tree-lined Grand Promenade, feel the 143\u00b0F natural thermal spring water fountains, and grab a thermal spring root beer float or cold drink at Superior Bathhouse Brewery."
+      },
+      {
+        "time": "3:30 PM \u2013 8:00 PM",
+        "label": "Drive to Waxahachie (South Dallas I-35E Corridor)",
+        "detail": "Arrive at your hotel, check in, unpack, and enjoy +1 free hour of sleep tonight as Daylight Saving Time ends!"
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Lunch (Memphis, TN)",
+        "name": "RP Tracks",
+        "rating": "4.6\u2605 (2,100+ local reviews)",
+        "vegHighlight": "\ud83c\udf31 World-famous Memphis BBQ Pulled Tofu Nachos ($12.50) & BBQ Tofu Sandwich ($11.50)",
+        "otherHighlight": "Classic Smoked Pulled Chicken, Club Sandwiches & Cajun Fries",
+        "costPerPerson": 16,
+        "url": "https://www.google.com/maps/search/?api=1&query=RP+Tracks+Memphis+TN"
+      },
+      {
+        "mealType": "Afternoon / Early Dinner (Hot Springs, AR)",
+        "name": "Cafe 1217 (or Superior Bathhouse Brewery)",
+        "rating": "4.8\u2605 (#1 Rated Local Cafe in Hot Springs)",
+        "vegHighlight": "\ud83c\udf31 Roasted Veggie & Goat Cheese Panini ($13), Thai Noodle Salad, or Superior's House Veggie Burger ($14) + Thermal Spring Root Beer Float",
+        "otherHighlight": "Gourmet Turkey Artichoke Melt, Chicken Salad & Local Craft Beers",
+        "costPerPerson": 19,
+        "url": "https://www.google.com/maps/search/?api=1&query=Cafe+1217+Hot+Springs+AR"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d1-h1",
+        "name": "La Quinta Inn & Suites by Wyndham Waxahachie",
+        "price": 84,
+        "cleanliness": "9.0/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Indoor Heated Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking \u2022 \ud83d\udcf6 Free Fast WiFi",
+        "vibe": "3-Star Wyndham \u2022 Spotless & Modern \u2022 Super Easy Highway Access",
+        "why": "Oct 31 Saturday Rate: $84 base ($96.60 w/ tax). Spotless rooms 25 mins south of Dallas with free hot waffles, eggs, and an indoor heated pool/hot tub.",
+        "url": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+by+Wyndham+Waxahachie+TX&checkin=2026-10-31&checkout=2026-11-01",
+        "selected": true
+      },
+      {
+        "id": "d1-h2",
+        "name": "Holiday Inn Express & Suites Waxahachie by IHG",
+        "price": 104,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Express Start Hot Breakfast \u2022 \ud83c\udfca Indoor Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star IHG \u2022 Fresh Duvets & Crisp Bedding \u2022 Quiet Location",
+        "why": "Oct 31 Saturday Rate: $104 base ($119.60 w/ tax). Famous IHG triple-sheeted beds, cinnamon rolls at breakfast, and modern fitness center.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+Suites+Waxahachie+TX&checkin=2026-10-31&checkout=2026-11-01",
+        "selected": false
+      },
+      {
+        "id": "d1-h3",
+        "name": "Fairfield Inn & Suites by Marriott Dallas Waxahachie",
+        "price": 112,
+        "cleanliness": "9.2/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Outdoor Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star Marriott \u2022 Reliable Quality \u2022 Spacious Rooms",
+        "why": "Oct 31 Saturday Rate: $112 base ($128.80 w/ tax). Highly-rated Marriott customer service with plush mattresses and complimentary hot breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=Fairfield+Inn+Suites+Dallas+Waxahachie&checkin=2026-10-31&checkout=2026-11-01",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "2\u20134",
+    "dayId": "day-2-4",
+    "date": "Sun, Nov 1 \u2013 Wed, Nov 4, 2026 (3 Nights)",
+    "checkIn": "2026-11-01",
+    "checkOut": "2026-11-04",
+    "nights": 3,
+    "taxRate": 0.1675,
+    "taxLabel": "16.75% SA City/Hotel Tax",
+    "title": "South Dallas \u2192 San Antonio Riverwalk & Convention Center (3-Night Hub)",
+    "routeSummary": "Waxahachie \u2794 Czech Stop (West, TX) \u2794 San Antonio Downtown",
+    "miles": "255 mi",
+    "driveTime": "~3 hrs 50 mins driving on Sunday (Zero highway driving Mon & Tue!)",
+    "driveCategory": "easy",
+    "driveBadge": "\ud83d\udfe2 Relaxed Morning Cruise + 3-Night Stay",
+    "sleepLocation": "Downtown San Antonio / Riverwalk (3 Nights: Sun, Mon, Tue)",
+    "vibe": "\ud83c\udf2e Czech Kolaches \u2022 Romantic Riverwalk Strolls \u2022 Historic Alamo \u2022 Convention Center",
+    "outfitTip": "\ud83d\udc57 Smart-casual outfits, cute dresses, and comfortable walking shoes for the cobblestone Riverwalk, evening dinner dates, and exploring the historic Pearl district.",
+    "timeZoneNote": "\u23f0 Central Time. Enjoy an extra hour of morning sleep on Sunday thanks to Daylight Saving Fall Back!",
+    "driveAlert": "Stop in West, TX (Exit 353 on I-35) for warm Czech Stop kolaches! You will arrive in San Antonio by 12:15 PM\u2014plenty of time before 1:00 PM at the Convention Center.",
+    "keyStops": [
+      "Czech Stop (West, TX): Famous roadside bakery for warm fruit & cream cheese kolaches",
+      "Henry B. Gonz\u00e1lez Convention Center: Arrive easily by 1:00 PM Sunday",
+      "San Antonio Riverwalk: Romantic cypress-lined waterways, bridges & night lights",
+      "Historic Market Square & Historic Pearl: Vibrant Mexican culture & artisan cafes"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Waxahachie,+TX/Czech+Stop,+West,+TX/Henry+B.+Gonz%C3%A1lez+Convention+Center,+900+E+Market+St,+San+Antonio,+TX+78205",
+    "schedule": [
+      {
+        "time": "Sun 7:45 AM",
+        "label": "Hot Hotel Breakfast + Czech Stop Kolaches",
+        "detail": "Wake up rested after +1 extra hour of sleep. Drive 45 mins south on I-35 to Czech Stop in West, TX for hot, pillowy cream cheese and berry kolaches ($6 for 1)."
+      },
+      {
+        "time": "Sun 12:15 PM",
+        "label": "Drop Bags at Hotel & Arrive at Convention Center by 1:00 PM",
+        "detail": "Check into your 3-star chain hotel in downtown San Antonio and walk 5\u201310 mins to the Henry B. Gonz\u00e1lez Convention Center with plenty of time to spare."
+      },
+      {
+        "time": "Sun Night",
+        "label": "Riverwalk Date Dinner & Evening Stroll",
+        "detail": "Stroll the moonlit Riverwalk and dine on authentic Mexican fare or artisan pastries at La Panader\u00eda."
+      },
+      {
+        "time": "Mon & Tue",
+        "label": "Conference Days + Incredible Local Lunches & Dinners",
+        "detail": "Enjoy healthy plant-forward lunches at Pharm Table (2 blocks south of CC), German-Texan comfort food at Schilo's, and dinner at Historic Market Square & The Pearl!"
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Sun Morning Stop (West, TX) + Sun Lunch (Downtown SA)",
+        "name": "Czech Stop Bakery + Schilo's German-Texan Deli (Est. 1917)",
+        "rating": "4.7\u2605 (14,000+ reviews) & 4.6\u2605 (5,200+ reviews)",
+        "vegHighlight": "\ud83c\udf31 Warm Cream Cheese & Berry Kolaches ($2.50 ea) at Czech Stop; Veggie Split Pea Soup, Egg-Cheese Brezel & Frosted Mug Homemade Root Beer ($12) at Schilo's (6-min walk from Convention Center)",
+        "otherHighlight": "Reuben Sandwiches, Smoked Bratwurst & Potato Pancakes",
+        "costPerPerson": 20,
+        "url": "https://www.google.com/maps/search/?api=1&query=Schilos+Delicatessen+San+Antonio+TX"
+      },
+      {
+        "mealType": "Sun Dinner (Downtown / Riverwalk)",
+        "name": "La Panader\u00eda (Downtown) or Acenar (Riverwalk)",
+        "rating": "4.8\u2605 (6,800+ local reviews)",
+        "vegHighlight": "\ud83c\udf31 La Panader\u00eda's Grilled Portobello, Avocado & Goat Cheese Telera Torta ($13.50) or Acenar's Wild Mushroom & Spinach Enchiladas ($16.50) overlooking the river",
+        "otherHighlight": "Tequila Almond Croissants, Chicken Milanesa Tortas & Shrimp Tacos",
+        "costPerPerson": 21,
+        "url": "https://www.google.com/maps/search/?api=1&query=La+Panaderia+Downtown+San+Antonio+TX"
+      },
+      {
+        "mealType": "Mon Lunch & Dinner (Near Convention Center)",
+        "name": "Pharm Table (Lunch) & Se\u00f1or Veggie / Casa Rio (Dinner)",
+        "rating": "4.7\u2605 (#1 Plant-Forward Cafe in San Antonio)",
+        "vegHighlight": "\ud83c\udf31 Pharm Table's Ayurvedic Veggie Nachos ($13) & Sweet Potato Tacos ($14); Se\u00f1or Veggie's Crispy Oyster-Mushroom Calamari & Jackfruit Street Tacos ($15)",
+        "otherHighlight": "Casa Rio Riverwalk Enchilada & Tamale Plates ($15)",
+        "costPerPerson": 38,
+        "url": "https://www.google.com/maps/search/?api=1&query=Pharm+Table+San+Antonio+TX"
+      },
+      {
+        "mealType": "Tue Lunch & Dinner (Market Square & Historic Pearl)",
+        "name": "Mi Tierra Caf\u00e9 y Panader\u00eda (Lunch) & La Gloria at The Pearl (Dinner)",
+        "rating": "4.5\u2605 (18,000+ reviews)",
+        "vegHighlight": "\ud83c\udf31 Mi Tierra's Vegetarian Fajitas & Cheese Enchiladas ($14.95); La Gloria's Tableside Guacamole, Black Bean & Queso Fresco Molotes ($11) & Rajas Poblanas Tacos ($12)",
+        "otherHighlight": "Sizzling Beef/Chicken Fajitas, Mexican Street Tacos & Handcrafted Margaritas",
+        "costPerPerson": 42,
+        "url": "https://www.google.com/maps/search/?api=1&query=Mi+Tierra+Cafe+y+Panaderia+San+Antonio+TX"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d2-h1",
+        "name": "Holiday Inn Express San Antonio N-Riverwalk Area by IHG",
+        "price": 106,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Express Breakfast \u2022 \ud83c\udfca Pool \u2022 \ud83d\udeb6 10-Min Walk to Convention Center \u2022 \ud83d\udcf6 Fast WiFi",
+        "vibe": "3-Star IHG \u2022 Historic Downtown Architecture \u2022 Spotless Crisp Rooms",
+        "why": "Nov 1\u20134 Mid-Week Rate: $106/nt base ($123.75/nt w/ tax = $371.26 total for 3 nights). Spotless IHG rooms in a historic downtown landmark (~10-min walk to Convention Center) + free hot breakfast every morning!",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+San+Antonio+N+Riverwalk+Area&checkin=2026-11-01&checkout=2026-11-04",
+        "selected": true
+      },
+      {
+        "id": "d2-h2",
+        "name": "La Quinta Inn & Suites by Wyndham San Antonio Riverwalk",
+        "price": 118,
+        "cleanliness": "8.9/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Courtyard Pool \u2022 \ud83d\udeb6 1 Block (3-Min Walk) to Convention Center!",
+        "vibe": "3-Star Wyndham \u2022 Closest Possible Walk to Convention Center",
+        "why": "Nov 1\u20134 Rate: $118/nt base ($137.76/nt w/ tax = $413.28 total). Literally across the street from Henry B. Gonz\u00e1lez Convention Center with courtyard pool & free breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+San+Antonio+Riverwalk&checkin=2026-11-01&checkout=2026-11-04",
+        "selected": false
+      },
+      {
+        "id": "d2-h3",
+        "name": "Drury Inn & Suites San Antonio Riverwalk",
+        "price": 134,
+        "cleanliness": "9.2/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udf78 Free 5:30 PM Hot Dinner & Drinks Nightly! \u2022 \ud83c\udfca Rooftop Pool",
+        "vibe": "3-Star Drury \u2022 Direct Riverwalk Access \u2022 Incredible Food Perks",
+        "why": "Nov 1\u20134 Rate: $134/nt base ($156.45/nt w/ tax = $469.35 total). Right on the Riverwalk (~6-min walk to CC). Includes free hot dinner food & drinks every single evening!",
+        "url": "https://www.google.com/travel/hotels?q=Drury+Inn+Suites+San+Antonio+Riverwalk&checkin=2026-11-01&checkout=2026-11-04",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "5",
+    "dayId": "day-5",
+    "date": "Wednesday, Nov 4, 2026",
+    "checkIn": "2026-11-04",
+    "checkOut": "2026-11-05",
+    "nights": 1,
+    "taxRate": 0.136,
+    "taxLabel": "13.6% NM Tax",
+    "title": "San Antonio, TX \u2192 Texas Hill Country \u2192 Carlsbad, NM",
+    "routeSummary": "San Antonio \u2794 Kerrville \u2794 Fort Stockton \u2794 Carlsbad, NM",
+    "miles": "465 mi",
+    "driveTime": "~6 hrs 45 mins driving (Gain +1 Hour Entering Mountain Time!)",
+    "driveCategory": "moderate",
+    "driveBadge": "\ud83d\udfe1 Scenic Hill Country & West Texas Drive",
+    "sleepLocation": "Carlsbad, NM",
+    "vibe": "\ud83c\udf35 Big Texas Skies \u2022 Mountain Time Zone Gain \u2022 Cozy Desert Evening",
+    "outfitTip": "\ud83e\udde5 Layer up! As you gain elevation in West Texas and New Mexico, the desert cools down quickly into the 40s/50s in the evening. A warm fleece or jacket is perfect.",
+    "timeZoneNote": "\u23f0 Gain +1 Hour of extra time crossing into Mountain Time today (you arrive 1 hour earlier on the clock)!",
+    "driveAlert": "Fill gas & use restrooms in Fort Stockton, TX before heading north on US-285 to Carlsbad (150 miles of remote desert highway).",
+    "keyStops": [
+      "Texas Hill Country: Rolling scenic highway along I-10 West",
+      "Kerrville, TX: Delicious Hill Country Tex-Mex lunch at Mamacita's",
+      "Carlsbad, NM: Check in, relax at hotel indoor pool, and prep for caverns tomorrow"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/San+Antonio,+TX/Mamacita's+Restaurant,+Kerrville,+TX/Carlsbad,+NM",
+    "schedule": [
+      {
+        "time": "8:30 AM",
+        "label": "Free Hotel Breakfast & Depart San Antonio",
+        "detail": "Fuel up on hot waffles and eggs, pack the car, and cruise into the rolling Texas Hill Country on I-10 West."
+      },
+      {
+        "time": "10:00 AM \u2013 12:30 PM",
+        "label": "Hill Country Lunch at Mamacita's (Kerrville, TX)",
+        "detail": "Authentic Mexican dining with warm chips, scratch salsa, and fresh spinach enchiladas before heading northwest through West Texas."
+      },
+      {
+        "time": "3:30 PM (MT)",
+        "label": "Arrive in Carlsbad, NM (+1 Hour Gained!)",
+        "detail": "Cross into Mountain Time and gain an hour! Pick up picnic sandwiches/snacks for tomorrow's hike, check into your spotless 3-star hotel, and enjoy dinner at Guadalupe Mountain Brewing or Yellow Brix."
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Lunch (Texas Hill Country - I-10)",
+        "name": "Mamacita's Restaurant (Kerrville, TX)",
+        "rating": "4.5\u2605 (3,400+ local reviews)",
+        "vegHighlight": "\ud83c\udf31 Fresh Spinach & Mushroom Enchiladas ($13.50) or Sizzling Veggie Fajitas + Free Unlimited Warm Chips, Salsa & Bean Dip",
+        "otherHighlight": "Mesquite Grilled Fajitas & Pollo Asado",
+        "costPerPerson": 16,
+        "url": "https://www.google.com/maps/search/?api=1&query=Mamacitas+Restaurant+Kerrville+TX"
+      },
+      {
+        "mealType": "Dinner (Carlsbad, NM)",
+        "name": "Guadalupe Mountain Brewing Co. (or Yellow Brix)",
+        "rating": "4.6\u2605 (Local Carlsbad Favorite)",
+        "vegHighlight": "\ud83c\udf31 Wood-Fired Margherita / Roasted Vegetable Brick-Oven Pizza ($16), Green Chile Cheese Fries & Pecos Salad",
+        "otherHighlight": "Green Chile Smash Burgers, Ribeye & House Craft Beers",
+        "costPerPerson": 19,
+        "url": "https://www.google.com/maps/search/?api=1&query=Guadalupe+Mountain+Brewing+Company+Carlsbad+NM"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d5-h1",
+        "name": "Sleep Inn & Suites Carlsbad Caverns Area (Choice Hotels)",
+        "price": 89,
+        "cleanliness": "8.8/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Heated Indoor Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star Choice \u2022 Bright, Modern & Quiet \u2022 20 Mins to Caverns Gate",
+        "why": "Nov 4 Wednesday Rate: $89 base ($101.10 w/ tax). Modern rooms on the south end of Carlsbad with indoor heated pool, hot tub & free hot breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=Sleep+Inn+Suites+Carlsbad+Caverns+Area+NM&checkin=2026-11-04&checkout=2026-11-05",
+        "selected": true
+      },
+      {
+        "id": "d5-h2",
+        "name": "La Quinta Inn & Suites by Wyndham Carlsbad",
+        "price": 95,
+        "cleanliness": "8.9/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Outdoor Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star Wyndham \u2022 Spotless Bedding \u2022 Very Popular with Couples",
+        "why": "Nov 4 Wednesday Rate: $95 base ($107.92 w/ tax). Spotless Wyndham rooms right on the highway heading directly to the Caverns.",
+        "url": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+by+Wyndham+Carlsbad+NM&checkin=2026-11-04&checkout=2026-11-05",
+        "selected": false
+      },
+      {
+        "id": "d5-h3",
+        "name": "Holiday Inn Express & Suites Carlsbad by IHG",
+        "price": 114,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Express Start Breakfast \u2022 \ud83c\udfca Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star IHG \u2022 Top-Rated Brand in Town \u2022 Extra Clean Guarantee",
+        "why": "Nov 4 Wednesday Rate: $114 base ($129.50 w/ tax). Top-rated IHG property in Carlsbad with plush pillowtop beds.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+Suites+Carlsbad+NM&checkin=2026-11-04&checkout=2026-11-05",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "6",
+    "dayId": "day-6",
+    "date": "Thursday, Nov 5, 2026",
+    "checkIn": "2026-11-05",
+    "checkOut": "2026-11-06",
+    "nights": 1,
+    "taxRate": 0.133,
+    "taxLabel": "13.3% NM Tax",
+    "title": "Carlsbad Caverns NP \u2192 Guadalupe Mountains NP \u2192 Cloudcroft Mountain Pass \u2192 Alamogordo, NM",
+    "routeSummary": "Carlsbad \u2794 Carlsbad Caverns \u2794 Guadalupe Mts \u2794 Cloudcroft (8,600 ft) \u2794 Alamogordo",
+    "miles": "215 mi",
+    "driveTime": "~3 hrs 45 mins total driving",
+    "driveCategory": "easy",
+    "driveBadge": "\ud83d\udfe2 Spectacular National Parks & Mountain Drive",
+    "sleepLocation": "Alamogordo, NM (12 mins from White Sands NP)",
+    "vibe": "\ud83e\udd87 Jaw-Dropping Caverns \u2022 Fall Foliage \u2022 Cloudcroft Mountain Bakery \u2022 Green Chile Pie",
+    "outfitTip": "\ud83e\udde5 Carlsbad Caverns is a constant 56\u00b0F (13\u00b0C) year-round! Bring a light jacket or cozy cardigan, plus athletic sneakers with good rubber traction for the paved cave trails.",
+    "timeZoneNote": "\u23f0 Mountain Time Zone.",
+    "driveAlert": "Pack lunch sandwiches in Carlsbad before driving to Guadalupe Mountains NP (no food sold inside the park). Enjoy the pine-forested drive over Cloudcroft (8,600 ft)!",
+    "keyStops": [
+      "Carlsbad Caverns National Park: 8:30 AM Timed Entry. Walk the Natural Entrance and the massive Big Room!",
+      "Guadalupe Mountains National Park: Picnic lunch among early-November golden maple foliage",
+      "Cloudcroft, NM (8,600 ft): Stop at Burro Street Bakery for warm Green Chile Apple Pie",
+      "Alamogordo, NM: Spotless 3-star hotel 12 mins from White Sands"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Carlsbad,+NM/Carlsbad+Caverns+Visitor+Center,+NM/Pine+Springs+Visitor+Center,+Salt+Flat,+TX/Burro+Street+Bakery,+Cloudcroft,+NM/Alamogordo,+NM",
+    "schedule": [
+      {
+        "time": "8:30 AM \u2013 11:30 AM",
+        "label": "Carlsbad Caverns NP (The Big Room & Natural Entrance)",
+        "detail": "Check in for your 8:30 AM slot. Hike down the awe-inspiring natural cave mouth, stroll the 1.5-mile Big Room loop beneath giant stalactites, then take the elevator back up!"
+      },
+      {
+        "time": "12:15 PM \u2013 3:00 PM",
+        "label": "Guadalupe Mountains National Park & Trail Picnic",
+        "detail": "Drive 35 mins south across the Texas border to Pine Springs / McKittrick Canyon. Eat your packed picnic lunch surrounded by Texas's highest peaks and fall colors."
+      },
+      {
+        "time": "3:00 PM \u2013 6:00 PM",
+        "label": "Scenic US-82 Mountain Pass through Cloudcroft (8,600 ft)",
+        "detail": "Climb up through pine forests into Cloudcroft. Grab slices of fresh New Mexico Green Chile Apple Pie at Burro Street Bakery before gliding down into Alamogordo."
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Trail Picnic Lunch + Cloudcroft Mountain Bakery Stop",
+        "name": "Picnic Sandwiches + Burro Street Bakery (Cloudcroft, NM)",
+        "rating": "4.7\u2605 (Beloved Cloudcroft Mountain Bakery)",
+        "vegHighlight": "\ud83c\udf31 Veggie Sub / Hummus Wrap at Guadalupe Mountains ($11 for 1) + Famous New Mexico Green Chile Apple Pie & Espresso at Burro Street Bakery ($7 for 1)",
+        "otherHighlight": "Cinnamon Rolls, Fruit Turnovers & Turkey Deli Subs",
+        "costPerPerson": 18,
+        "url": "https://www.google.com/maps/search/?api=1&query=Burro+Street+Bakery+Cloudcroft+NM"
+      },
+      {
+        "mealType": "Dinner (Alamogordo, NM)",
+        "name": "Thai Cuisine Alamogordo (or Hi-D-Ho Drive-In Est. 1953)",
+        "rating": "4.6\u2605 & 4.7\u2605 (Local Legends)",
+        "vegHighlight": "\ud83c\udf31 Fresh Tofu & Vegetable Pad Thai / Green Curry ($13) at Thai Cuisine, OR Hi-D-Ho's famous Hatch Green Chile Grilled Cheese ($7.50) + Homemade Milkshake ($5)",
+        "otherHighlight": "Famous Green Chile Double Cheeseburgers & Onion Rings",
+        "costPerPerson": 14,
+        "url": "https://www.google.com/maps/search/?api=1&query=Hi-D-Ho+Drive-In+Alamogordo+NM"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d6-h1",
+        "name": "SureStay Plus by Best Western Alamogordo White Sands",
+        "price": 82,
+        "cleanliness": "8.8/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Heated Indoor Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking \u2022 12 Mins to White Sands",
+        "vibe": "3-Star Best Western \u2022 Exceptional Budget Value \u2022 Indoor Pool & Spa",
+        "why": "Nov 5 Thursday Rate: $82 base ($92.91 w/ tax). Spotless rooms 12 mins from White Sands with indoor pool, hot tub, and free hot eggs/waffles breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=SureStay+Plus+by+Best+Western+Alamogordo+White+Sands&checkin=2026-11-05&checkout=2026-11-06",
+        "selected": true
+      },
+      {
+        "id": "d6-h2",
+        "name": "Holiday Inn Express & Suites Alamogordo Hwy 54/70 by IHG",
+        "price": 105,
+        "cleanliness": "9.0/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Express Start Breakfast \u2022 \ud83c\udfca Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star IHG \u2022 Fresh & Modern \u2022 Reliable Brand",
+        "why": "Nov 5 Thursday Rate: $105 base ($118.97 w/ tax). Crisp modern IHG rooms right on US-54/70 with great cleanliness reviews.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+Suites+Alamogordo+NM&checkin=2026-11-05&checkout=2026-11-06",
+        "selected": false
+      },
+      {
+        "id": "d6-h3",
+        "name": "Hampton Inn Alamogordo (by Hilton)",
+        "price": 114,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Indoor Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star Hilton \u2022 Top Hilton CleanStay Standards",
+        "why": "Nov 5 Thursday Rate: $114 base ($129.16 w/ tax). Backed by Hilton CleanStay with free hot waffles & eggs.",
+        "url": "https://www.google.com/travel/hotels?q=Hampton+Inn+Alamogordo+NM&checkin=2026-11-05&checkout=2026-11-06",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "7",
+    "dayId": "day-7",
+    "date": "Friday, Nov 6, 2026",
+    "checkIn": "2026-11-06",
+    "checkOut": "2026-11-07",
+    "nights": 1,
+    "taxRate": 0.167,
+    "taxLabel": "12.05% + $4 AZ Tax",
+    "title": "White Sands National Park \u2192 Historic Old Mesilla Courtyard \u2192 Tucson, AZ",
+    "routeSummary": "Alamogordo \u2794 White Sands NP \u2794 Historic Old Mesilla \u2794 Tucson, AZ",
+    "miles": "355 mi",
+    "driveTime": "~5 hrs 15 mins driving",
+    "driveCategory": "moderate",
+    "driveBadge": "\ud83d\udfe1 White Sands Dunes & Desert Highway",
+    "sleepLocation": "Tucson, AZ (UNESCO City of Gastronomy!)",
+    "vibe": "\u2744\ufe0f Sledding White Gypsum Dunes \u2022 1840s Adobe Village \u2022 Award-Winning Tacos in Tucson",
+    "outfitTip": "\ud83d\udd76\ufe0f White Sands looks like pure snow and reflects sunlight intensely! Wear dark UV sunglasses, sunscreen, and barefoot/sandals for climbing the warm gypsum dunes (it doesn't get scorching like quartz sand).",
+    "timeZoneNote": "\u23f0 Mountain Time (Arizona does not observe DST, perfectly matching Mountain Standard Time!).",
+    "driveAlert": "Brief Border Patrol checkpoint on US-70/I-10 near Las Cruces. Return your White Sands saucer at the gift shop before leaving to get your $5 refund!",
+    "keyStops": [
+      "White Sands National Park: Pure white gypsum sand dunes, dune sledding & Dunes Drive",
+      "Historic Old Mesilla: 1840s stagecoach adobe plaza, shops & courtyard lunch",
+      "Tucson, AZ: World-renowned culinary capital (dinner at Tumerico, rated #1 on Yelp in the Southwest!)"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Alamogordo,+NM/White+Sands+National+Park+Visitor+Center,+NM/La+Posta+de+Mesilla,+Mesilla,+NM/Tumerico,+Tucson,+AZ",
+    "schedule": [
+      {
+        "time": "8:00 AM \u2013 11:00 AM",
+        "label": "White Sands National Park (Dune Sledding & Boardwalk)",
+        "detail": "Grab a plastic saucer and wax at the visitor center (net $12 after returning), hike up the sparkling white dunes, and sled down! Walk the scenic Interdune Boardwalk."
+      },
+      {
+        "time": "12:15 PM \u2013 1:30 PM",
+        "label": "Lunch in Historic Old Mesilla (La Posta de Mesilla)",
+        "detail": "Eat lunch in an authentic 1840s Butterfield Stagecoach adobe courtyard filled with exotic birds, tropical plants, warm chips, and homemade honey sopapillas."
+      },
+      {
+        "time": "1:30 PM \u2013 5:45 PM",
+        "label": "Drive I-10 West to Tucson, AZ + Dinner at Tumerico",
+        "detail": "Cruise across the desert into Tucson. Settle in and dine at Tumerico (voted #1 restaurant in the Southwest on Yelp!) for world-class scratch Mexican cuisine."
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Lunch (Historic Old Mesilla / Las Cruces, NM)",
+        "name": "La Posta de Mesilla (Est. 1939 in 1840s Stagecoach Station)",
+        "rating": "4.6\u2605 (7,500+ reviews)",
+        "vegHighlight": "\ud83c\udf31 Vegetarian Hatch Chile Relleno & Cheese Enchilada Plate ($15.50 - ask for vegetarian red/green chile) + Free Warm Chips, Salsa & Honey Sopapillas!",
+        "otherHighlight": "Sizzling Fajitas, Carnitas & Enchiladas Supremas",
+        "costPerPerson": 19,
+        "url": "https://www.google.com/maps/search/?api=1&query=La+Posta+de+Mesilla+NM"
+      },
+      {
+        "mealType": "Dinner (Tucson, AZ)",
+        "name": "Tumerico (or La Chaiteria by Chef Wendy Garcia)",
+        "rating": "4.9\u2605 (Ranked #1 Place to Eat in the Southwest on Yelp!)",
+        "vegHighlight": "\ud83c\udf31 Legendary Jackfruit Al Pastor Tacos ($14.50), Cuban Tacos, Vegan Tamales & Scratch Cashew Crema + Fresh Horchata",
+        "otherHighlight": "La Chaiteria also serves Grilled Chicken & Carne Asada alongside the full veggie menu",
+        "costPerPerson": 19,
+        "url": "https://www.google.com/maps/search/?api=1&query=Tumerico+6th+St+Tucson+AZ"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d7-h1",
+        "name": "La Quinta Inn & Suites by Wyndham Tucson - Reid Park",
+        "price": 86,
+        "cleanliness": "8.8/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Outdoor Heated Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking \u2022 Central Location",
+        "vibe": "3-Star Wyndham \u2022 Newly Renovated \u2022 Charming Courtyard Pool",
+        "why": "Nov 6 Friday Rate: $86 base ($100.36 w/ tax). Spotless, newly refreshed rooms in central Tucson near Tumerico with heated pool, hot tub, and free hot breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+by+Wyndham+Tucson+Reid+Park&checkin=2026-11-06&checkout=2026-11-07",
+        "selected": true
+      },
+      {
+        "id": "d7-h2",
+        "name": "Ramada by Wyndham Viscount Suite Hotel Tucson East",
+        "price": 92,
+        "cleanliness": "8.7/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Full Hot Breakfast Buffet \u2022 \ud83c\udfca Lush Tropical Atrium Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star Wyndham All-Suite \u2022 Huge 2-Room Suites \u2022 4-Story Atrium",
+        "why": "Nov 6 Friday Rate: $92 base ($107.09 w/ tax). Two-room suites with living area, bedroom, and full hot breakfast buffet in a tropical courtyard.",
+        "url": "https://www.google.com/travel/hotels?q=Ramada+by+Wyndham+Viscount+Suite+Hotel+Tucson+AZ&checkin=2026-11-06&checkout=2026-11-07",
+        "selected": false
+      },
+      {
+        "id": "d7-h3",
+        "name": "Holiday Inn Express & Suites Tucson Mall / I-10 by IHG",
+        "price": 104,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Express Breakfast \u2022 \ud83c\udfca Pool \u2022 15 Mins to Saguaro West",
+        "vibe": "3-Star IHG \u2022 Modern & Crisp \u2022 Convenient Northwest Tucson",
+        "why": "Nov 6 Friday Rate: $104 base ($120.53 w/ tax). 15 mins from Saguaro NP West entrance with top cleanliness scores.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+Suites+Tucson+Mall+AZ&checkin=2026-11-06&checkout=2026-11-07",
+        "selected": false
+      }
+    ]
+  }
+];
+    const optionATail = [
+  {
+    "dayNum": "8",
+    "dayId": "day-8",
+    "date": "Saturday, Nov 7, 2026",
+    "checkIn": "2026-11-07",
+    "checkOut": "2026-11-08",
+    "nights": 1,
+    "taxRate": 0.12,
+    "taxLabel": "12% CA TOT Tax",
+    "title": "Saguaro National Park, AZ \u2192 Direct West Drive \u2192 Twentynine Palms (Joshua Tree Area), CA",
+    "routeSummary": "Tucson \u2794 Saguaro NP West \u2794 I-10 West \u2794 Twentynine Palms, CA",
+    "miles": "345 mi",
+    "driveTime": "~5 hrs 00 mins driving (Gain +1 Hour Crossing into Pacific Time!)",
+    "driveCategory": "moderate",
+    "driveBadge": "\ud83d\udfe1 Saguaro Cacti + Direct West Desert Cruise",
+    "sleepLocation": "Twentynine Palms (Joshua Tree North Entrance), CA",
+    "vibe": "\ud83c\udf35 Giant Saguaros \u2022 \ud83d\uddff Ancient Petroglyphs \u2022 \ud83c\udf34 California Time Zone Gain \u2022 Cozy Desert Night",
+    "outfitTip": "\ud83d\udc5f Sneakers and sun hat for your morning walk among the giant saguaros in Tucson, plus a cozy sweater for stargazing in Twentynine Palms tonight!",
+    "timeZoneNote": "\u23f0 Gain +1 Hour crossing the Colorado River into California (Pacific Time Zone)!",
+    "driveAlert": "With Sedona removed, you save 290 miles of mountain driving! Cruise straight west on I-10 from Saguaro NP through Phoenix South Bypass (Loop 202) and Blythe right to Joshua Tree's North Gate.",
+    "keyStops": [
+      "Saguaro National Park West: Bajada Loop Drive, Valley View Overlook & Signal Hill petroglyphs",
+      "La Chaiteria / Seis Kitchen (Tucson): Early lunch before heading west on I-10",
+      "Colorado River Crossing (Blythe, CA): Gain +1 hour entering Pacific Time",
+      "Twentynine Palms, CA: Spotless 3-star hotel 5 mins from Joshua Tree North Gate + dinner at Crossroads Cafe"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Tucson,+AZ/Signal+Hill+Picnic+Area,+Tucson,+AZ/Twentynine+Palms,+CA",
+    "schedule": [
+      {
+        "time": "8:00 AM \u2013 11:00 AM",
+        "label": "Saguaro National Park West (Giant Saguaro Cacti)",
+        "detail": "Drive scenic Bajada Loop, take photos with towering 40-foot saguaros, and walk the easy trail to ancient Native American petroglyphs at Signal Hill ($0 with pass)."
+      },
+      {
+        "time": "11:15 AM \u2013 12:15 PM",
+        "label": "Early Lunch in Tucson (Seis Kitchen at Mercado San Agustin)",
+        "detail": "Eat crispy calabacitas (zucchini & corn) tacos and guacamole in a charming courtyard right near I-10 before heading west."
+      },
+      {
+        "time": "12:15 PM \u2013 4:15 PM (PT)",
+        "label": "Direct I-10 West Drive to Twentynine Palms (+1 Hour Gained!)",
+        "detail": "Skip the northern detour to Sedona and glide straight west into California! Roll your clock back 1 hour and check into your hotel 5 mins from Joshua Tree's entrance."
+      },
+      {
+        "time": "6:00 PM",
+        "label": "Dinner at Crossroads Cafe (Joshua Tree) or Grnd Sqrl (29 Palms)",
+        "detail": "Enjoy beloved local desert comfort food and stargazing."
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Lunch (Tucson Mercado - Before I-10 Drive)",
+        "name": "Seis Kitchen (Mercado San Agustin)",
+        "rating": "4.7\u2605 (3,200+ local reviews)",
+        "vegHighlight": "\ud83c\udf31 Calabacitas Tacos (Roasted Zucchini, Corn, Peppers & Cotija, $12.50 plate) or Crispy Potato Tacos + Fresh Aguas Frescas",
+        "otherHighlight": "Pocochero Carnitas, Birria & Pollo Asado Tacos",
+        "costPerPerson": 16,
+        "url": "https://www.google.com/maps/search/?api=1&query=Seis+Kitchen+Mercado+Tucson+AZ"
+      },
+      {
+        "mealType": "Dinner (Joshua Tree / Twentynine Palms, CA)",
+        "name": "Crossroads Cafe (Joshua Tree) or Grnd Sqrl (Twentynine Palms)",
+        "rating": "4.6\u2605 & 4.7\u2605 (Top Local Desert Gems)",
+        "vegHighlight": "\ud83c\udf31 Crossroads' famous Soyrizo & Potato Quesadilla ($14.50) & Mikey's Veggie Melt ($14); OR Grnd Sqrl's Crispy Spiced Cauliflower & Roasted Beet Burger ($15.50)",
+        "otherHighlight": "Pork Belly Sliders, Smash Burgers & Local Craft Taps",
+        "costPerPerson": 19,
+        "url": "https://www.google.com/maps/search/?api=1&query=Crossroads+Cafe+Joshua+Tree+CA"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d8a-h1",
+        "name": "SureStay Plus by Best Western Twentynine Palms Joshua Tree",
+        "price": 98,
+        "cleanliness": "8.8/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Large Outdoor Heated Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking \u2022 5 Mins to Park Gate",
+        "vibe": "3-Star Best Western \u2022 Spotless Rooms \u2022 Fantastic Pool for Desert Relaxation",
+        "why": "Nov 7 Saturday Rate: $98 base ($109.76 w/ tax). Large desert pool, hot tub, free parking & free hot breakfast 5 mins from Joshua Tree's North Gate.",
+        "url": "https://www.google.com/travel/hotels?q=SureStay+Plus+by+Best+Western+Twentynine+Palms+Joshua+Tree&checkin=2026-11-07&checkout=2026-11-08",
+        "selected": true
+      },
+      {
+        "id": "d8a-h2",
+        "name": "Holiday Inn Express & Suites Twentynine Palms - Joshua Tree by IHG",
+        "price": 118,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Express Start Breakfast \u2022 \ud83c\udfca Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star IHG \u2022 #1 Cleanliness in 29 Palms \u2022 Modern Design",
+        "why": "Nov 7 Saturday Rate: $118 base ($132.16 w/ tax). Newest, crispest IHG property at Joshua Tree with pristine bathrooms and comfy beds.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+Suites+Twentynine+Palms+Joshua+Tree&checkin=2026-11-07&checkout=2026-11-08",
+        "selected": false
+      },
+      {
+        "id": "d8a-h3",
+        "name": "Fairfield Inn & Suites by Marriott Twentynine Palms-Joshua Tree NP",
+        "price": 124,
+        "cleanliness": "9.0/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Heated Pool \u2022 \ud83c\udd7f\ufe0f Free Parking",
+        "vibe": "3-Star Marriott \u2022 Desert Mountain Views \u2022 Great Housekeeping",
+        "why": "Nov 7 Saturday Rate: $124 base ($138.88 w/ tax). Modern Marriott rooms with desert mountain views and full complimentary breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=Fairfield+Inn+Suites+Twentynine+Palms+Joshua+Tree&checkin=2026-11-07&checkout=2026-11-08",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "9\u201310",
+    "dayId": "day-9-10",
+    "date": "Sun, Nov 8 \u2013 Tue, Nov 10, 2026 (2 Nights)",
+    "checkIn": "2026-11-08",
+    "checkOut": "2026-11-10",
+    "nights": 2,
+    "taxRate": 0.127,
+    "taxLabel": "12.7% San Diego City/Hotel Tax",
+    "title": "Joshua Tree NP Scenic Drive \u2192 2 Oceanfront Nights in La Jolla, CA",
+    "routeSummary": "Twentynine Palms \u2794 Joshua Tree NP \u2794 Yucca Valley \u2794 La Jolla (2 Nights)",
+    "miles": "175 mi total (including Park Loop)",
+    "driveTime": "~3 hrs 15 mins driving Sunday \u2022 Zero highway driving Monday!",
+    "driveCategory": "easy",
+    "driveBadge": "\ud83d\udfe2 Short Desert Drive + 2-Night Coastal Paradise",
+    "sleepLocation": "La Jolla / Mission Bay Corridor (San Diego, CA - 2 Nights: Sun & Mon)",
+    "vibe": "\ud83c\udf35 Joshua Trees \u2022 \ud83e\uddad La Jolla Cove Sea Lions \u2022 \ud83c\udf0a Sunny Jim's Sea Cave \u2022 \ud83e\udd50 Wayfarer Bakery \u2022 \ud83c\udf2e Famous Taco Stand",
+    "outfitTip": "\ud83d\udc57 Sun dresses, beach sandals, sunglasses, and a light jacket for coastal evening breezes. Don't forget a swimsuit for the beach, hotel hot tub, and rooftop cafes!",
+    "timeZoneNote": "\u23f0 Pacific Time Zone.",
+    "driveAlert": "Enter Joshua Tree at the North Gate (29 Palms) and exit at the West Gate (Yucca Valley) for a seamless scenic loop with zero backtracking!",
+    "keyStops": [
+      "Joshua Tree National Park: Cholla Cactus Garden, Skull Rock, Keys View & Hidden Valley",
+      "Frontier Cafe (Yucca Valley): Artisanal sourdough sandwiches and matcha lattes",
+      "La Jolla Cove: Wild sea lions and harbor seals basking on the sandstone cliffs",
+      "Sunny Jim's Sea Cave: Historic 145-step wooden tunnel carved through the cliffs right into an ocean sea cave ($10/person)",
+      "Torrey Pines State Reserve: Sweeping coastal clifftop ocean trails & sunset"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Twentynine+Palms,+CA/Cholla+Cactus+Garden,+CA/Skull+Rock,+CA/Keys+View,+CA/Hidden+Valley,+CA/Frontier+Cafe,+Yucca+Valley,+CA/La+Jolla,+San+Diego,+CA",
+    "schedule": [
+      {
+        "time": "Sun 8:00 AM \u2013 12:30 PM",
+        "label": "Drive Scenic Joshua Tree National Park ($0 w/ Pass)",
+        "detail": "Enter at North Gate. Explore Cholla Cactus Garden, Arch Rock, Skull Rock, panoramic Keys View (look down onto Palm Springs & San Andreas Fault), and hike the 1-mile Hidden Valley loop!"
+      },
+      {
+        "time": "Sun 12:45 PM \u2013 4:30 PM",
+        "label": "Artisan Lunch at Frontier Cafe \u2192 Drive to the Pacific Ocean!",
+        "detail": "Pick up a sandwich on fresh sourdough at Frontier Cafe, then drive down to coastal La Jolla for hotel check-in and ocean sunset!"
+      },
+      {
+        "time": "Mon, Nov 9 (FULL DAY)",
+        "label": "Coastal Day: Sea Lions, Sea Caves & Rooftop Cafes",
+        "detail": "Pick up hot croissants at Wayfarer Bread (4.9\u2605), walk La Jolla Cove to see sea lions swimming in crystal turquoise water, descend into Sunny Jim's Sea Cave tunnel ($10), have rooftop lunch at Trilogy Sanctuary, hike Torrey Pines cliffs, and celebrate with wood-fired pizza at Isola Pizza Bar!"
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Sun Lunch (Exiting Joshua Tree - Yucca Valley, CA)",
+        "name": "Frontier Cafe",
+        "rating": "4.7\u2605 (1,400+ reviews \u2014 Beloved Desert Artisanal Cafe)",
+        "vegHighlight": "\ud83c\udf31 'The Green Dream' Sandwich (House Artichoke-Cashew Spread, Avocado, Sprouts & Pickled Onion on Sourdough, $13.50) + Matcha/Espresso",
+        "otherHighlight": "Chipotle Turkey Panini & Breakfast Burritos",
+        "costPerPerson": 17,
+        "url": "https://www.google.com/maps/search/?api=1&query=Frontier+Cafe+Yucca+Valley+CA"
+      },
+      {
+        "mealType": "Sun Dinner (La Jolla Village, CA)",
+        "name": "The Taco Stand (Pearl St, La Jolla)",
+        "rating": "4.7\u2605 (6,500+ reviews \u2014 Iconic Local Line-Out-The-Door Spot)",
+        "vegHighlight": "\ud83c\udf31 Grilled Nopales (Cactus) Taco ($4.29), Garlic Mushroom Taco ($4.49), Bean & Cheese Burrito + Fresh Chips & Guacamole ($8.50) & Handmade Churros!",
+        "otherHighlight": "Famous Baja Battered Fish Tacos ($4.89) & Al Pastor",
+        "costPerPerson": 16,
+        "url": "https://www.google.com/maps/search/?api=1&query=The+Taco+Stand+La+Jolla+CA"
+      },
+      {
+        "mealType": "Mon Morning Bakery + Mon Ocean-View Lunch (La Jolla)",
+        "name": "Wayfarer Bread & Pastry (4.9\u2605) + Trilogy Sanctuary Rooftop Cafe (4.7\u2605)",
+        "rating": "4.9\u2605 & 4.7\u2605 (Top Local La Jolla Favorites)",
+        "vegHighlight": "\ud83c\udf31 Morning Sea-Salt Chocolate Chip Cookie & Croissant at Wayfarer ($7); Ocean-View Rooftop Lunch at Trilogy Sanctuary\u2014Crispy Cauliflower 'Earth Tacos' ($16) or Cali Veggie Burrito ($16)",
+        "otherHighlight": "Don Carlos Taco Shop right across the street has great Fish/Shrimp Burritos too",
+        "costPerPerson": 24,
+        "url": "https://www.google.com/maps/search/?api=1&query=Trilogy+Sanctuary+La+Jolla+CA"
+      },
+      {
+        "mealType": "Mon Final Night Dinner (La Jolla Village)",
+        "name": "Isola Pizza Bar (Girard Ave, La Jolla)",
+        "rating": "4.7\u2605 (1,200+ reviews \u2014 Cozy Chef-Run Wood-Fired Trattoria)",
+        "vegHighlight": "\ud83c\udf31 Wood-Fired Burrata & Cherry Tomato Pizza ($19) + Handmade Truffle Mushroom Gnocchi ($21) (Even cheaper during daily 3\u20136 PM Happy Hour!)",
+        "otherHighlight": "Prosciutto & Fig Pizza, Seafood Pasta & Italian Wine",
+        "costPerPerson": 24,
+        "url": "https://www.google.com/maps/search/?api=1&query=Isola+Pizza+Bar+La+Jolla+CA"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d9a-h1",
+        "name": "La Quinta Inn & Suites by Wyndham San Diego Mission Bay (La Jolla South)",
+        "price": 112,
+        "cleanliness": "8.9/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking \u2022 8 Mins to La Jolla Cove",
+        "vibe": "3-Star Wyndham \u2022 Incredible 2-Night Value ($224 Base for 2 Nights!)",
+        "why": "Nov 8\u201310 Sun/Mon Rate: $112/nt base ($126.22/nt w/ tax = $252.45 total for 2 nights). 8 mins from La Jolla Cove right off I-5 with pool, hot tub & free hot breakfast!",
+        "url": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+by+Wyndham+San+Diego+Mission+Bay&checkin=2026-11-08&checkout=2026-11-10",
+        "selected": true
+      },
+      {
+        "id": "d9a-h2",
+        "name": "Best Western Plus Inn by the Sea (Heart of La Jolla Village)",
+        "price": 154,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Heated Pool \u2022 \ud83d\udeb6 Walk to La Jolla Cove & Taco Stand!",
+        "vibe": "3-Star Best Western Plus \u2022 Unbeatable Village Location \u2022 Walk to Beach",
+        "why": "Nov 8\u201310 Rate: $154/nt base ($173.56/nt w/ tax = $347.12 total). Steps from La Jolla Cove, Isola Pizza Bar & The Taco Stand!",
+        "url": "https://www.google.com/travel/hotels?q=Best+Western+Plus+Inn+by+the+Sea+La+Jolla+CA&checkin=2026-11-08&checkout=2026-11-10",
+        "selected": false
+      },
+      {
+        "id": "d9a-h3",
+        "name": "Holiday Inn Express & Suites La Jolla \u2013 Windansea Beach by IHG",
+        "price": 164,
+        "cleanliness": "9.2/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Express Start Breakfast \u2022 \ud83c\udfca Pool \u2022 \ud83d\udeb6 2 Blocks to Windansea Beach",
+        "vibe": "3-Star IHG \u2022 Walk to Windansea Beach & Wayfarer Bakery",
+        "why": "Nov 8\u201310 Rate: $164/nt base ($184.83/nt w/ tax = $369.66 total). Crisp IHG rooms blocks from famous Windansea Beach with free hot breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+La+Jolla+Windansea+Beach&checkin=2026-11-08&checkout=2026-11-10",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "11",
+    "dayId": "day-11",
+    "date": "Tuesday, Nov 10, 2026",
+    "checkIn": "",
+    "checkOut": "",
+    "nights": 0,
+    "taxRate": 0,
+    "taxLabel": "",
+    "title": "La Jolla, CA \u2192 Highway 1 Coastline Drive \u2192 Home Sweet Home in Turlock, CA!",
+    "routeSummary": "La Jolla \u2794 Santa Barbara (Funk Zone) \u2794 San Luis Obispo \u2794 Turlock, CA",
+    "miles": "495\u2013585 mi",
+    "driveTime": "~8.5 hrs (SoCal/Central Coast Hwy 1) OR ~11.5 hrs (Full Big Sur Hwy 1)",
+    "driveCategory": "long",
+    "driveBadge": "\ud83d\udfe0 Scenic Coastal Finale Highway Drive",
+    "sleepLocation": "Home Sweet Home in Turlock, CA! \ud83c\udf89",
+    "vibe": "\ud83c\udf0a Pacific Ocean Waves \u2022 Santa Barbara Funk Zone Tacos \u2022 Pismo Cinnamon Rolls \u2022 Grand Finale!",
+    "outfitTip": "\ud83e\udde5 Layered casual outfit with a warm jacket for breezy Pacific coastline overlooks and roadside photo stops along Highway 1.",
+    "timeZoneNote": "\u23f0 Pacific Time Zone.",
+    "driveAlert": "Depart La Jolla around 7:45 AM to breeze up the coast to Malibu and Santa Barbara right in time for lunch at Mony's!",
+    "keyStops": [
+      "Pacific Coast Highway (Highway 1): Malibu beaches, ocean cliffs & palm trees",
+      "Santa Barbara Funk Zone: Mony's Mexican Food (4.9\u2605 crispy potato tacos & salsa bar)",
+      "San Luis Obispo / Pismo Beach: High Street Deli or warm Old West Cinnamon Rolls",
+      "Home Sweet Home: Arrive safely back in Turlock, CA!"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/La+Jolla,+CA/Malibu,+CA/Mony's+Mexican+Food,+Santa+Barbara,+CA/High+Street+Deli,+San+Luis+Obispo,+CA/Turlock,+CA",
+    "schedule": [
+      {
+        "time": "7:45 AM",
+        "label": "Free Hotel Breakfast & Depart La Jolla",
+        "detail": "Pack up, grab morning coffee, and head north along the Southern California coastline past Malibu and Ventura."
+      },
+      {
+        "time": "11:30 AM \u2013 1:00 PM",
+        "label": "Lunch in Santa Barbara's Funk Zone (Mony's - 4.9\u2605)",
+        "detail": "Eat the #1 rated tacos in Santa Barbara 2 blocks from the ocean\u2014crispy potato tacos, zucchini/corn tacos, and their world-famous pistachio salsa."
+      },
+      {
+        "time": "2:30 PM \u2013 4:00 PM",
+        "label": "San Luis Obispo or Pismo Beach Pit Stop",
+        "detail": "Pick up a sandwich on famous Dutch Crunch bread at High Street Deli (SLO) or warm cinnamon rolls in Pismo Beach before cruising up Highway 99 to Turlock."
+      },
+      {
+        "time": "Evening",
+        "label": "Arrive Home in Turlock, CA!",
+        "detail": "Celebrate completing an unforgettable cross-country adventure!"
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Lunch (Santa Barbara Funk Zone - Hwy 1)",
+        "name": "Mony's Mexican Food",
+        "rating": "4.9\u2605 (2,200+ reviews \u2014 #1 Rated Local Taqueria in Santa Barbara)",
+        "vegHighlight": "\ud83c\udf31 Crispy Potato Tacos ($3.50), Calabacitas (Roasted Zucchini & Sweet Corn) Tacos ($3.75) & Veggie Burritos + Famous Pistachio, Mango & Avocado Salsa Bar!",
+        "otherHighlight": "Al Pastor, Carnitas & Pollo Mole Tacos",
+        "costPerPerson": 13,
+        "url": "https://www.google.com/maps/search/?api=1&query=Monys+Mexican+Food+Santa+Barbara+CA"
+      },
+      {
+        "mealType": "Afternoon / Early Dinner (San Luis Obispo / Pismo Beach)",
+        "name": "High Street Deli (SLO - Est. 1927) + Old West Cinnamon Rolls (Pismo)",
+        "rating": "4.8\u2605 (3,100+ reviews \u2014 Legendary Central Coast Deli)",
+        "vegHighlight": "\ud83c\udf31 'The Doobie Brothers' (Avocado, Cream Cheese, Cucumber, Sprouts, Cheddar & Chipotle Mayo on Dutch Crunch, $13.50) + Warm Pismo Cinnamon Roll ($5.50)",
+        "otherHighlight": "Central Coast Tri-Tip & Smoked Turkey Sandwiches",
+        "costPerPerson": 13,
+        "url": "https://www.google.com/maps/search/?api=1&query=High+Street+Deli+San+Luis+Obispo+CA"
+      }
+    ],
+    "hotels": []
+  }
+];
+    const optionBTail = [
+  {
+    "dayNum": "8\u20139",
+    "dayId": "day-8-9",
+    "date": "Sat, Nov 7 \u2013 Mon, Nov 9, 2026 (2 Nights)",
+    "checkIn": "2026-11-07",
+    "checkOut": "2026-11-09",
+    "nights": 2,
+    "taxRate": 0.127,
+    "taxLabel": "12.7% San Diego City/Hotel Tax",
+    "title": "Saguaro NP, AZ \u2192 Direct I-8 West \u2192 2 Oceanfront Nights in La Jolla, CA (Saves $159.28!)",
+    "routeSummary": "Tucson \u2794 Saguaro NP West \u2794 I-8 West \u2794 La Jolla, CA (2 Nights)",
+    "miles": "405 mi on Saturday \u2022 0 highway miles on Sunday!",
+    "driveTime": "~5 hrs 45 mins driving Saturday (+1 Hr Gained!) \u2022 Zero driving Sunday!",
+    "driveCategory": "moderate",
+    "driveBadge": "\ud83d\udfe1 Saguaro Morning + Direct to La Jolla Beach!",
+    "sleepLocation": "La Jolla / Mission Bay Corridor (San Diego, CA - 2 Nights: Sat & Sun)",
+    "vibe": "\ud83c\udf35 Saguaro Cacti \u2022 \ud83e\uddad La Jolla Cove Sea Lions \u2022 \ud83c\udf0a Sunny Jim's Sea Cave \u2022 \ud83e\udd50 Wayfarer Bakery \u2022 \ud83c\udf2e Famous Taco Stand",
+    "outfitTip": "\ud83d\udc57 Sneakers for Saturday morning's Saguaro walk, then sun dresses, beach sandals, sunglasses, and a swimsuit for Saturday evening & all day Sunday in La Jolla!",
+    "timeZoneNote": "\u23f0 Gain +1 Hour crossing into California (Pacific Time) on Saturday afternoon\u2014you arrive at the beach an hour earlier!",
+    "driveAlert": "Skipping both Sedona and Joshua Tree takes you straight from Saguaro NP onto I-10 W & scenic I-8 W past Yuma and the dramatic boulder mountains of Jacumba directly to La Jolla\u2014saving 1 hotel night, 1 day of food, 90 miles of CA gas, and $159.28 total!",
+    "keyStops": [
+      "Saguaro National Park West (Sat Morning): Bajada Loop, giant saguaros & Signal Hill petroglyphs",
+      "Seis Kitchen Tucson: Courtyard taco lunch before cruising west on I-8",
+      "La Jolla Cove: Wild sea lions and harbor seals basking on the sandstone cliffs",
+      "Sunny Jim's Sea Cave: Historic 145-step wooden tunnel carved through the cliffs right into an ocean sea cave ($10/person)",
+      "Torrey Pines State Reserve: Sweeping coastal clifftop ocean trails & sunset"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/Tucson,+AZ/Signal+Hill+Picnic+Area,+Tucson,+AZ/La+Jolla,+San+Diego,+CA",
+    "schedule": [
+      {
+        "time": "Sat 8:00 AM \u2013 10:45 AM",
+        "label": "Saguaro National Park West (Giant Saguaro Cacti)",
+        "detail": "Drive scenic Bajada Loop, take photos with towering 40-foot saguaros, and walk the short trail to ancient Native American petroglyphs at Signal Hill."
+      },
+      {
+        "time": "Sat 11:00 AM \u2013 12:00 PM",
+        "label": "Early Lunch at Seis Kitchen (Tucson) \u2192 Depart West on I-10 & I-8",
+        "detail": "Grab calabacitas tacos in Tucson, then cruise west on I-8 across the Colorado River (+1 hour gained entering Pacific Time!)."
+      },
+      {
+        "time": "Sat 4:45 PM (PT)",
+        "label": "Arrive in La Jolla for Sunset + Dinner at The Taco Stand",
+        "detail": "Check into your hotel, watch the Pacific sunset, and eat famous cactus & mushroom tacos + fresh churros at The Taco Stand!"
+      },
+      {
+        "time": "Sun, Nov 8 (FULL DAY)",
+        "label": "Full Zero-Driving Beach Day in La Jolla!",
+        "detail": "Grab hot croissants at Wayfarer Bread (4.9\u2605), see the sea lions at La Jolla Cove, walk down Sunny Jim's Sea Cave tunnel ($10), eat ocean-view rooftop lunch at Trilogy Sanctuary, hike Torrey Pines cliffs, and dine on wood-fired pizza at Isola Pizza Bar!"
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Sat Lunch (Tucson Mercado - Before I-8 Drive)",
+        "name": "Seis Kitchen (Mercado San Agustin)",
+        "rating": "4.7\u2605 (3,200+ local reviews)",
+        "vegHighlight": "\ud83c\udf31 Calabacitas Tacos (Roasted Zucchini, Corn, Peppers & Cotija, $12.50 plate) or Crispy Potato Tacos + Fresh Aguas Frescas",
+        "otherHighlight": "Pocochero Carnitas, Birria & Pollo Asado Tacos",
+        "costPerPerson": 16,
+        "url": "https://www.google.com/maps/search/?api=1&query=Seis+Kitchen+Mercado+Tucson+AZ"
+      },
+      {
+        "mealType": "Sat Dinner (La Jolla Village, CA)",
+        "name": "The Taco Stand (Pearl St, La Jolla)",
+        "rating": "4.7\u2605 (6,500+ reviews \u2014 Iconic Local Line-Out-The-Door Spot)",
+        "vegHighlight": "\ud83c\udf31 Grilled Nopales (Cactus) Taco ($4.29), Garlic Mushroom Taco ($4.49), Bean & Cheese Burrito + Fresh Chips & Guacamole ($8.50) & Handmade Churros!",
+        "otherHighlight": "Famous Baja Battered Fish Tacos ($4.89) & Al Pastor",
+        "costPerPerson": 16,
+        "url": "https://www.google.com/maps/search/?api=1&query=The+Taco+Stand+La+Jolla+CA"
+      },
+      {
+        "mealType": "Sun Morning Bakery + Sun Ocean-View Lunch (La Jolla)",
+        "name": "Wayfarer Bread & Pastry (4.9\u2605) + Trilogy Sanctuary Rooftop Cafe (4.7\u2605)",
+        "rating": "4.9\u2605 & 4.7\u2605 (Top Local La Jolla Favorites)",
+        "vegHighlight": "\ud83c\udf31 Morning Sea-Salt Chocolate Chip Cookie & Croissant at Wayfarer ($7); Ocean-View Rooftop Lunch at Trilogy Sanctuary\u2014Crispy Cauliflower 'Earth Tacos' ($16) or Cali Veggie Burrito ($16)",
+        "otherHighlight": "Don Carlos Taco Shop right across the street has great Fish/Shrimp Burritos too",
+        "costPerPerson": 24,
+        "url": "https://www.google.com/maps/search/?api=1&query=Trilogy+Sanctuary+La+Jolla+CA"
+      },
+      {
+        "mealType": "Sun Final Night Dinner (La Jolla Village)",
+        "name": "Isola Pizza Bar (Girard Ave, La Jolla)",
+        "rating": "4.7\u2605 (1,200+ reviews \u2014 Cozy Chef-Run Wood-Fired Trattoria)",
+        "vegHighlight": "\ud83c\udf31 Wood-Fired Burrata & Cherry Tomato Pizza ($19) + Handmade Truffle Mushroom Gnocchi ($21) (Even cheaper during daily 3\u20136 PM Happy Hour!)",
+        "otherHighlight": "Prosciutto & Fig Pizza, Seafood Pasta & Italian Wine",
+        "costPerPerson": 24,
+        "url": "https://www.google.com/maps/search/?api=1&query=Isola+Pizza+Bar+La+Jolla+CA"
+      }
+    ],
+    "hotels": [
+      {
+        "id": "d8b-h1",
+        "name": "La Quinta Inn & Suites by Wyndham San Diego Mission Bay (La Jolla South)",
+        "price": 115,
+        "cleanliness": "8.9/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Pool & Hot Tub \u2022 \ud83c\udd7f\ufe0f Free Parking \u2022 8 Mins to La Jolla Cove",
+        "vibe": "3-Star Wyndham \u2022 Incredible 2-Night Value ($230 Base for 2 Nights!)",
+        "why": "Nov 7\u20139 Sat/Sun Rate: $118 Sat + $112 Sun = $230 base ($259.21 total w/ tax for 2 nights). 8 mins from La Jolla Cove right off I-5 with pool, hot tub & free hot breakfast!",
+        "url": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+by+Wyndham+San+Diego+Mission+Bay&checkin=2026-11-07&checkout=2026-11-09",
+        "selected": true
+      },
+      {
+        "id": "d8b-h2",
+        "name": "Best Western Plus Inn by the Sea (Heart of La Jolla Village)",
+        "price": 159,
+        "cleanliness": "9.1/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Hot Breakfast \u2022 \ud83c\udfca Heated Pool \u2022 \ud83d\udeb6 Walk to La Jolla Cove & Taco Stand!",
+        "vibe": "3-Star Best Western Plus \u2022 Unbeatable Village Location \u2022 Walk to Beach",
+        "why": "Nov 7\u20139 Rate: $159/nt base ($179.19/nt w/ tax = $358.39 total). Steps from La Jolla Cove, Isola Pizza Bar & The Taco Stand!",
+        "url": "https://www.google.com/travel/hotels?q=Best+Western+Plus+Inn+by+the+Sea+La+Jolla+CA&checkin=2026-11-07&checkout=2026-11-09",
+        "selected": false
+      },
+      {
+        "id": "d8b-h3",
+        "name": "Holiday Inn Express & Suites La Jolla \u2013 Windansea Beach by IHG",
+        "price": 169,
+        "cleanliness": "9.2/10 Cleanliness Score",
+        "amenities": "\ud83c\udf73 Free Express Start Breakfast \u2022 \ud83c\udfca Pool \u2022 \ud83d\udeb6 2 Blocks to Windansea Beach",
+        "vibe": "3-Star IHG \u2022 Walk to Windansea Beach & Wayfarer Bakery",
+        "why": "Nov 7\u20139 Rate: $169/nt base ($190.46/nt w/ tax = $380.93 total). Crisp IHG rooms blocks from famous Windansea Beach with free hot breakfast.",
+        "url": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+La+Jolla+Windansea+Beach&checkin=2026-11-07&checkout=2026-11-09",
+        "selected": false
+      }
+    ]
+  },
+  {
+    "dayNum": "10",
+    "dayId": "day-10",
+    "date": "Monday, Nov 9, 2026",
+    "checkIn": "",
+    "checkOut": "",
+    "nights": 0,
+    "taxRate": 0,
+    "taxLabel": "",
+    "title": "La Jolla, CA \u2192 Highway 1 Coastline Drive \u2192 Home Sweet Home in Turlock, CA!",
+    "routeSummary": "La Jolla \u2794 Santa Barbara (Funk Zone) \u2794 San Luis Obispo \u2794 Turlock, CA",
+    "miles": "495\u2013585 mi",
+    "driveTime": "~8.5 hrs (SoCal/Central Coast Hwy 1) OR ~11.5 hrs (Full Big Sur Hwy 1)",
+    "driveCategory": "long",
+    "driveBadge": "\ud83d\udfe0 Scenic Coastal Finale Highway Drive",
+    "sleepLocation": "Home Sweet Home in Turlock, CA! \ud83c\udf89",
+    "vibe": "\ud83c\udf0a Pacific Ocean Waves \u2022 Santa Barbara Funk Zone Tacos \u2022 Pismo Cinnamon Rolls \u2022 Grand Finale!",
+    "outfitTip": "\ud83e\udde5 Layered casual outfit with a warm jacket for breezy Pacific coastline overlooks and roadside photo stops along Highway 1.",
+    "timeZoneNote": "\u23f0 Pacific Time Zone.",
+    "driveAlert": "Depart La Jolla around 7:45 AM to breeze up the coast to Malibu and Santa Barbara right in time for lunch at Mony's!",
+    "keyStops": [
+      "Pacific Coast Highway (Highway 1): Malibu beaches, ocean cliffs & palm trees",
+      "Santa Barbara Funk Zone: Mony's Mexican Food (4.9\u2605 crispy potato tacos & salsa bar)",
+      "San Luis Obispo / Pismo Beach: High Street Deli or warm Old West Cinnamon Rolls",
+      "Home Sweet Home: Arrive safely back in Turlock, CA on Monday evening!"
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/La+Jolla,+CA/Malibu,+CA/Mony's+Mexican+Food,+Santa+Barbara,+CA/High+Street+Deli,+San+Luis+Obispo,+CA/Turlock,+CA",
+    "schedule": [
+      {
+        "time": "7:45 AM",
+        "label": "Free Hotel Breakfast & Depart La Jolla",
+        "detail": "Pack up, grab morning coffee, and head north along the Southern California coastline past Malibu and Ventura."
+      },
+      {
+        "time": "11:30 AM \u2013 1:00 PM",
+        "label": "Lunch in Santa Barbara's Funk Zone (Mony's - 4.9\u2605)",
+        "detail": "Eat the #1 rated tacos in Santa Barbara 2 blocks from the ocean\u2014crispy potato tacos, zucchini/corn tacos, and their world-famous pistachio salsa."
+      },
+      {
+        "time": "2:30 PM \u2013 4:00 PM",
+        "label": "San Luis Obispo or Pismo Beach Pit Stop",
+        "detail": "Pick up a sandwich on famous Dutch Crunch bread at High Street Deli (SLO) or warm cinnamon rolls in Pismo Beach before cruising up Highway 99 to Turlock."
+      },
+      {
+        "time": "Evening",
+        "label": "Arrive Home in Turlock, CA!",
+        "detail": "Celebrate completing an unforgettable cross-country adventure under budget!"
+      }
+    ],
+    "meals": [
+      {
+        "mealType": "Lunch (Santa Barbara Funk Zone - Hwy 1)",
+        "name": "Mony's Mexican Food",
+        "rating": "4.9\u2605 (2,200+ reviews \u2014 #1 Rated Local Taqueria in Santa Barbara)",
+        "vegHighlight": "\ud83c\udf31 Crispy Potato Tacos ($3.50), Calabacitas (Roasted Zucchini & Sweet Corn) Tacos ($3.75) & Veggie Burritos + Famous Pistachio, Mango & Avocado Salsa Bar!",
+        "otherHighlight": "Al Pastor, Carnitas & Pollo Mole Tacos",
+        "costPerPerson": 13,
+        "url": "https://www.google.com/maps/search/?api=1&query=Monys+Mexican+Food+Santa+Barbara+CA"
+      },
+      {
+        "mealType": "Afternoon / Early Dinner (San Luis Obispo / Pismo Beach)",
+        "name": "High Street Deli (SLO - Est. 1927) + Old West Cinnamon Rolls (Pismo)",
+        "rating": "4.8\u2605 (3,100+ reviews \u2014 Legendary Central Coast Deli)",
+        "vegHighlight": "\ud83c\udf31 'The Doobie Brothers' (Avocado, Cream Cheese, Cucumber, Sprouts, Cheddar & Chipotle Mayo on Dutch Crunch, $13.50) + Warm Pismo Cinnamon Roll ($5.50)",
+        "otherHighlight": "Central Coast Tri-Tip & Smoked Turkey Sandwiches",
+        "costPerPerson": 13,
+        "url": "https://www.google.com/maps/search/?api=1&query=High+Street+Deli+San+Luis+Obispo+CA"
+      }
+    ],
+    "hotels": []
+  }
+];
+    const fuelSegmentsA = [
+  {
+    "state": "Tennessee & Arkansas (Day 1)",
+    "miles": 360,
+    "pricePerGal": 3.84
+  },
+  {
+    "state": "Texas (Days 1\u20135: Dallas, San Antonio, West TX)",
+    "miles": 1090,
+    "pricePerGal": 3.72
+  },
+  {
+    "state": "New Mexico (Days 5\u20137: Carlsbad, Caverns, White Sands)",
+    "miles": 550,
+    "pricePerGal": 4.27
+  },
+  {
+    "state": "Arizona (Days 7\u20138: Tucson, Saguaro NP, I-10 West)",
+    "miles": 260,
+    "pricePerGal": 4.52
+  },
+  {
+    "state": "California (Days 8\u201311: Joshua Tree, La Jolla, Hwy 1, Turlock)",
+    "miles": 550,
+    "pricePerGal": 6.02
+  }
+];
+    const fuelSegmentsB = [
+  {
+    "state": "Tennessee & Arkansas (Day 1)",
+    "miles": 360,
+    "pricePerGal": 3.84
+  },
+  {
+    "state": "Texas (Days 1\u20135: Dallas, San Antonio, West TX)",
+    "miles": 1090,
+    "pricePerGal": 3.72
+  },
+  {
+    "state": "New Mexico (Days 5\u20137: Carlsbad, Caverns, White Sands)",
+    "miles": 550,
+    "pricePerGal": 4.27
+  },
+  {
+    "state": "Arizona (Days 7\u20138: Tucson, Saguaro NP, I-8 West via Yuma)",
+    "miles": 260,
+    "pricePerGal": 4.52
+  },
+  {
+    "state": "California (Days 8\u201310: Direct I-8 to La Jolla, Hwy 1, Turlock)",
+    "miles": 460,
+    "pricePerGal": 6.02
+  }
+];
+    const walkthroughData = [
+  {
+    "stopNum": 1,
+    "dayLabel": "Day 1 \u2022 Sat, Oct 31 (Morning)",
+    "optionTag": "both",
+    "title": "Memphis, TN & Mississippi River Crossing",
+    "subtitle": "Nashville \u2794 Memphis (210 mi \u2022 3 hrs via I-40 W)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Hernando_de_Soto_Bridge_Memphis_TN.jpg?width=900",
+    "fallbackGradient": "from-blue-600 to-indigo-800",
+    "fallbackEmoji": "\ud83c\udfb8",
+    "vibe": "Cross the mighty Mississippi River on the iconic M-Bridge after a hearty lunch of famous BBQ Pulled Tofu Nachos at RP Tracks in Midtown Memphis.",
+    "driveCare": [
+      "\ud83d\ude9a I-40 Truck Traffic: I-40 between Nashville and Memphis has heavy 18-wheeler traffic; stay in the left passing lane around Jackson, TN.",
+      "\u26fd Fuel Tip: Top off gas on the west side of Memphis before crossing the bridge into Arkansas, or in West Memphis, AR where fuel taxes are low.",
+      "\ud83c\udd7f\ufe0f Parking at RP Tracks: Free surface lot right next to the restaurant on Walker Ave near the University of Memphis."
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=RP+Tracks+Memphis+TN"
+  },
+  {
+    "stopNum": 2,
+    "dayLabel": "Day 1 \u2022 Sat, Oct 31 (Afternoon)",
+    "optionTag": "both",
+    "title": "Hot Springs National Park, AR (Historic Bathhouse Row)",
+    "subtitle": "Memphis \u2794 Hot Springs NP (190 mi \u2022 2 hrs 50 mins via I-40 W & US-70 W)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Bathhouse_Row_Hot_Springs_National_Park.jpg?width=900",
+    "fallbackGradient": "from-emerald-600 to-teal-800",
+    "fallbackEmoji": "\u2668\ufe0f",
+    "vibe": "A gorgeous, walkable 1920s spa town tucked into the Ouachita Mountains. Touch bubbling 143\u00b0F thermal spring water fountains, stroll the brick Grand Promenade, and grab a root beer float made with thermal spring water at Superior Bathhouse Brewery.",
+    "driveCare": [
+      "\ud83c\udd7f\ufe0f Free Parking Secret: Park for FREE at the Exchange Street Parking Plaza (128 Exchange St), one block behind Bathhouse Row.",
+      "\ud83d\udca7 Bring an Empty Water Bottle: There are free thermal spring jug fountains where locals fill up bottles with pure mineral water!",
+      "\ud83c\udf06 Evening Drive to Waxahachie: You'll leave Hot Springs around 3:30 PM and drive 4.5 hours into Texas. Sleeping in Waxahachie (25 mins south of Dallas) avoids Sunday morning Dallas traffic."
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bathhouse+Row+Hot+Springs+National+Park"
+  },
+  {
+    "stopNum": 3,
+    "dayLabel": "Days 2\u20134 \u2022 Sun, Nov 1 \u2013 Wed, Nov 4 (3 Nights)",
+    "optionTag": "both",
+    "title": "Czech Stop (West, TX) & San Antonio Riverwalk / Convention Center",
+    "subtitle": "Waxahachie \u2794 West, TX \u2794 Downtown San Antonio (255 mi \u2022 3 hrs 50 mins via I-35 S)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/San_Antonio_River_Walk.jpg?width=900",
+    "fallbackGradient": "from-amber-600 to-rose-700",
+    "fallbackEmoji": "\ud83c\udf2e",
+    "vibe": "First, stop 45 mins south of Waxahachie in West, TX for warm fruit & cream cheese kolaches at Czech Stop. Then arrive at your spotless 3-star hotel steps from the Henry B. Gonz\u00e1lez Convention Center and cypress-lined San Antonio Riverwalk!",
+    "driveCare": [
+      "\u23f0 +1 Extra Hour of Sleep: Daylight Saving Time ends at 2:00 AM on Sunday, Nov 1\u2014you gain a free hour of sleep before your easy drive!",
+      "\ud83d\udea7 I-35 Austin Corridor: I-35 through Waco, Temple, and Austin moves fast on Sunday mornings (9 AM\u201312 PM), getting you to the Convention Center well before 1:00 PM.",
+      "\ud83d\udeb6 Walkability: Once parked in San Antonio, you don't need to drive at all until Wednesday morning\u2014the Convention Center, Alamo, Riverwalk, Schilo's, and Pharm Table are all walkable."
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Henry+B+Gonzalez+Convention+Center+San+Antonio+TX"
+  },
+  {
+    "stopNum": 4,
+    "dayLabel": "Day 5 \u2022 Wed, Nov 4",
+    "optionTag": "both",
+    "title": "Texas Hill Country & Chihuahuan Desert Drive to Carlsbad, NM",
+    "subtitle": "San Antonio \u2794 Kerrville \u2794 Fort Stockton \u2794 Carlsbad, NM (465 mi \u2022 6 hrs 45 mins)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Pecos_River_Carlsbad_NM.jpg?width=900",
+    "fallbackGradient": "from-orange-500 to-amber-800",
+    "fallbackEmoji": "\ud83c\udf35",
+    "vibe": "Cruise through rolling limestone hills and oak ranches in the Texas Hill Country (80 MPH speed limit on I-10!), stop for Tex-Mex enchiladas in Kerrville, then head north into New Mexico.",
+    "driveCare": [
+      "\u26fd CRITICAL GAS & RESTROOM ALERT: Fill your tank in Fort Stockton, TX before turning north onto US-285! The 150-mile stretch of US-285 from Fort Stockton through Pecos to Carlsbad is remote oilfield highway with very few nice restrooms.",
+      "\ud83d\udcf6 Cell Dead Zones: Download offline Google Maps for West Texas & Southeastern New Mexico before leaving San Antonio.",
+      "\u23f0 Time Zone Bonus: You cross from Central Time into Mountain Time entering New Mexico, gaining +1 hour on the clock!"
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Carlsbad+NM"
+  },
+  {
+    "stopNum": 5,
+    "dayLabel": "Day 6 \u2022 Thu, Nov 5 (Morning)",
+    "optionTag": "both",
+    "title": "Carlsbad Caverns National Park, NM (The Big Room)",
+    "subtitle": "Carlsbad \u2794 Carlsbad Caverns Visitor Center (28 mi \u2022 35 mins)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Carlsbad_Caverns_National_Park_Big_Room.jpg?width=900",
+    "fallbackGradient": "from-purple-800 to-slate-900",
+    "fallbackEmoji": "\ud83e\udd87",
+    "vibe": "One of the largest underground chambers on Earth! Walk down the dramatic 1.25-mile Natural Entrance into the earth, stroll the flat 1.5-mile paved Big Room trail past giant stalagmites, and ride the 750-foot elevator back to the surface.",
+    "driveCare": [
+      "\ud83c\udf9f\ufe0f $1 Timed Reservation: You must book your $1.00 timed entry ticket on Recreation.gov (aim for 8:30 AM). Elevator down/up is included.",
+      "\ud83e\udde5 56\u00b0F Cave Temperature: Wear a fleece or light jacket and rubber-soled sneakers (the paved trail is slightly damp in spots).",
+      "\ud83d\udc5f Bio-Cleaning Mat: Do not wear the same shoes you wore in any other cave without stepping on the ranger disinfectant mat at the exit."
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Carlsbad+Caverns+National+Park+Visitor+Center"
+  },
+  {
+    "stopNum": 6,
+    "dayLabel": "Day 6 \u2022 Thu, Nov 5 (Afternoon)",
+    "optionTag": "both",
+    "title": "Guadalupe Mountains NP, TX & Cloudcroft Mountain Pass, NM",
+    "subtitle": "Carlsbad Caverns \u2794 Guadalupe Mts \u2794 Cloudcroft (8,600 ft) \u2794 Alamogordo (185 mi \u2022 3 hrs 10 mins)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/El_Capitan_Guadalupe_Mountains.jpg?width=900",
+    "fallbackGradient": "from-amber-600 to-emerald-800",
+    "fallbackEmoji": "\u26f0\ufe0f",
+    "vibe": "See the towering limestone sheer cliffs of El Capitan and golden early-November maple leaves in McKittrick Canyon! Later, climb up to 8,600 ft into the pine village of Cloudcroft for famous New Mexico Green Chile Apple Pie at Burro Street Bakery.",
+    "driveCare": [
+      "\ud83e\udd6a No Food Inside Guadalupe Mountains: Pick up your picnic sandwich in Carlsbad on Wednesday evening or Thursday morning\u2014there are zero restaurants or gas stations at Guadalupe Mountains NP!",
+      "\ud83d\udee3\ufe0f Scenic Mountain Descent: US-82 from Cloudcroft down to Alamogordo drops 4,300 feet in 16 miles with sweeping views of White Sands in the basin below\u2014use low gear / regenerative braking to save your brakes!"
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Guadalupe+Mountains+National+Park"
+  },
+  {
+    "stopNum": 7,
+    "dayLabel": "Day 7 \u2022 Fri, Nov 6",
+    "optionTag": "both",
+    "title": "White Sands National Park & Historic Old Mesilla, NM",
+    "subtitle": "Alamogordo \u2794 White Sands NP \u2794 Old Mesilla \u2794 Tucson, AZ (355 mi \u2022 5 hrs 15 mins)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/White_Sands_New_Mexico_USA.jpg?width=900",
+    "fallbackGradient": "from-sky-400 to-blue-700",
+    "fallbackEmoji": "\u2744\ufe0f",
+    "vibe": "275 square miles of wave-like, pure white gypsum sand dunes! Grab a waxed saucer at the gift shop ($12 net after $5 return refund) and sled down the dunes. Afterward, eat lunch in an 1840s stagecoach courtyard at La Posta de Mesilla.",
+    "driveCare": [
+      "\ud83d\ude80 Missile Range Check: White Sands occasionally pauses Hwy 70/park entry for 1\u20132 hours early in the morning for testing\u2014check nps.gov/whsa 48 hours prior.",
+      "\ud83d\udec2 Border Patrol Checkpoint on US-70 / I-10: There is a routine U.S. Border Patrol checkpoint between White Sands and Las Cruces (takes 30 seconds, just keep IDs handy).",
+      "\ud83d\udd76\ufe0f Polarized Sunglasses: The white gypsum sand reflects UV light like fresh snow\u2014sunglasses and sunscreen are essential!"
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=White+Sands+National+Park"
+  },
+  {
+    "stopNum": 8,
+    "dayLabel": "Day 7 Night & Day 8 Morning \u2022 Fri, Nov 6 \u2013 Sat, Nov 7",
+    "optionTag": "both",
+    "title": "Tucson (UNESCO City of Gastronomy) & Saguaro National Park, AZ",
+    "subtitle": "Central Tucson \u2794 Saguaro NP West (Bajada Loop & Signal Hill)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Saguaro_National_Park_West.jpg?width=900",
+    "fallbackGradient": "from-emerald-600 to-amber-700",
+    "fallbackEmoji": "\ud83c\udf35",
+    "vibe": "Dine Friday night at Tumerico (voted #1 place to eat in the Southwest on Yelp!). Saturday morning, drive through forests of 40-foot-tall giant saguaro cacti and walk 10 minutes up Signal Hill to see 800-year-old Hohokam petroglyphs!",
+    "driveCare": [
+      "\ud83d\udee3\ufe0f Graded Dirt Loop (Bajada Loop): The 6-mile Bajada Loop in Saguaro NP West is a smooth, flat graded scenic road easily driven by any regular 2WD sedan/hybrid at 15 MPH.",
+      "\ud83d\udca7 Desert Hydration: Keep cold water in your trunk cooler, and reconnect to I-10 West right from North Sandario Road when finished!"
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Signal+Hill+Picnic+Area+Saguaro+National+Park"
+  },
+  {
+    "stopNum": 9,
+    "dayLabel": "Day 8 Night & Day 9 Morning \u2022 Sat, Nov 7 \u2013 Sun, Nov 8 [OPTION A ONLY]",
+    "optionTag": "optionA",
+    "title": "Joshua Tree National Park, CA (Optional Stop: +$159.28)",
+    "subtitle": "Saguaro NP \u2794 Twentynine Palms (345 mi \u2022 5 hrs) \u2794 Park Loop to La Jolla (175 mi \u2022 3.2 hrs)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Joshua_Tree_National_Park_Skull_Rock.jpg?width=900",
+    "fallbackGradient": "from-amber-700 to-stone-800",
+    "fallbackEmoji": "\ud83e\udea8",
+    "vibe": "Otherworldly Mojave boulder formations and twisted Joshua trees! Enter at the quiet North Gate in Twentynine Palms, see Cholla Cactus Garden, Skull Rock, Keys View (panoramic view of the San Andreas Fault), and walk the 1-mile Hidden Valley loop before heading to La Jolla.",
+    "driveCare": [
+      "\ud83d\udcb0 Price Difference Note: Including Joshua Tree adds 1 hotel night in Twentynine Palms ($109.76 w/ tax), 1 day of food ($41), 90 extra miles of CA gas ($10.28), and $5 in park pass difference = +$159.28 total.",
+      "\ud83d\udcf5 Zero Cell Service Inside Park: Download offline maps for Joshua Tree NP and bring water\u2014there are no gas stations or stores inside the park!",
+      "\u23f0 Gain +1 Hour: Crossing the Colorado River at Blythe on Saturday rolls the clock back 1 hour into Pacific Time!"
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=Skull+Rock+Joshua+Tree+National+Park"
+  },
+  {
+    "stopNum": 10,
+    "dayLabel": "La Jolla 2-Night Coastal Stay (Sun\u2013Tue in Opt A \u2022 Sat\u2013Mon in Opt B)",
+    "optionTag": "both",
+    "title": "La Jolla Cove, Sunny Jim's Sea Cave & Torrey Pines Cliffs, CA",
+    "subtitle": "2 Full Nights by the Pacific Ocean (Zero Highway Driving on Your Full Beach Day!)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Jolla_Cove_San_Diego.jpg?width=900",
+    "fallbackGradient": "from-cyan-500 to-blue-800",
+    "fallbackEmoji": "\ud83e\uddad",
+    "vibe": "Turquoise ocean coves, wild sea lions and harbor seals basking on sandstone ledges, a historic wooden tunnel carved inside a cliffside sea cave, flaky morning croissants at Wayfarer Bread, ocean-view rooftop tacos at Trilogy Sanctuary, and sunset cliffs at Torrey Pines!",
+    "driveCare": [
+      "\ud83d\ude97 Option B Direct Route (I-8 West): If you skip Joshua Tree, you drive I-10 W to I-8 W straight from Tucson to La Jolla (405 mi, ~5 hrs 45 mins) past the dramatic Imperial Sand Dunes and boulder mountains of Jacumba!",
+      "\ud83e\uddad Sea Lion Etiquette: You can watch and photograph the sea lions up close along the Coast Blvd seawall, just give them 10\u201315 feet of space.",
+      "\ud83c\udd7f\ufe0f Free La Jolla Parking Tip: Park along Coast Blvd South (3-hour free street spaces before 9:30 AM) or on Girard/Prospect streets."
+    ],
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=La+Jolla+Cove+San+Diego+CA"
+  },
+  {
+    "stopNum": 11,
+    "dayLabel": "Final Day \u2022 Highway 1 Coastline Drive Home to Turlock, CA",
+    "optionTag": "both",
+    "title": "Pacific Coast Highway (Santa Barbara, Pismo Beach & Central Coast) \u2192 Turlock",
+    "subtitle": "La Jolla \u2794 Malibu \u2794 Santa Barbara \u2794 San Luis Obispo \u2794 Turlock (495 mi \u2022 ~8.5 hrs)",
+    "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Barbara_Beach_and_Stearns_Wharf.jpg?width=900",
+    "fallbackGradient": "from-blue-500 to-indigo-900",
+    "fallbackEmoji": "\ud83c\udf0a",
+    "vibe": "Cruise up the sparkling Southern California coast past Malibu and Ventura, stop in Santa Barbara's artsy Funk Zone for Mony's 4.9\u2605 crispy potato tacos, grab a warm cinnamon roll in Pismo Beach or Dutch Crunch sandwich in San Luis Obispo, and arrive home in Turlock!",
+    "driveCare": [
+      "\ud83d\udd56 Leave La Jolla by 7:30\u20138:00 AM: Leaving cleanly avoids morning LA basin slowdowns or lets you breeze up I-5 / US-101 to Malibu and Ventura.",
+      "\ud83d\udee3\ufe0f Two Route Choices North of SLO: Take CA-46 East at Paso Robles to I-5/CA-99 North for the fastest arrival into Turlock (~8.5 hrs total), OR continue up reopened Big Sur Highway 1 past Bixby Bridge (~11.5 hrs total)."
+    ],
+    "mapUrl": "https://www.google.com/maps/dir/La+Jolla,+CA/Malibu,+CA/Mony's+Mexican+Food,+Santa+Barbara,+CA/High+Street+Deli,+San+Luis+Obispo,+CA/Turlock,+CA"
+  }
+];
+    const checklistItems = [
+  {
+    "id": "chk-1",
+    "urgent": true,
+    "title": "Book San Antonio 3-Star Chain Hotel (Sun Nov 1 \u2013 Wed Nov 4, 2026)",
+    "detail": "Holiday Inn Express San Antonio N-Riverwalk ($106/nt base, $371.26 w/ tax for 3 nights) or La Quinta Riverwalk (1 block from Convention Center, $118/nt base).",
+    "link": "https://www.google.com/travel/hotels?q=Holiday+Inn+Express+San+Antonio+N+Riverwalk+Area&checkin=2026-11-01&checkout=2026-11-04",
+    "linkText": "Book Nov 1\u20134 \u2197"
+  },
+  {
+    "id": "chk-2",
+    "urgent": true,
+    "title": "Reserve Carlsbad Caverns Timed Entry for Thu, Nov 5 (8:30 AM Slot)",
+    "detail": "Carlsbad Caverns requires a $1.00 timed entry reservation ticket on Recreation.gov. Book the 8:30 AM entry slot now.",
+    "link": "https://www.recreation.gov/timed-entry/10086910",
+    "linkText": "Reserve ($1 Ticket) \u2197"
+  },
+  {
+    "id": "chk-3",
+    "urgent": true,
+    "title": "Decide Between Option A (With Joshua Tree) vs. Option B (Skip Joshua Tree, Save $159.28)",
+    "detail": "Option A books 1 night in Twentynine Palms (Sat Nov 7) + 2 nights in La Jolla (Nov 8\u201310). Option B drives straight from Saguaro NP to La Jolla for 2 nights (Sat Nov 7 \u2013 Mon Nov 9).",
+    "link": "#summary",
+    "linkText": "Compare Options"
+  },
+  {
+    "id": "chk-4",
+    "urgent": false,
+    "title": "Book La Jolla / Mission Bay 2-Night Chain Stay",
+    "detail": "La Quinta by Wyndham San Diego Mission Bay ($112\u2013$115/nt base) or Best Western Plus Inn by the Sea La Jolla ($154\u2013$159/nt base).",
+    "link": "https://www.google.com/travel/hotels?q=La+Quinta+Inn+Suites+by+Wyndham+San+Diego+Mission+Bay&checkin=2026-11-08&checkout=2026-11-10",
+    "linkText": "Book La Jolla \u2197"
+  },
+  {
+    "id": "chk-5",
+    "urgent": false,
+    "title": "Book 1-Night 3-Star Chain Stops (Waxahachie, Carlsbad, Alamogordo, Tucson + 29 Palms if Option A)",
+    "detail": "All stops range from $82 to $98/night base rate across La Quinta, Sleep Inn, and SureStay Plus by Best Western\u2014all with free hot breakfast.",
+    "link": "#hotels",
+    "linkText": "Open Hotel Selector"
+  },
+  {
+    "id": "chk-6",
+    "urgent": false,
+    "title": "Sign Up for Free Wyndham Rewards, IHG One Rewards & Best Western Rewards",
+    "detail": "Using free member rates knocks 5\u201310% off and earns ~12,000+ points across this trip.",
+    "link": "https://www.wyndhamhotels.com/wyndham-rewards",
+    "linkText": "Wyndham Rewards \u2197"
+  },
+  {
+    "id": "chk-7",
+    "urgent": false,
+    "title": "National Parks Pass Strategy at Carlsbad Caverns (Nov 5)",
+    "detail": "If choosing Option A (with Joshua Tree), buy the $80 Annual Pass at Carlsbad Caverns (saves $25 vs $105 solo fees). If choosing Option B (skipping Joshua Tree), individual park fees total $75 ($5 cheaper than the pass, or buy the $80 pass for $5 more to use all year in California!).",
+    "link": "https://www.nps.gov/planyourvisit/passes.htm",
+    "linkText": "Pass Info \u2197"
+  },
+  {
+    "id": "chk-8",
+    "urgent": false,
+    "title": "Check White Sands Missile Range Closure Schedule (For Morning of Fri, Nov 6)",
+    "detail": "Check the NPS alert page 48 hrs before Fri Nov 6 to verify no morning missile test delays.",
+    "link": "https://www.nps.gov/whsa/planyourvisit/park-closures.htm",
+    "linkText": "White Sands Alerts \u2197"
+  },
+  {
+    "id": "chk-9",
+    "urgent": false,
+    "title": "Pack Cooler in Trunk for Drinks, Fruit & Guadalupe Mountains Trail Picnic",
+    "detail": "All 3-star chain hotels have in-room mini-fridges to refreeze ice packs every night!",
+    "link": "",
+    "linkText": ""
+  },
+  {
+    "id": "chk-10",
+    "urgent": false,
+    "title": "Pre-Trip Car Inspection (Oil, Tire Pressure, Wipers, Coolant for 50 MPG Efficiency)",
+    "detail": "Ensure tires are properly inflated for peak hybrid/gas mileage across the 2,720\u20132,810 total miles.",
+    "link": "",
+    "linkText": ""
+  },
+  {
+    "id": "chk-11",
+    "urgent": false,
+    "title": "Download Offline Google Maps for West Texas (US-285), Guadalupe Mts, & Joshua Tree",
+    "detail": "Cell service drops out between Fort Stockton & Carlsbad and inside Joshua Tree National Park.",
+    "link": "",
+    "linkText": ""
+  },
+  {
+    "id": "chk-12",
+    "urgent": false,
+    "title": "Pack Walking Sneakers, Light Cave Jacket (56\u00b0F), Sunglasses & Swimsuit",
+    "detail": "Bring comfy sneakers for caverns/desert walks, a jacket for Carlsbad Caverns, dark sunglasses for White Sands, and beachwear for La Jolla!",
+    "link": "",
+    "linkText": ""
+  }
+];
+
+    function getActiveTripDays() {
+      return currentOption === 'A' ? [...sharedDays, ...optionATail] : [...sharedDays, ...optionBTail];
+    }
+
+    function getFuelTotals(mpg, opt) {
+      const segs = (opt === 'A') ? fuelSegmentsA : fuelSegmentsB;
+      let totalGallons = 0;
+      let totalCost = 0;
+      let totalMiles = 0;
+      const rows = segs.map(seg => {
+        const gals = seg.miles / mpg;
+        const cost = gals * seg.pricePerGal;
+        totalGallons += gals;
+        totalCost += cost;
+        totalMiles += seg.miles;
+        return { ...seg, gallons: gals, cost: cost };
+      });
+      return { totalGallons, totalCost, totalMiles, rows };
+    }
+
+    function getOptionHotelTotals(opt) {
+      const days = (opt === 'A') ? [...sharedDays, ...optionATail] : [...sharedDays, ...optionBTail];
+      let base = 0;
+      let tax = 0;
+      let nights = 0;
+      days.forEach(d => {
+        if (d.hotels && d.hotels.length > 0) {
+          const sel = d.hotels.find(h => h.selected) || d.hotels[0];
+          const b = sel.price * d.nights;
+          const t = b * (1 + d.taxRate);
+          base += b;
+          tax += t;
+          nights += d.nights;
+        }
+      });
+      return { base, tax, nights };
+    }
+
+    // THEME TOGGLE (LIGHT / DARK)
+    function initTheme() {
+      const saved = localStorage.getItem('roadtrip_theme');
+      if (saved === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon').textContent = '☀️';
+        document.getElementById('theme-label').textContent = 'Light Mode';
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('roadtrip_theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      document.getElementById('theme-label').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    // ROUTE OPTION SWITCHER ('A' vs 'B')
+    function setRouteOption(opt) {
+      currentOption = opt;
+      const btnA = document.getElementById('route-btn-A');
+      const btnB = document.getElementById('route-btn-B');
+      if (opt === 'A') {
+        btnA.classList.add('route-btn-active');
+        btnB.classList.remove('route-btn-active');
+        document.getElementById('hero-dates-badge').textContent = '📅 Sat, Oct 31 – Tue, Nov 10, 2026 (11 Days)';
+        const map2 = document.getElementById('master-map-part2');
+        map2.href = 'https://www.google.com/maps/dir/Alamogordo,+NM/White+Sands+National+Park,+NM/Tucson,+AZ/Saguaro+National+Park,+AZ/Twentynine+Palms,+CA/Joshua+Tree+National+Park,+CA/La+Jolla,+CA/Turlock,+CA';
+        map2.textContent = '🗺️ Google Maps Part 2 (Opt A): NM → Tucson → Joshua Tree → La Jolla → Turlock ↗';
+      } else {
+        btnB.classList.add('route-btn-active');
+        btnA.classList.remove('route-btn-active');
+        document.getElementById('hero-dates-badge').textContent = '📅 Sat, Oct 31 – Mon, Nov 9, 2026 (10 Days)';
+        const map2 = document.getElementById('master-map-part2');
+        map2.href = 'https://www.google.com/maps/dir/Alamogordo,+NM/White+Sands+National+Park,+NM/Tucson,+AZ/Saguaro+National+Park,+AZ/La+Jolla,+CA/Turlock,+CA';
+        map2.textContent = '🗺️ Google Maps Part 2 (Opt B): NM → Tucson → Direct I-8 to La Jolla → Turlock ↗';
+      }
+
+      renderTimeline();
+      renderWalkthrough();
+      renderItinerary();
+      renderHotelMatrix();
+      updateBudgetTotals();
+    }
+
+    // RENDER TAB 1: SIMPLIFIED TIMELINE
+    function renderTimeline() {
+      const container = document.getElementById("timeline-stepper-container");
+      const tbody = document.getElementById("timeline-table-tbody");
+      const activeDays = getActiveTripDays();
+
+      document.getElementById("timeline-main-title").textContent = currentOption === 'A'
+        ? "Trip At A Glance (Option A: With Joshua Tree • 11 Days / 10 Nights)"
+        : "Trip At A Glance (Option B: Skip Joshua Tree Direct to La Jolla • 10 Days / 9 Nights)";
+
+      let stepperHtml = "";
+      let tableHtml = "";
+
+      activeDays.forEach((d) => {
+        const selectedHotel = d.hotels.find(h => h.selected);
+        const badgeColor = d.driveCategory === 'long' 
+          ? 'bg-rose-50 text-rose-700 border-rose-200' 
+          : (d.driveCategory === 'moderate' 
+            ? 'bg-amber-50 text-amber-700 border-amber-200' 
+            : 'bg-emerald-50 text-emerald-700 border-emerald-200');
+
+        stepperHtml += `
+          <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs hover:border-slate-300 transition relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              
+              <div class="space-y-1.5 flex-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-3 py-1 rounded-xl bg-blue-600 text-white text-xs font-black">
+                    Day ${d.dayNum}
+                  </span>
+                  <span class="text-xs font-bold text-slate-500">${d.date}</span>
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg border ${badgeColor}">
+                    🚗 ${d.miles} • ${d.driveTime}
+                  </span>
+                </div>
+
+                <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
+                  ${d.title}
+                </h3>
+
+                <div class="text-xs font-bold text-indigo-600 pt-0.5">
+                  ✨ Vibe: <span class="text-slate-700 font-medium">${d.vibe}</span>
+                </div>
+
+                <div class="pt-2">
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Key Fun Stops & Highlights:</div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs text-slate-700">
+                    ${d.keyStops.map(s => `
+                      <div class="flex items-start gap-1.5">
+                        <span class="text-blue-500 shrink-0">📍</span>
+                        <span>${s}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <div class="bg-rose-50/70 border border-rose-100 rounded-xl p-2.5 mt-2.5 text-xs text-rose-950 flex items-start gap-2">
+                  <span class="text-sm shrink-0">👗</span>
+                  <div>
+                    <span class="font-bold">What to Wear & Road Tip:</span> ${d.outfitTip}
+                  </div>
+                </div>
+              </div>
+
+              <div class="lg:w-72 shrink-0 bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between gap-3">
+                ${selectedHotel ? `
+                  <div>
+                    <div class="text-[11px] font-bold uppercase text-slate-400">Where We Sleep (${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'}):</div>
+                    <div class="text-xs font-bold text-slate-900 mt-0.5">${selectedHotel.name}</div>
+                    <div class="text-[11px] text-emerald-600 font-bold mt-0.5">⭐ ${selectedHotel.cleanliness}</div>
+                    <div class="text-[11px] text-slate-600 mt-1">🍳 Free Hot Breakfast & Pool</div>
+                    <div class="text-xs font-extrabold text-blue-600 mt-1.5">
+                      $${selectedHotel.price.toFixed(1)}/nt Base ($${(selectedHotel.price * d.nights * (1 + d.taxRate)).toFixed(2)} total w/ tax)
+                    </div>
+                  </div>
+                ` : `
+                  <div>
+                    <div class="text-[11px] font-bold uppercase text-slate-400">Tonight's Destination:</div>
+                    <div class="text-sm font-black text-emerald-600 mt-0.5">${d.sleepLocation}</div>
+                    <div class="text-xs text-slate-600 mt-1">Sleeping in your own cozy bed tonight! 🎉</div>
+                  </div>
+                `}
+
+                <div class="flex flex-col gap-2 pt-1 border-t border-slate-200/80">
+                  <button onclick="jumpToDay('${d.dayId}')"
+                          class="w-full text-center px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition cursor-pointer">
+                    📖 View Full Day Details & Food ➔
+                  </button>
+                  <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer"
+                     class="w-full text-center px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold transition">
+                    🗺️ Open Google Maps Route ↗
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        `;
+
+        tableHtml += `
+          <tr class="hover:bg-slate-50 transition cursor-pointer" onclick="jumpToDay('${d.dayId}')">
+            <td class="py-2.5 px-3 font-black text-slate-900 whitespace-nowrap">
+              Day ${d.dayNum}<div class="text-[11px] font-normal text-slate-500">${d.date.split(',')[0]}</div>
+            </td>
+            <td class="py-2.5 px-3 font-semibold text-slate-800">${d.routeSummary}</td>
+            <td class="py-2.5 px-3 whitespace-nowrap font-medium text-slate-700">
+              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-bold ${badgeColor}">
+                ${d.miles} (${d.driveTime.split('(')[0].trim()})
+              </span>
+            </td>
+            <td class="py-2.5 px-3 text-slate-600 max-w-xs truncate">${d.keyStops.map(s => s.split(':')[0]).join(', ')}</td>
+            <td class="py-2.5 px-3 font-bold text-slate-900 whitespace-nowrap">${d.sleepLocation.split('(')[0].trim()}</td>
+          </tr>
+        `;
+      });
+
+      container.innerHTML = stepperHtml;
+      tbody.innerHTML = tableHtml;
+    }
+
+    // RENDER TAB 2: VISUAL WALKTHROUGH & DRIVE CARE GUIDE
+    function renderWalkthrough() {
+      const container = document.getElementById("walkthrough-container");
+      container.innerHTML = walkthroughData.map(item => {
+        const isSkippedInB = (item.optionTag === 'optionA' && currentOption === 'B');
+        return `
+          <div class="bg-white border ${isSkippedInB ? 'border-amber-400/60 opacity-80' : 'border-slate-200'} rounded-3xl overflow-hidden shadow-xs flex flex-col justify-between">
+            <div>
+              <!-- Image Container with Graceful Fallback -->
+              <div class="relative h-56 w-full bg-gradient-to-br ${item.fallbackGradient} overflow-hidden flex items-center justify-center">
+                <img src="${item.imageUrl}" 
+                     alt="${item.title}" 
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div style="display:none;" class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center">
+                  <span class="text-6xl mb-2">${item.fallbackEmoji}</span>
+                  <span class="text-sm font-bold tracking-wide uppercase opacity-90">${item.title}</span>
+                </div>
+                <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                  <span class="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-black">
+                    Stop #${item.stopNum} • ${item.dayLabel}
+                  </span>
+                  ${item.optionTag === 'optionA' ? `
+                    <span class="px-3 py-1 rounded-full bg-amber-500 text-slate-950 text-xs font-black shadow-sm">
+                      ${currentOption === 'B' ? '⚠️ Skipped in Option B (Click Option A to Include)' : '🌵 Option A Stop (+$159.28)'}
+                    </span>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="p-5 space-y-3">
+                <div>
+                  <div class="text-xs font-bold text-blue-600">${item.subtitle}</div>
+                  <h3 class="text-lg font-black text-slate-900 mt-0.5">${item.title}</h3>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  ${item.vibe}
+                </p>
+
+                <!-- What to Care About Along the Drive -->
+                <div class="bg-amber-50 border border-amber-200/80 rounded-2xl p-3.5 space-y-1.5">
+                  <div class="text-xs font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                    <span>⚠️ What to Care About Along This Drive:</span>
+                  </div>
+                  <ul class="space-y-1.5 text-xs text-slate-700">
+                    ${item.driveCare.map(tip => `<li class="leading-relaxed">${tip}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="px-5 py-3.5 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <span class="text-xs font-bold text-slate-500">Stop #${item.stopNum} of 11</span>
+              <a href="${item.mapUrl}" target="_blank" rel="noopener noreferrer"
+                 class="text-xs font-bold text-blue-600 hover:underline">
+                📍 View Location on Google Maps ↗
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // RENDER TAB 3: DETAILED DAY GUIDE
+    function renderItinerary() {
+      const container = document.getElementById("days-container");
+      const pillsContainer = document.getElementById("day-pills-bar");
+      const activeDays = getActiveTripDays();
+
+      let pillsHtml = "";
+      activeDays.forEach(d => {
+        pillsHtml += `
+          <button onclick="scrollToDay('${d.dayId}')" 
+                  class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+            Day ${d.dayNum}
+          </button>
+        `;
+      });
+      pillsContainer.innerHTML = pillsHtml;
+
+      container.innerHTML = activeDays.map((d) => {
+        const selectedHotel = d.hotels.find(h => h.selected);
+        const dayMealTotal = d.meals.reduce((acc, m) => acc + m.costPerPerson, 0);
+        const selBaseTotal = selectedHotel ? selectedHotel.price * d.nights : 0;
+        const selTaxTotal = selectedHotel ? selBaseTotal * (1 + d.taxRate) : 0;
+
+        return `
+          <details open id="${d.dayId}" class="day-card bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
+            <summary class="cursor-pointer p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/80 transition select-none">
+              <div class="space-y-1.5 flex-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-3 py-1 rounded-xl bg-blue-600 text-white text-xs font-black">
+                    Day ${d.dayNum}
+                  </span>
+                  <span class="text-xs font-bold text-slate-500">${d.date}</span>
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700">
+                    🚗 ${d.miles} (${d.driveTime})
+                  </span>
+                </div>
+                <h3 class="text-base sm:text-xl font-black text-slate-900">${d.title}</h3>
+                <div class="text-xs text-indigo-600 font-bold">${d.vibe}</div>
+              </div>
+              <div class="flex items-center gap-2 self-start md:self-center shrink-0">
+                ${selectedHotel ? `
+                  <div class="text-right hidden sm:block mr-2">
+                    <div class="text-xs font-semibold text-slate-500">${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'}</div>
+                    <div class="text-xs font-extrabold text-emerald-600">$${selectedHotel.price.toFixed(1)}/nt Base ($${selTaxTotal.toFixed(2)} w/ tax)</div>
+                  </div>
+                ` : ''}
+                <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                   class="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 shadow-xs transition">
+                  📍 Google Maps Route ↗
+                </a>
+              </div>
+            </summary>
+
+            <div class="p-5 md:p-6 pt-0 border-t border-slate-100 space-y-5">
+              
+              <!-- Daily Outfit & Drive Care Tip Box -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                <div class="bg-rose-50 border border-rose-200/80 rounded-2xl p-4 flex items-start gap-3">
+                  <span class="text-2xl shrink-0">👗</span>
+                  <div class="space-y-0.5">
+                    <div class="text-xs font-black uppercase tracking-wider text-rose-800">What to Wear & Pack Today:</div>
+                    <div class="text-xs text-rose-950 font-medium leading-relaxed">${d.outfitTip}</div>
+                    ${d.timeZoneNote ? `<div class="text-xs font-bold text-indigo-700 pt-1">${d.timeZoneNote}</div>` : ''}
+                  </div>
+                </div>
+                <div class="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 flex items-start gap-3">
+                  <span class="text-2xl shrink-0">🛣️</span>
+                  <div class="space-y-0.5">
+                    <div class="text-xs font-black uppercase tracking-wider text-amber-900">What to Care About on Today's Drive:</div>
+                    <div class="text-xs text-slate-700 font-medium leading-relaxed">${d.driveAlert || 'Smooth interstate driving all day—keep snacks and water handy!'}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Schedule -->
+              <div class="space-y-2.5">
+                <div class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                  <span>⏱️ Step-by-Step Daily Schedule & Stops</span>
+                </div>
+                <div class="grid gap-2">
+                  ${d.schedule.map(s => `
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 bg-slate-50 border border-slate-200/80 rounded-xl p-3.5">
+                      <span class="text-xs font-extrabold text-blue-600 shrink-0 sm:w-36">${s.time}</span>
+                      <div class="space-y-0.5">
+                        <div class="text-xs sm:text-sm font-bold text-slate-900">${s.label}</div>
+                        <div class="text-xs text-slate-600 leading-relaxed">${s.detail}</div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Local Recommended Restaurants -->
+              <div class="space-y-3 pt-3 border-t border-slate-100">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <span class="text-xs font-black uppercase tracking-wider text-emerald-700 flex items-center gap-1.5">
+                    <span>🌱 Local-Favorite Restaurants (Great Vegetarian Choices!)</span>
+                  </span>
+                  <span class="text-xs font-bold text-slate-500">Day Dining Total (1 Person): $${dayMealTotal}.00 (Breakfast is Free at Hotel!)</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  ${d.meals.map(m => `
+                    <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between hover:border-slate-300 transition">
+                      <div>
+                        <div class="flex items-start justify-between gap-2">
+                          <div>
+                            <span class="text-[11px] font-extrabold uppercase text-amber-600 tracking-wide">${m.mealType}</span>
+                            <div class="text-sm font-black text-slate-900 mt-0.5">${m.name}</div>
+                          </div>
+                          <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black shrink-0">
+                            $${m.costPerPerson} for 1
+                          </span>
+                        </div>
+                        <div class="text-xs font-bold text-amber-600 mt-1">⭐ ${m.rating}</div>
+                        
+                        <div class="bg-emerald-50/70 border border-emerald-200/60 rounded-xl p-2.5 mt-2.5 text-xs text-emerald-950">
+                          <strong class="text-emerald-800">Must-Order Veggie Dish:</strong> ${m.vegHighlight}
+                        </div>
+
+                        <div class="text-xs text-slate-600 mt-2">
+                          <strong class="text-slate-700">Also Great For:</strong> ${m.otherHighlight}
+                        </div>
+                      </div>
+                      <div class="mt-3 pt-2.5 border-t border-slate-200/80 flex justify-end">
+                        <a href="${m.url}" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 underline">
+                          🗺️ View Menu & Location in Google Maps ↗
+                        </a>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Hotels for this Stop -->
+              ${d.hotels.length > 0 ? `
+                <div class="space-y-3 pt-3 border-t border-slate-100">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-500">
+                      🏨 Where We're Sleeping: 3-Star Reliable Chain Hotels in ${d.sleepLocation}
+                    </span>
+                    <span class="text-xs text-slate-500 font-semibold">${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'} • Includes ${d.taxLabel}</span>
+                  </div>
+                  
+                  ${(() => {
+                    const sel = selectedHotel || d.hotels[0];
+                    const bSub = sel.price * d.nights;
+                    const tSub = bSub * (1 + d.taxRate);
+                    return `
+                      <div class="bg-blue-50/50 border-2 border-blue-500 rounded-2xl p-4 md:p-5 relative">
+                        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                          <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                              <span class="px-2.5 py-0.5 rounded-lg bg-blue-600 text-white text-xs font-black">✓ Active Choice</span>
+                              <span class="text-xs font-bold text-emerald-600">⭐ ${sel.cleanliness}</span>
+                            </div>
+                            <h4 class="text-base font-black text-slate-900">${sel.name}</h4>
+                            <p class="text-xs text-slate-600">${sel.amenities}</p>
+                            <p class="text-xs text-slate-700 font-medium pt-1">${sel.why}</p>
+                          </div>
+                          <div class="sm:text-right shrink-0">
+                            <div class="text-lg font-black text-slate-900">$${sel.price.toFixed(1)}/nt Base</div>
+                            <div class="text-xs font-bold text-emerald-600">Total: $${tSub.toFixed(2)} w/ tax</div>
+                            <div class="text-[11px] text-slate-500 mt-0.5">($${bSub.toFixed(0)} pre-tax for ${d.nights} ${d.nights > 1 ? 'nights' : 'night'})</div>
+                            <a href="${sel.url}" target="_blank" rel="noopener noreferrer"
+                               class="inline-block mt-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-xs hover:bg-blue-700 transition">
+                              Book Dates (${d.checkIn}) ↗
+                            </a>
+                          </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-blue-200/60">
+                          <details class="text-xs">
+                            <summary class="cursor-pointer font-bold text-blue-700 hover:text-blue-800 select-none">
+                              👉 Want to compare backup hotel options for this stop? (Click to view ${d.hotels.length - 1} other choices)
+                            </summary>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                              ${d.hotels.filter(h => h.id !== sel.id).map(h => {
+                                const altB = h.price * d.nights;
+                                const altT = altB * (1 + d.taxRate);
+                                return `
+                                  <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                      <div class="flex justify-between items-start gap-1">
+                                        <div class="font-bold text-slate-900">${h.name}</div>
+                                        <div class="font-bold text-slate-700 shrink-0">$${h.price.toFixed(1)}/nt</div>
+                                      </div>
+                                      <div class="text-[11px] text-amber-600 font-medium mt-0.5">${h.vibe}</div>
+                                      <p class="text-[11px] text-slate-600 mt-1">${h.why}</p>
+                                    </div>
+                                    <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between">
+                                      <button onclick="selectHotel('${d.dayNum}', '${h.id}')"
+                                              class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer">
+                                        Select this hotel
+                                      </button>
+                                      <a href="${h.url}" target="_blank" rel="noopener noreferrer"
+                                         class="text-[11px] font-bold text-slate-500 hover:underline">
+                                        Book ↗
+                                      </a>
+                                    </div>
+                                  </div>
+                                `;
+                              }).join('')}
+                            </div>
+                          </details>
+                        </div>
+
+                      </div>
+                    `;
+                  })()}
+
+                </div>
+              ` : ''}
+
+            </div>
+          </details>
+        `;
+      }).join('');
+    }
+
+    // RENDER TAB 5: HOTEL MATRIX BUILDER
+    function renderHotelMatrix() {
+      const container = document.getElementById("hotel-matrix-container");
+      const activeDays = getActiveTripDays();
+      const hotelDays = activeDays.filter(d => d.hotels.length > 0);
+      container.innerHTML = hotelDays.map(d => {
+        const selected = d.hotels.find(h => h.selected);
+        const selBase = selected.price * d.nights;
+        const selTax = selBase * (1 + d.taxRate);
+        return `
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-3.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+              <div>
+                <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-blue-600 text-white mr-2">Day ${d.dayNum}</span>
+                <span class="text-sm sm:text-base font-black text-slate-900">${d.sleepLocation}</span>
+                <span class="text-xs text-slate-500 font-medium ml-1">(${d.checkIn} → ${d.checkOut} • ${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'})</span>
+              </div>
+              <div class="text-xs font-black text-emerald-600">
+                Selected: $${selBase.toFixed(0)} Base • $${selTax.toFixed(2)} w/ ${d.taxLabel}
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              ${d.hotels.map(h => {
+                const b = h.price * d.nights;
+                const t = b * (1 + d.taxRate);
+                return `
+                  <div onclick="selectHotel('${d.dayNum}', '${h.id}')"
+                       class="cursor-pointer bg-white border border-slate-200 rounded-2xl p-4 transition flex flex-col justify-between ${h.selected ? 'hotel-selected' : 'hover:border-slate-300'}">
+                    <div>
+                      <div class="flex justify-between items-start gap-2">
+                        <span class="text-xs font-black text-slate-900">${h.name}</span>
+                        <span class="text-xs font-black text-emerald-600 shrink-0">$${h.price.toFixed(1)}/nt</span>
+                      </div>
+                      <div class="text-[11px] text-amber-600 font-bold mt-1">⭐ ${h.cleanliness}</div>
+                      <div class="text-[11px] text-slate-500 font-medium mt-0.5">${h.amenities}</div>
+                      <p class="text-xs text-slate-600 mt-2">${h.why}</p>
+                    </div>
+                    <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                      <span class="text-xs font-black ${h.selected ? 'text-blue-600' : 'text-slate-500'}">
+                        ${h.selected ? '✓ Active Choice' : '$' + t.toFixed(2) + ' w/ tax'}
+                      </span>
+                      <a href="${h.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                         class="px-2.5 py-1 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition">
+                        Book ${d.checkIn} ↗
+                      </a>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // RENDER TAB 4: SUMMARY TABLES
+    function renderSummaryTables() {
+      const masterTbody = document.getElementById("master-cost-tbody");
+      const foodTbody = document.getElementById("food-table-tbody");
+      const activeDays = getActiveTripDays();
+
+      document.getElementById("active-budget-table-title").textContent = currentOption === 'A'
+        ? "📊 Itemized Master Budget Table (Active Route: Option A — With Joshua Tree, 11 Days)"
+        : "📊 Itemized Master Budget Table (Active Route: Option B — Skip Joshua Tree, 10 Days)";
+
+      let hotelRowsHtml = "";
+      let totalHotelBase = 0;
+      let totalHotelTax = 0;
+
+      activeDays.filter(d => d.hotels.length > 0).forEach(d => {
+        const sel = d.hotels.find(h => h.selected) || d.hotels[0];
+        const base = sel.price * d.nights;
+        const withTax = base * (1 + d.taxRate);
+        totalHotelBase += base;
+        totalHotelTax += withTax;
+        hotelRowsHtml += `
+          <tr>
+            <td class="py-2.5 px-3 font-bold text-blue-600">🏨 Hotel (${d.nights}nt)</td>
+            <td class="py-2.5 px-3 font-black text-slate-900">${sel.name}</td>
+            <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">${d.checkIn} → ${d.checkOut}</td>
+            <td class="py-2.5 px-3 text-slate-500">$${sel.price.toFixed(1)}/nt × ${d.nights} + ${d.taxLabel} (Free Hot Breakfast)</td>
+            <td class="py-2.5 px-3 text-right font-medium">$${base.toFixed(2)}</td>
+            <td class="py-2.5 px-3 text-right font-black text-slate-900">$${withTax.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+
+      const fuelInfo = getFuelTotals(currentMpg, currentOption);
+      let fuelRowsHtml = fuelInfo.rows.map(r => `
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-amber-600">⛽ Fuel (${currentMpg} MPG)</td>
+          <td class="py-2.5 px-3 font-black text-slate-900">${r.state}</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">Trip Segment</td>
+          <td class="py-2.5 px-3 text-slate-500">${r.miles} mi ÷ ${currentMpg} MPG = ${r.gallons.toFixed(1)} gal @ $${r.pricePerGal.toFixed(2)}/gal</td>
+          <td class="py-2.5 px-3 text-right font-medium">$${r.cost.toFixed(2)}</td>
+          <td class="py-2.5 px-3 text-right font-black text-slate-900">$${r.cost.toFixed(2)}</td>
+        </tr>
+      `).join('');
+
+      const parksFee = (currentOption === 'A') ? 80 : 75;
+      const parksDesc = (currentOption === 'A')
+        ? "America the Beautiful Annual Pass ($80 covers Carlsbad, Guadalupe, White Sands, Saguaro & Joshua Tree)"
+        : "Individual Park Entries without Joshua Tree ($15 Carlsbad + $10 Guadalupe + $25 White Sands + $25 Saguaro = $75)";
+      const parksTotal = parksFee + 23 + 65;
+
+      const parksHtml = `
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-purple-600">🌵 Park Entries</td>
+          <td class="py-2.5 px-3 font-black text-slate-900">${currentOption === 'A' ? 'America the Beautiful Annual Pass' : '4 Individual National Park Entries'}</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">Nov 5 – Nov 8</td>
+          <td class="py-2.5 px-3 text-slate-500">${parksDesc}</td>
+          <td class="py-2.5 px-3 text-right font-medium">$${parksFee.toFixed(2)}</td>
+          <td class="py-2.5 px-3 text-right font-black text-slate-900">$${parksFee.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-purple-600">🎟️ Admissions (1 Person)</td>
+          <td class="py-2.5 px-3 font-black text-slate-900">Carlsbad Caverns Timed Entry ($1) + White Sands Sled ($12) + Sea Cave ($10)</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">Nov 5 – Nov 9</td>
+          <td class="py-2.5 px-3 text-slate-500">For 1 person ($1 Caverns slot, 1 waxed saucer net of buyback, $10 Sea Cave tunnel)</td>
+          <td class="py-2.5 px-3 text-right font-medium">$23.00</td>
+          <td class="py-2.5 px-3 text-right font-black text-slate-900">$23.00</td>
+        </tr>
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-purple-600">🅿️ Parking</td>
+          <td class="py-2.5 px-3 font-black text-slate-900">San Antonio Convention Parking & Coastal Overlook Meters</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">All Trip</td>
+          <td class="py-2.5 px-3 text-slate-500">All hotels have free parking; includes downtown/coastal meter fund</td>
+          <td class="py-2.5 px-3 text-right font-medium">$65.00</td>
+          <td class="py-2.5 px-3 text-right font-black text-slate-900">$65.00</td>
+        </tr>
+      `;
+
+      let mealSum = 0;
+      let mealCount = 0;
+      activeDays.forEach(d => {
+        d.meals.forEach(m => {
+          mealSum += m.costPerPerson;
+          mealCount++;
+        });
+      });
+      const coolerCost = (currentOption === 'A') ? 62 : 56;
+      const totalFood = mealSum + coolerCost;
+      const baseFood = Math.round(mealSum * 0.85);
+
+      const foodSummaryHtml = `
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-emerald-600">🍽️ Dining (1 Person)</td>
+          <td class="py-2.5 px-3 font-black text-slate-900">${mealCount} Local-Favorite Meals & Bakeries (For 1 Person)</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">All Trip</td>
+          <td class="py-2.5 px-3 text-slate-500">All hotel breakfasts are $0 (included free at 3-star chain hotels!)</td>
+          <td class="py-2.5 px-3 text-right font-medium">$${baseFood.toFixed(2)}</td>
+          <td class="py-2.5 px-3 text-right font-black text-slate-900">$${mealSum.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td class="py-2.5 px-3 font-bold text-emerald-600">🥤 Road Cooler (1 Person)</td>
+          <td class="py-2.5 px-3 font-black text-slate-900">Bottled Water, Iced Coffee, Fresh Fruit, Trail Bars & Snacks</td>
+          <td class="py-2.5 px-3 whitespace-nowrap text-slate-600">${currentOption === 'A' ? '11 Days' : '10 Days'}</td>
+          <td class="py-2.5 px-3 text-slate-500">Trunk cooler runs at grocery stores in Nashville, San Antonio H-E-B & Tucson</td>
+          <td class="py-2.5 px-3 text-right font-medium">$${(coolerCost - 4).toFixed(2)}</td>
+          <td class="py-2.5 px-3 text-right font-black text-slate-900">$${coolerCost.toFixed(2)}</td>
+        </tr>
+      `;
+
+      const grandBase = totalHotelBase + fuelInfo.totalCost + parksTotal + baseFood + (coolerCost - 4);
+      const grandAllIn = totalHotelTax + fuelInfo.totalCost + parksTotal + totalFood;
+
+      masterTbody.innerHTML = hotelRowsHtml + fuelRowsHtml + parksHtml + foodSummaryHtml + `
+        <tr class="border-t-2 border-slate-300 bg-slate-50 font-black text-sm text-slate-900">
+          <td colspan="4" class="py-3 px-3">COMPLETE ROAD TRIP GRAND TOTAL (OPTION ${currentOption} • 1 PERSON @ ${currentMpg} MPG)</td>
+          <td class="py-3 px-3 text-right">$${grandBase.toFixed(2)}</td>
+          <td class="py-3 px-3 text-right text-emerald-600 text-base">$${grandAllIn.toFixed(2)}</td>
+        </tr>
+      `;
+
+      let foodRows = "";
+      activeDays.forEach(d => {
+        d.meals.forEach(m => {
+          foodRows += `
+            <tr class="hover:bg-slate-50">
+              <td class="py-2.5 px-3 font-bold text-slate-900">Day ${d.dayNum}<div class="text-[11px] font-normal text-slate-500">${d.date.split(',')[0]}</div></td>
+              <td class="py-2.5 px-3 font-semibold text-slate-700">${m.mealType}</td>
+              <td class="py-2.5 px-3"><div class="font-black text-slate-900">${m.name}</div><div class="text-amber-600 font-bold text-[11px]">⭐ ${m.rating}</div></td>
+              <td class="py-2.5 px-3"><div class="font-medium text-emerald-950">${m.vegHighlight}</div><div class="text-slate-500 text-[11px] mt-0.5"><em>Also: ${m.otherHighlight}</em></div></td>
+              <td class="py-2.5 px-3 text-right font-black text-emerald-600 whitespace-nowrap">$${m.costPerPerson}.00</td>
+              <td class="py-2.5 px-3 text-right whitespace-nowrap"><a href="${m.url}" target="_blank" rel="noopener noreferrer" class="underline text-blue-600 font-bold">Map ↗</a></td>
+            </tr>
+          `;
+        });
+      });
+      foodRows += `
+        <tr class="bg-slate-50 font-bold">
+          <td class="py-2.5 px-3">All Trip</td>
+          <td class="py-2.5 px-3">Free Hot Hotel Breakfasts + Road Cooler Snacks</td>
+          <td class="py-2.5 px-3">Included at Chain Hotels + H-E-B / Grocery Runs</td>
+          <td class="py-2.5 px-3 text-slate-700">🌱 Hot Oatmeal, Waffles, Eggs, Fruit, Yogurt & Trail Mix / Drinks</td>
+          <td class="py-2.5 px-3 text-right font-black text-emerald-600">$${coolerCost}.00</td>
+          <td class="py-2.5 px-3 text-right text-slate-400">—</td>
+        </tr>
+        <tr class="border-t-2 border-slate-300 font-black text-sm bg-slate-50">
+          <td colspan="4" class="py-3 px-3">TOTAL FOOD, RESTAURANTS, COFFEE & SNACKS (OPTION ${currentOption} • 1 PERSON)</td>
+          <td class="py-3 px-3 text-right text-emerald-600 text-base">$${totalFood}.00</td>
+          <td class="py-3 px-3 text-right text-xs font-normal text-slate-500">$${mealSum} Meals + $${coolerCost} Cooler</td>
+        </tr>
+      `;
+      foodTbody.innerHTML = foodRows;
+    }
+
+    function updateBudgetTotals() {
+      const hotelA = getOptionHotelTotals('A');
+      const hotelB = getOptionHotelTotals('B');
+      const fuelA = getFuelTotals(currentMpg, 'A');
+      const fuelB = getFuelTotals(currentMpg, 'B');
+
+      const foodA = 376; // $314 meals + $62 cooler
+      const foodB = 335; // $279 meals + $56 cooler
+      const parksA = 168; // $80 pass + $23 + $65
+      const parksB = 163; // $75 fees + $23 + $65
+
+      const grandA = hotelA.tax + fuelA.totalCost + foodA + parksA;
+      const grandB = hotelB.tax + fuelB.totalCost + foodB + parksB;
+      const diffAB = grandA - grandB;
+
+      // Update comparison table in Tab 4
+      document.getElementById("cmp-mpg-label").textContent = currentMpg;
+      document.getElementById("cmp-hotel-a").textContent = `$${hotelA.tax.toFixed(2)}`;
+      document.getElementById("cmp-hotel-b").textContent = `$${hotelB.tax.toFixed(2)}`;
+      document.getElementById("cmp-hotel-diff").textContent = `-$${(hotelA.tax - hotelB.tax).toFixed(2)}`;
+      document.getElementById("cmp-fuel-a").textContent = `$${fuelA.totalCost.toFixed(2)}`;
+      document.getElementById("cmp-fuel-b").textContent = `$${fuelB.totalCost.toFixed(2)}`;
+      document.getElementById("cmp-fuel-diff").textContent = `-$${(fuelA.totalCost - fuelB.totalCost).toFixed(2)}`;
+      document.getElementById("cmp-total-a").textContent = `$${grandA.toFixed(2)} (Arrive Home Tue Nov 10)`;
+      document.getElementById("cmp-total-b").textContent = `$${grandB.toFixed(2)} (Arrive Home Mon Nov 9)`;
+      document.getElementById("cmp-total-diff").textContent = `Saves $${diffAB.toFixed(2)}!`;
+
+      // Update Top Route Switcher Buttons
+      document.querySelector('#route-btn-A .text-sm.font-black').textContent = `$${grandA.toFixed(2)}`;
+      document.querySelector('#route-btn-B .text-sm.font-black').textContent = `$${grandB.toFixed(2)}`;
+
+      // Update Active KPI Ribbon
+      const activeHotel = (currentOption === 'A') ? hotelA : hotelB;
+      const activeFuel = (currentOption === 'A') ? fuelA : fuelB;
+      const activeFood = (currentOption === 'A') ? foodA : foodB;
+      const activeParks = (currentOption === 'A') ? parksA : parksB;
+      const activeGrand = (currentOption === 'A') ? grandA : grandB;
+
+      document.getElementById("kpi-hotel-label").textContent = `${activeHotel.nights}-Night Hotels (w/ Tax)`;
+      document.getElementById("kpi-hotel-tax").textContent = `$${activeHotel.tax.toFixed(2)}`;
+      document.getElementById("kpi-hotel-breakfast").textContent = `🍳 ${activeHotel.nights} Free Hot Breakfasts!`;
+      document.getElementById("kpi-hotel-avg").textContent = `Avg $${(activeHotel.base / activeHotel.nights).toFixed(2)}/nt pre-tax`;
+
+      document.getElementById("kpi-gas-total").textContent = `$${activeFuel.totalCost.toFixed(2)}`;
+      document.getElementById("kpi-gas-sub").textContent = `⚡ ${activeFuel.totalMiles.toLocaleString()} Total Miles`;
+      document.getElementById("kpi-gas-gal").textContent = `~${activeFuel.totalGallons.toFixed(1)} gallons @ ${currentMpg} MPG`;
+
+      document.getElementById("kpi-food-total").textContent = `$${activeFood.toFixed(2)}`;
+      document.getElementById("kpi-food-sub").textContent = currentOption === 'A'
+        ? '🌱 $314 Meals + $62 Cooler (11d)'
+        : '🌱 $279 Meals + $56 Cooler (10d)';
+
+      document.getElementById("kpi-parks-total").textContent = `$${activeParks.toFixed(2)}`;
+      document.getElementById("kpi-parks-sub").textContent = currentOption === 'A'
+        ? '🎟️ $80 Pass + Cave/Sled/Parking'
+        : '🎟️ $75 Park Fees + Cave/Sled/Parking';
+
+      document.getElementById("kpi-grand-label").textContent = `All-In Total (Option ${currentOption})`;
+      document.getElementById("kpi-grand-total").textContent = `$${activeGrand.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById("kpi-grand-diff").textContent = currentOption === 'A'
+        ? `Option B is $${grandB.toFixed(2)} (-$${diffAB.toFixed(2)})`
+        : `Saves $${diffAB.toFixed(2)} vs. Option A!`;
+
+      document.getElementById("builder-nights-label").textContent = `Active ${activeHotel.nights}-Night Hotel Total (Option ${currentOption})`;
+      document.getElementById("builder-total").textContent = `$${activeHotel.base.toFixed(0)} Base ($${activeHotel.tax.toFixed(2)} w/ Tax)`;
+
+      renderSummaryTables();
+    }
+
+    function updateMpg(val) {
+      currentMpg = Number(val);
+      document.getElementById("mpg-val").textContent = `${currentMpg} MPG`;
+      updateBudgetTotals();
+    }
+
+    function selectHotel(dayNum, hotelId) {
+      const allLists = [sharedDays, optionATail, optionBTail];
+      allLists.forEach(list => {
+        const dayObj = list.find(d => String(d.dayNum) === String(dayNum));
+        if (dayObj && dayObj.hotels.some(h => h.id === hotelId)) {
+          dayObj.hotels.forEach(h => {
+            h.selected = (h.id === hotelId);
+          });
+        }
+      });
+      renderTimeline();
+      renderItinerary();
+      renderHotelMatrix();
+      updateBudgetTotals();
+    }
+
+    function renderChecklist() {
+      const savedState = JSON.parse(localStorage.getItem("nash_turlock_chk") || "{}");
+      const container = document.getElementById("checklist-container");
+      let doneCount = 0;
+
+      container.innerHTML = checklistItems.map(item => {
+        const isChecked = !!savedState[item.id];
+        if (isChecked) doneCount++;
+        return `
+          <div onclick="toggleCheck('${item.id}')"
+               class="cursor-pointer flex items-start justify-between gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100/80 transition">
+            <div class="flex items-start gap-3">
+              <input type="checkbox" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); toggleCheck('${item.id}')"
+                     class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-xs sm:text-sm font-bold ${isChecked ? 'line-through text-slate-400' : 'text-slate-900'}">
+                    ${item.title}
+                  </span>
+                  ${item.urgent ? `<span class="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-800 text-[11px] font-black">Priority Step</span>` : ''}
+                </div>
+                <p class="text-xs text-slate-500 mt-1">${item.detail}</p>
+              </div>
+            </div>
+            ${item.link ? `
+              <a href="${item.link}" ${item.link.startsWith('#') ? `onclick="event.stopPropagation(); switchTab('${item.link.substring(1)}')"` : 'target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"'}
+                 class="shrink-0 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold shadow-xs transition">
+                ${item.linkText}
+              </a>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById("tab-chk-count").textContent = `${doneCount}/${checklistItems.length}`;
+    }
+
+    function toggleCheck(id) {
+      const savedState = JSON.parse(localStorage.getItem("nash_turlock_chk") || "{}");
+      savedState[id] = !savedState[id];
+      localStorage.setItem("nash_turlock_chk", JSON.stringify(savedState));
+      renderChecklist();
+    }
+
+    function switchTab(tabName) {
+      const tabs = ['timeline', 'walkthrough', 'itinerary', 'summary', 'hotels', 'parks', 'checklist'];
+      tabs.forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tabName) {
+          el.classList.remove('hidden');
+          btn.classList.add('tab-active');
+          btn.classList.remove('text-slate-600');
+        } else {
+          el.classList.add('hidden');
+          btn.classList.remove('tab-active');
+          btn.classList.add('text-slate-600');
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleAllDays(expand) {
+      document.querySelectorAll('.day-card').forEach(card => {
+        card.open = expand;
+      });
+    }
+
+    function jumpToDay(dayId) {
+      switchTab('itinerary');
+      setTimeout(() => {
+        scrollToDay(dayId);
+      }, 50);
+    }
+
+    function scrollToDay(dayId) {
+      const target = document.getElementById(dayId);
+      if (target) {
+        target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.classList.add('ring-2', 'ring-blue-500');
+        setTimeout(() => {
+          target.classList.remove('ring-2', 'ring-blue-500');
+        }, 2000);
+      }
+    }
+
+    // Initial render calls
+    initTheme();
+    renderTimeline();
+    renderWalkthrough();
+    renderItinerary();
+    renderHotelMatrix();
+    updateBudgetTotals();
+    renderChecklist();
+  </script>
+</body>
+</html>
