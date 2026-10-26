@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🚗 Road Trip Master Planner: Nashville → Joshua Tree → Highway 1 → Turlock</title>
+  <title>🚗 Coast-to-Coast Road Trip Planner: Nashville → San Antonio → Desert Parks → Pacific Coast → Turlock</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -137,11 +137,29 @@
       background-color: #1e293b !important;
     }
 
+    html.dark table thead tr,
+    html.dark table tfoot tr {
+      background-color: #1e293b !important;
+      border-color: #334155 !important;
+    }
+    html.dark table thead th {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+    }
+    html.dark table tfoot td {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+    }
+
     @media print {
       body { background: white !important; padding: 0 !important; color: black !important; }
       .no-print { display: none !important; }
       details { break-inside: avoid; }
       details[open] summary { border-bottom: 1px solid #ccc; }
+      table { width: 100% !important; border-collapse: collapse !important; font-size: 10px !important; }
+      th, td { border: 1px solid #cbd5e1 !important; padding: 6px 8px !important; }
+      th { background-color: #f1f5f9 !important; color: #0f172a !important; font-weight: bold !important; }
+      tr { break-inside: avoid !important; }
     }
   </style>
 </head>
@@ -152,14 +170,14 @@
     <!-- Top Hero Banner -->
     <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-teal-700 rounded-3xl p-5 sm:p-7 md:p-8 text-white shadow-lg relative overflow-hidden">
       <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none text-9xl">
-        🌊
+        🗺️
       </div>
       <div class="relative z-10 space-y-4">
         
         <!-- Top Row: Badges + Light/Dark Toggle -->
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold">
-            <span>💖 Direct Highway 1 Coastline Route</span>
+            <span>🗺️ Complete 10-Day Cross-Country Route (2,885 Miles)</span>
             <span>•</span>
             <span>📅 Sat, Oct 31 – Mon, Nov 9, 2026 (9 Hotel Nights)</span>
             <span>•</span>
@@ -183,20 +201,20 @@
 
         <div>
           <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
-            Nashville → Joshua Tree → Highway 1 (Big Sur) → Turlock
+            Nashville → San Antonio → Southwest Parks → California Coast → Turlock
           </h1>
           <p class="text-blue-100 text-sm md:text-base max-w-3xl leading-relaxed mt-1">
-            <strong>Streamlined Finale (Monterey Hotel Removed!):</strong> After your Sunday night stay in Pismo Beach / Morro Bay, you drive the full world-famous <strong>Highway 1 coastline through Big Sur to Carmel-by-the-Sea</strong>, enjoy sunset and dinner, and cruise straight through into the night via Pacheco Pass (CA-152) directly home into your own bed in <strong>Turlock</strong> on Monday, Nov 9!
+            The complete day-by-day master planner for your 10-day cross-country journey spanning <strong>2,885 miles</strong>. From the music culture of Nashville and Memphis through Hot Springs National Park, 3 nights on the San Antonio Riverwalk, the wonders of Carlsbad Caverns, White Sands, and Saguaro, to the desert boulders of Joshua Tree and California's iconic Highway 1 coastline home to <strong>Turlock</strong>.
           </p>
         </div>
 
         <!-- Highlight Route Banner -->
         <div class="bg-black/25 backdrop-blur-md border border-white/25 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-blue-100 leading-relaxed space-y-1">
           <div class="font-black text-amber-300 uppercase tracking-wider text-xs">
-            🌟 California Coastal Master Route:
+            🌟 Complete 10-Day Cross-Country Route:
           </div>
           <div>
-            <strong>Joshua Tree NP</strong> (Sun morning) ➔ <strong>Santa Barbara Funk Zone</strong> ➔ <strong>Pismo Beach & Morro Bay</strong> (Sun Night) ➔ <strong>Highway 1 Big Sur & Bixby Bridge</strong> (Mon daytime) ➔ <strong>Carmel-by-the-Sea</strong> (Mon sunset/dinner) ➔ <strong>Drive into the night via CA-152 Pacheco Pass straight to Turlock</strong> (arrive home Mon night Nov 9)!
+            <strong>Nashville, TN</strong> ➔ <strong>Memphis & Hot Springs NP</strong> ➔ <strong>San Antonio Riverwalk (3 Nights)</strong> ➔ <strong>Carlsbad Caverns & Guadalupe Mts</strong> ➔ <strong>White Sands NP</strong> ➔ <strong>Tucson & Saguaro NP</strong> ➔ <strong>Joshua Tree NP & Desert Hot Springs</strong> ➔ <strong>Pismo Beach Bluffs</strong> ➔ <strong>Highway 1 Big Sur & Carmel</strong> ➔ <strong>Turlock, CA</strong>
           </div>
         </div>
 
@@ -238,83 +256,160 @@
         </button>
         <button onclick="switchTab('checklist')" id="tab-btn-checklist" 
                 class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
-          ✅ Checklist (<span id="tab-chk-count">0/10</span>)
+          ✅ Checklist (<span id="tab-chk-count">0/7</span>)
         </button>
       </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 1: SIMPLIFIED TIMELINE (AT A GLANCE)   -->
+    <!-- TAB 1: FULL TRIP ROADMAP & CHEAT SHEET     -->
     <!-- ========================================== -->
     <div id="tab-timeline" class="space-y-5">
       
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+      <!-- Full Trip Roadmap Summary Card -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-5">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div>
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-1.5">
               <span>✨ Complete Route Overview (9 Nights Total)</span>
             </div>
             <h2 class="text-xl md:text-2xl font-black text-slate-900">
-              Trip At A Glance: Timeline, Driving Distances & Stops
+              Full Trip Roadmap & Route Summary
             </h2>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              From Nashville through Texas, New Mexico, and Arizona, to the granite boulders of Joshua Tree, leading into the Pacific Coast Highway 1 drive through Morro Bay, Big Sur, and Carmel, driving straight through into the night to Turlock!
+              Executive overview of all 10 days, 2,885 miles, 6 National Parks, and 7 confirmed hotel stays across Tennessee, Arkansas, Texas, New Mexico, Arizona, and California.
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-2 text-xs">
             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
-              🟢 Easy Drive (&lt;4 hrs)
+              🟢 Easy (&lt;4 hrs)
             </span>
             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 font-semibold border border-amber-200">
-              🟡 Moderate Drive (4–6.5 hrs)
+              🟡 Moderate (4–6.5 hrs)
             </span>
             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 font-semibold border border-rose-200">
-              🟠 Big Drive Day (&gt;7 hrs)
+              🟠 Long Day (&gt;7 hrs)
             </span>
           </div>
         </div>
 
-        <!-- Highlight Callout for the new California Route -->
-        <div class="bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-200 rounded-2xl p-4">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase text-blue-800">🌊 Your Scenic Highway 1 Drive Straight Home to Turlock:</span>
-            <span class="text-xs font-black px-2.5 py-0.5 rounded bg-emerald-600 text-white">Direct Coastal Route</span>
+        <!-- Trip Executive Stats Tiles -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-blue-50/60 border border-blue-200/70 rounded-2xl p-3.5 text-center">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-blue-700">Total Driving</div>
+            <div class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">2,885 mi</div>
+            <div class="text-[11px] text-slate-500 font-medium">Nashville ➔ Turlock</div>
           </div>
-          <p class="text-xs text-slate-700 mt-1.5 leading-relaxed">
-            <strong>Sat Nov 7 (Night 8):</strong> Saguaro NP West in morning ➔ Drive west to <strong>Desert Hot Springs Inn</strong> (67840 Hacienda Ave, Desert Hot Springs, CA — sleep 1 nt).<br/>
-            <strong>Sun Nov 8 (Night 9):</strong> Morning in <strong>Joshua Tree NP</strong> ➔ Drive past Santa Barbara along coastal US-101 to oceanfront <strong>Pismo Beach</strong> (sleep at <strong>Cottage Inn by the Sea</strong>)<br/>
-            <strong>Mon Nov 9 (Day 10 - Grand Finale):</strong> Drive world-famous <strong>Highway 1 through Big Sur</strong> (San Simeon Elephant Seals, Ragged Point, McWay Falls, Bixby Bridge, Point Lobos) to <strong>Carmel-by-the-Sea</strong> for sunset and dinner, then cruise into the night via CA-152 Pacheco Pass straight home to <strong>Turlock</strong>!
-          </p>
+          <div class="bg-indigo-50/60 border border-indigo-200/70 rounded-2xl p-3.5 text-center">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-indigo-700">Drive Time</div>
+            <div class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">~41 hrs</div>
+            <div class="text-[11px] text-slate-500 font-medium">Spread over 10 days</div>
+          </div>
+          <div class="bg-emerald-50/60 border border-emerald-200/70 rounded-2xl p-3.5 text-center">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Hotel Nights</div>
+            <div class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">9 Nights</div>
+            <div class="text-[11px] text-emerald-600 font-bold">100% Confirmed (7 Stays)</div>
+          </div>
+          <div class="bg-amber-50/60 border border-amber-200/70 rounded-2xl p-3.5 text-center">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-amber-800">National Parks</div>
+            <div class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">6 Parks</div>
+            <div class="text-[11px] text-slate-500 font-medium">+ Point Lobos Reserve</div>
+          </div>
+        </div>
+
+        <!-- 3-Stage Journey Roadmap Cards -->
+        <div class="bg-gradient-to-r from-blue-50 via-indigo-50 to-teal-50 border border-blue-200 rounded-2xl p-4 sm:p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black uppercase text-blue-900">🗺️ 3 Major Journey Stages Across America:</span>
+            <span class="text-xs font-black px-2.5 py-0.5 rounded bg-blue-600 text-white">Full Trip Roadmap</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-3 text-xs text-slate-700">
+            <div class="bg-white/90 p-4 rounded-xl border border-blue-100/90 shadow-2xs space-y-1">
+              <div class="font-extrabold text-blue-900 text-sm">🎸 Stage 1: The South & Texas (Days 1–4)</div>
+              <p class="text-slate-600 leading-relaxed">Nashville ➔ Memphis BBQ & Mississippi River ➔ Hot Springs NP thermal waters ➔ Waxahachie ➔ 3 Nights at Kimpton Santo on the San Antonio Riverwalk.</p>
+            </div>
+            <div class="bg-white/90 p-4 rounded-xl border border-blue-100/90 shadow-2xs space-y-1">
+              <div class="font-extrabold text-blue-900 text-sm">🌵 Stage 2: Southwest Parks & Deserts (Days 5–8)</div>
+              <p class="text-slate-600 leading-relaxed">Texas Hill Country ➔ Carlsbad Caverns Big Room ➔ Guadalupe Mts ➔ White Sands dunes ➔ Tucson UNESCO dining & Saguaro NP ➔ Desert Hot Springs.</p>
+            </div>
+            <div class="bg-white/90 p-4 rounded-xl border border-blue-100/90 shadow-2xs space-y-1">
+              <div class="font-extrabold text-blue-900 text-sm">🌊 Stage 3: California Coastline & Home (Days 9–10)</div>
+              <p class="text-slate-600 leading-relaxed">Joshua Tree NP boulders ➔ Santa Barbara & Pismo Beach ocean bluffs ➔ Highway 1 Big Sur & Bixby Bridge ➔ Carmel sunset ➔ Night cruise home to Turlock!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Milestone Journey Tracker -->
+        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black uppercase tracking-wider text-slate-500">📍 10-Day Milestone Tracker:</span>
+            <span class="font-bold text-blue-600">Click any stop to jump directly to its daily guide</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 pt-1" id="roadmap-milestones-container"></div>
         </div>
       </div>
 
-      <!-- Chronological Stepper Timeline Container -->
-      <div id="timeline-stepper-container" class="space-y-4"></div>
-
-      <!-- Printable Route Cheat-Sheet Table -->
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
-        <h3 class="text-base sm:text-lg font-black text-slate-900">
-          🚗 Printable Route, Mileage & Stops Cheat Sheet
-        </h3>
-        <div class="overflow-x-auto">
+      <!-- Printable Route Cheat-Sheet Table Section -->
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-7 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-1.5">
+              <span>📋 Quick Trip Reference Table</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-black text-slate-900">
+              🚗 Printable Route, Mileage & Stops Cheat Sheet
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              Formatted for effortless reading and printing. Click any row or button to jump directly to detailed guides or launch Google Maps.
+            </p>
+          </div>
+          <button onclick="window.print()" class="no-print self-start sm:self-auto inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 text-xs font-bold transition shadow-2xs cursor-pointer">
+            <span>🖨️</span> <span>Print Cheat Sheet</span>
+          </button>
+        </div>
+        
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider">
-                <th class="py-2.5 px-3">Day & Date</th>
-                <th class="py-2.5 px-3">From → To</th>
-                <th class="py-2.5 px-3">Driving Time & Miles</th>
-                <th class="py-2.5 px-3">Main Stops</th>
-                <th class="py-2.5 px-3">Where We Sleep</th>
+              <tr class="border-b-2 border-slate-200 text-slate-700 font-black uppercase tracking-wider bg-slate-100/90">
+                <th class="py-3.5 px-4 w-36 whitespace-nowrap">Day & Date</th>
+                <th class="py-3.5 px-4 w-52">Route (From ➔ To)</th>
+                <th class="py-3.5 px-4 w-40 whitespace-nowrap">Distance & Time</th>
+                <th class="py-3.5 px-4 min-w-[280px]">Key Stops & Highlights</th>
+                <th class="py-3.5 px-4 w-56">Overnight Destination & Hotel</th>
+                <th class="py-3.5 px-4 w-28 text-right no-print whitespace-nowrap">Links</th>
               </tr>
             </thead>
-            <tbody id="timeline-table-tbody" class="divide-y divide-slate-100"></tbody>
+            <tbody id="timeline-table-tbody" class="divide-y divide-slate-100 bg-white"></tbody>
+            <tfoot class="border-t-2 border-slate-300 font-bold bg-slate-100/95 text-slate-900">
+              <tr>
+                <td class="py-3.5 px-4 font-black">
+                  <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-800 text-xs font-black">10 Days</span>
+                </td>
+                <td class="py-3.5 px-4 font-extrabold text-slate-800">
+                  Nashville ➔ Turlock (Coast-to-Coast)
+                </td>
+                <td class="py-3.5 px-4 whitespace-nowrap">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-100 text-blue-900 text-xs font-black">
+                    <span>🚗</span> <span>2,885 mi</span> • <span>⏱️ ~41 hrs</span>
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-slate-700 font-semibold text-[11px]">
+                  6 National Parks • 1 State Reserve • Big Sur Hwy 1
+                </td>
+                <td class="py-3.5 px-4 font-black text-emerald-800">
+                  9 Hotel Nights • 7 Confirmed Stays
+                </td>
+                <td class="py-3.5 px-4 text-right no-print"></td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
-
     </div>
 
     <!-- ========================================== -->
+    <!-- TAB 2<!-- ========================================== -->
     <!-- TAB 2: DETAILED DAILY GUIDE & FOOD         -->
     <!-- ========================================== -->
     <!-- TAB 3: DETAILED DAILY GUIDE & FOOD         -->
@@ -358,83 +453,188 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 5: PARKS & FUN ACTIVITIES              -->
+    <!-- TAB 5: PARKS & PASSES GUIDE                -->
     <!-- ========================================== -->
-    <div id="tab-parks" class="hidden space-y-4">
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-4">
+    <div id="tab-parks" class="hidden space-y-5">
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs space-y-5">
+        
+        <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
           <div>
-            <h2 class="text-xl font-black text-slate-900">National Parks & Passes Guide</h2>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-1.5">
+              <span>🌲 6 National Parks + 1 State Reserve</span>
+            </div>
+            <h2 class="text-xl md:text-2xl font-black text-slate-900">
+              National Parks, Passes & Permit Guide
+            </h2>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">
-              Visiting 5 National Parks across your route: Hot Springs, Carlsbad Caverns, Guadalupe Mountains, White Sands, and Joshua Tree.
+              Accurate breakdown of entry fees, America the Beautiful pass savings, timed-entry reservations, and park-specific guidelines across all 10 days.
             </p>
           </div>
           <a href="https://www.nps.gov/planyourvisit/passes.htm" target="_blank" rel="noopener noreferrer"
              class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-xs hover:bg-blue-700 transition">
-            🎟️ Official NPS Pass Info ↗
+            🎟️ Official NPS Pass Store ↗
           </a>
         </div>
 
-        <div class="bg-blue-50/60 border border-blue-200 rounded-2xl p-4">
-          <div class="text-xs font-black uppercase text-blue-700">💡 America the Beautiful Annual Pass Tip:</div>
-          <div class="text-sm font-bold text-slate-900 mt-1">Pick Up at Carlsbad Caverns on Nov 5 (Valid for 1 Full Year)</div>
-          <p class="text-xs text-slate-600 mt-1">
-            The America the Beautiful Pass covers entry to Carlsbad Caverns, Guadalupe Mountains, White Sands, Saguaro, and Joshua Tree, and remains valid for 12 months for free entry into Yosemite, Pinnacles, and Sequoia & Kings Canyon right near your home in Turlock!
-          </p>
+        <!-- America the Beautiful Pass Savings Card -->
+        <div class="bg-gradient-to-r from-blue-50 via-indigo-50 to-teal-50 border border-blue-200 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-black uppercase text-blue-900 flex items-center gap-1.5">
+              <span>💳 America the Beautiful Annual Pass Math & Savings:</span>
+            </span>
+            <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-600 text-white">
+              Instant $50 Net Savings on This Trip!
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="bg-white/90 p-3.5 rounded-xl border border-blue-100 shadow-2xs space-y-1">
+              <div class="font-extrabold text-slate-900">Standalone Gate Fees (2 Adults):</div>
+              <ul class="text-slate-600 space-y-0.5 text-[11px]">
+                <li>• Carlsbad Caverns: $30 ($15 × 2 adults)</li>
+                <li>• Guadalupe Mountains: $20 ($10 × 2 adults)</li>
+                <li>• White Sands: $25 (per vehicle)</li>
+                <li>• Saguaro West: $25 (per vehicle)</li>
+                <li>• Joshua Tree: $30 (per vehicle)</li>
+                <li class="font-bold text-slate-800 pt-0.5">Total Without Pass = $130</li>
+              </ul>
+            </div>
+
+            <div class="bg-white/90 p-3.5 rounded-xl border border-emerald-200 shadow-2xs space-y-1">
+              <div class="font-extrabold text-emerald-800">Annual Pass Value:</div>
+              <ul class="text-slate-600 space-y-0.5 text-[11px]">
+                <li>• <strong>Pass Cost: $80</strong> (covers whole car)</li>
+                <li>• <strong>Immediate Savings: $50 saved</strong></li>
+                <li>• <strong>Pickup Location:</strong> Carlsbad Caverns Visitor Center on Thu, Nov 5</li>
+                <li>• <strong>No Shipping Delay:</strong> Buy directly at ticket desk upon morning arrival</li>
+              </ul>
+            </div>
+
+            <div class="bg-white/90 p-3.5 rounded-xl border border-blue-100 shadow-2xs space-y-1">
+              <div class="font-extrabold text-blue-900">1-Year Home Bonus (Near Turlock):</div>
+              <p class="text-slate-600 leading-relaxed text-[11px]">
+                Valid for 12 full months (through Nov 30, 2027) for free entry into <strong>Yosemite</strong> ($35 saved), <strong>Sequoia & Kings Canyon</strong> ($35 saved), and <strong>Pinnacles</strong> ($30 saved) right in your backyard!
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-xs text-amber-950 flex items-start gap-2">
+            <span class="text-base shrink-0">⚠️</span>
+            <div>
+              <strong>Important Caveat on Reservations & State Parks:</strong>
+              Carlsbad Caverns entry fee ($15/ea) is covered by the $80 Annual Pass, but <em>timed entry tickets are strictly required</em> ($1 per person on Recreation.gov). Point Lobos is a <em>California State Park</em> and requires a separate $10 day-use vehicle fee (federal passes do not apply to state parks).
+            </div>
+          </div>
         </div>
 
+        <!-- Parks & Passes Table -->
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
-              <tr class="border-b border-slate-200 text-slate-500 font-bold uppercase">
-                <th class="py-2.5 px-3">Date</th>
-                <th class="py-2.5 px-3">Park / Experience</th>
-                <th class="py-2.5 px-3">Entry & Reservation Requirements</th>
-                <th class="py-2.5 px-3">Official Link</th>
+              <tr class="border-b-2 border-slate-200 text-slate-600 font-extrabold uppercase tracking-wider bg-slate-50/80">
+                <th class="py-3 px-3">Date</th>
+                <th class="py-3 px-3">Park / Reserve & Location</th>
+                <th class="py-3 px-3">Standard Gate Fee</th>
+                <th class="py-3 px-3">With $80 Annual Pass</th>
+                <th class="py-3 px-3">Permits & Timed Reservations</th>
+                <th class="py-3 px-3 text-right">Official Link</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Sat, Oct 31</td>
-                <td class="py-2.5 px-3 font-bold">Hot Springs National Park (AR)</td>
-                <td class="py-2.5 px-3 text-emerald-600 font-bold">Free Public Entry</td>
-                <td class="py-2.5 px-3"><a href="https://www.nps.gov/hosp/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Sat, Oct 31</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">Hot Springs National Park</div>
+                  <div class="text-[11px] text-slate-500">Hot Springs, Arkansas</div>
+                </td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">Free ($0)</td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">Free Public Entry</td>
+                <td class="py-3 px-3 text-slate-700">None required. Bathhouse Row and Grand Promenade trails are open to the public.</td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.nps.gov/hosp/index.htm" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition">NPS Page ↗</a>
+                </td>
               </tr>
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Thu, Nov 5</td>
-                <td class="py-2.5 px-3 font-bold">Carlsbad Caverns NP (NM)</td>
-                <td class="py-2.5 px-3 font-bold text-slate-900">Covered by Annual Pass • Requires Timed Entry Reservation on Recreation.gov</td>
-                <td class="py-2.5 px-3"><a href="https://www.recreation.gov/timed-entry/10086910" target="_blank" class="underline text-blue-600 font-semibold">Book Slot ↗</a></td>
+              <tr class="hover:bg-slate-50 transition bg-amber-50/30">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Thu, Nov 5</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">Carlsbad Caverns National Park</div>
+                  <div class="text-[11px] text-slate-500">Eddy County, New Mexico</div>
+                </td>
+                <td class="py-3 px-3 text-slate-700">$15 / person ($30 total)</td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">✅ Fully Covered ($0)</td>
+                <td class="py-3 px-3">
+                  <span class="inline-block px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[11px] mb-1">Timed Entry Ticket Required</span>
+                  <div class="text-[11px] text-slate-600 leading-tight">Must book 8:30 AM slot on Recreation.gov ($1 service fee/person). Elevator & Natural Entrance included. Buy Annual Pass at ticket desk.</div>
+                </td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.recreation.gov/timed-entry/10086910" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 shadow-xs transition">Book Slot ↗</a>
+                </td>
               </tr>
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Thu, Nov 5</td>
-                <td class="py-2.5 px-3 font-bold">Guadalupe Mountains National Park (TX)</td>
-                <td class="py-2.5 px-3 text-emerald-600 font-bold">Covered by Annual Pass</td>
-                <td class="py-2.5 px-3"><a href="https://www.nps.gov/gumo/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Thu, Nov 5</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">Guadalupe Mountains National Park</div>
+                  <div class="text-[11px] text-slate-500">Culberson County, Texas</div>
+                </td>
+                <td class="py-3 px-3 text-slate-700">$10 / person ($20 total)</td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">✅ Fully Covered ($0)</td>
+                <td class="py-3 px-3 text-slate-700">None required. Display pass on vehicle dashboard at Pine Springs Visitor Center trailhead parking.</td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.nps.gov/gumo/index.htm" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition">NPS Page ↗</a>
+                </td>
               </tr>
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Fri, Nov 6</td>
-                <td class="py-2.5 px-3 font-bold">White Sands National Park (NM)</td>
-                <td class="py-2.5 px-3 text-emerald-600 font-bold">Covered by Annual Pass (Saucers & wax available at visitor gift shop)</td>
-                <td class="py-2.5 px-3"><a href="https://www.nps.gov/whsa/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Fri, Nov 6</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">White Sands National Park</div>
+                  <div class="text-[11px] text-slate-500">Otero / Doña Ana County, NM</div>
+                </td>
+                <td class="py-3 px-3 text-slate-700">$25 / vehicle</td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">✅ Fully Covered ($0)</td>
+                <td class="py-3 px-3 text-slate-700">None required. Check White Sands missile testing alerts 24–48 hrs prior. Plastic sand saucers & wax sold at visitor gift shop.</td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.nps.gov/whsa/index.htm" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition">NPS Page ↗</a>
+                </td>
               </tr>
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Sat, Nov 7</td>
-                <td class="py-2.5 px-3 font-bold">Saguaro National Park West (AZ)</td>
-                <td class="py-2.5 px-3 text-emerald-600 font-bold">Covered by Annual Pass</td>
-                <td class="py-2.5 px-3"><a href="https://www.nps.gov/sagu/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Sat, Nov 7</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">Saguaro National Park West</div>
+                  <div class="text-[11px] text-slate-500">Tucson Mountain District, Arizona</div>
+                </td>
+                <td class="py-3 px-3 text-slate-700">$25 / vehicle</td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">✅ Fully Covered ($0)</td>
+                <td class="py-3 px-3 text-slate-700">None required. Red Hills Visitor Center, Bajada Loop drive, and Signal Hill petroglyphs trail are open daily.</td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.nps.gov/sagu/index.htm" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition">NPS Page ↗</a>
+                </td>
               </tr>
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Sun, Nov 8</td>
-                <td class="py-2.5 px-3 font-bold">Joshua Tree National Park (CA)</td>
-                <td class="py-2.5 px-3 text-emerald-600 font-bold">Covered by Annual Pass</td>
-                <td class="py-2.5 px-3"><a href="https://www.nps.gov/jotr/index.htm" target="_blank" class="underline text-blue-600 font-semibold">NPS Page ↗</a></td>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Sun, Nov 8</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">Joshua Tree National Park</div>
+                  <div class="text-[11px] text-slate-500">San Bernardino / Riverside, CA</div>
+                </td>
+                <td class="py-3 px-3 text-slate-700">$30 / vehicle</td>
+                <td class="py-3 px-3 text-emerald-700 font-bold">✅ Fully Covered ($0)</td>
+                <td class="py-3 px-3 text-slate-700">None required. Enter via West Entrance (Joshua Tree / CA-62) to access Hidden Valley, Keys View, and Skull Rock.</td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.nps.gov/jotr/index.htm" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition">NPS Page ↗</a>
+                </td>
               </tr>
-              <tr>
-                <td class="py-2.5 px-3 font-semibold">Mon, Nov 9</td>
-                <td class="py-2.5 px-3 font-bold">Point Lobos State Natural Reserve (CA)</td>
-                <td class="py-2.5 px-3 font-bold text-slate-900">California State Park Vehicle Entry</td>
-                <td class="py-2.5 px-3"><a href="https://www.parks.ca.gov/?page_id=571" target="_blank" class="underline text-blue-600 font-semibold">Parks CA ↗</a></td>
+              <tr class="hover:bg-slate-50 transition bg-slate-50/50">
+                <td class="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">Mon, Nov 9</td>
+                <td class="py-3 px-3">
+                  <div class="font-black text-slate-900">Point Lobos State Natural Reserve</div>
+                  <div class="text-[11px] text-slate-500">Carmel-by-the-Sea, California</div>
+                </td>
+                <td class="py-3 px-3 text-slate-700">$10 / vehicle</td>
+                <td class="py-3 px-3 text-amber-700 font-semibold">❌ Not Covered (State Park)</td>
+                <td class="py-3 px-3 text-slate-700">California State Park day-use vehicle fee ($10 at kiosk). Parking inside is limited; walk-in access from Hwy 1 shoulder is free.</td>
+                <td class="py-3 px-3 text-right whitespace-nowrap">
+                  <a href="https://www.parks.ca.gov/?page_id=571" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition">Parks CA ↗</a>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -505,7 +705,7 @@
           "Superior Bathhouse Brewery / Cafe 1217: Local brews & artisan bakery bites",
           "Waxahachie, TX: Spotless 3-star hotel stop south of Dallas"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/Nashville,+TN/RP+Tracks,+Memphis,+TN/Superior+Bathhouse+Brewery,+Hot+Springs,+AR/Waxahachie,+TX",
+        "mapUrl": "https://www.google.com/maps/dir/Nashville,+TN/Memphis,+TN/Hot+Springs+National+Park,+AR/Holiday+Inn+Express+%26+Suites+Waxahachie,+984+US-287+Bypass,+Waxahachie,+TX+75165",
         "schedule": [
           { "time": "6:30 AM", "label": "Depart Nashville, TN via I-40 West", "detail": "Eat a quick breakfast at home before leaving so your timing lands perfectly in Memphis for lunch!" },
           { "time": "9:45 AM – 10:45 AM", "label": "Memphis Pit Stop & Early Lunch at RP Tracks", "detail": "Midtown Memphis favorite right across from the university. Incredibly tasty BBQ Pulled Tofu Nachos & BBQ Tofu Sandwiches (plus burgers & tenders for meat lovers)." },
@@ -562,13 +762,28 @@
         "outfitTip": "👗 Smart-casual outfits, cute dresses, and comfortable walking shoes for the cobblestone Riverwalk, evening dinner dates, and exploring the historic Pearl district.",
         "timeZoneNote": "⏰ Central Time. Enjoy an extra hour of morning sleep on Sunday thanks to Daylight Saving Fall Back!",
         "driveAlert": "Stop in West, TX (Exit 353 on I-35) for warm Czech Stop kolaches! You will arrive in San Antonio by 12:15 PM—plenty of time before 1:00 PM at the Convention Center.",
+        "stopGuides": [
+          {
+            "title": "San Antonio Riverwalk & Cypress-Lined Waterways",
+            "desc": "Stroll the stone pathways, arched bridges, and vibrant waterside cafes of the Riverwalk right outside your hotel, illuminated by twinkling evening lights."
+          },
+          {
+            "title": "The Historic Alamo & Pearl District",
+            "desc": "Explore 300 years of Texas history at the iconic Alamo plaza, and discover world-class dining, bakeries, and artisan architecture in the revitalized Historic Pearl."
+          }
+        ],
+        "roadCareTips": [
+          "🥖 Czech Stop Kolaches: Exit 353 off I-35 in West, TX is famous for hot fruit & cream cheese kolaches—easy on/off right on the highway.",
+          "🚶 Unpack & Walk: The Kimpton Santo is steps from both the Henry B. González Convention Center and the Riverwalk—park once and walk everywhere for 3 days!",
+          "⏰ Sunday Timing: Leaving Waxahachie by 8:30 AM arrives in downtown San Antonio smoothly by 12:15 PM, avoiding any traffic delays."
+        ],
         "keyStops": [
           "Czech Stop (West, TX): Famous roadside bakery for warm fruit & cream cheese kolaches",
           "Henry B. González Convention Center: Arrive easily by 1:00 PM Sunday",
           "San Antonio Riverwalk: Romantic cypress-lined waterways, bridges & night lights",
           "Historic Market Square & Historic Pearl: Vibrant Mexican culture & artisan cafes"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/Waxahachie,+TX/Czech+Stop,+West,+TX/Henry+B.+Gonz%C3%A1lez+Convention+Center,+900+E+Market+St,+San+Antonio,+TX+78205",
+        "mapUrl": "https://www.google.com/maps/dir/Holiday+Inn+Express+%26+Suites+Waxahachie,+984+US-287+Bypass,+Waxahachie,+TX+75165/West,+TX/The+Alamo,+300+Alamo+Plaza,+San+Antonio,+TX+78205/San+Antonio+River+Walk,+San+Antonio,+TX/Kimpton+Santo+San+Antonio,+431+S+Alamo+St,+San+Antonio,+TX+78205",
         "schedule": [
           { "time": "Sun 7:45 AM", "label": "Hot Hotel Breakfast + Czech Stop Kolaches", "detail": "Wake up rested after +1 extra hour of sleep. Drive 45 mins south on I-35 to Czech Stop in West, TX for hot, pillowy cream cheese and berry kolaches." },
           { "time": "Sun 12:15 PM", "label": "Drop Bags at Hotel & Arrive at Convention Center by 1:00 PM", "detail": "Check into your hotel in downtown San Antonio and walk 5–10 mins to the Henry B. González Convention Center with plenty of time to spare." },
@@ -641,20 +856,20 @@
         "outfitTip": "🧥 Layer up! As you gain elevation in West Texas and New Mexico, the desert cools down quickly into the 40s/50s in the evening. A warm fleece or jacket is perfect.",
         "stopGuides": [
           {
-                    "title": "Pecos River Canyon & The Gateway to West Texas",
-                    "desc": "Cruise I-10 West across the expansive Texas plateau, crossing the historic Pecos River canyon with dramatic desert canyon vistas as the Chihuahuan Desert begins."
+            "title": "Texas Hill Country & Kerrville",
+            "desc": "Climb into the rolling limestone hills of the Texas Hill Country along I-10 West, stopping for authentic scratch Tex-Mex lunch and warm salsa at Mamacita's in Kerrville."
           },
           {
-                    "title": "Guadalupe Mountains National Park & El Capitan",
-                    "desc": "Marvel at the colossal 8,085-ft El Capitan limestone cliff towering thousands of feet above the Chihuahuan Desert\u2014the highest mountain range in Texas!"
+            "title": "Pecos River Canyon & West Texas Horizons",
+            "desc": "Cruise across the expansive West Texas plateau and historic Pecos River basin, watching the wide-open Chihuahuan Desert landscape unfold on the way to Carlsbad."
           }
-],
+        ],
         "roadCareTips": [
-          "\u26a1 West Texas Speed Limits: I-10 has legal 80 mph speed limits west of Kerrville; set cruise control and enjoy wide-open highway driving.",
-          "\ud83d\udca8 Wind Advisories: Guadalupe Pass on US-62/180 is known for sudden high crosswinds; hold steering wheel firmly.",
-          "\u26fd Remote Stretch: No services between Whites City and Pine Springs; ensure you leave Carlsbad or Pecos with a full tank of gas.",
-          "\u23f0 Time Zone Boundary: Van Horn, TX marks the transition from Central to Mountain Time (you gain +1 hour today!)."
-],
+          "⚡ West Texas Speed Limits: I-10 has legal 80 mph speed limits west of Kerrville; set cruise control and enjoy wide-open highway driving.",
+          "⛽ Fort Stockton Fuel & Rest Stop: Fill your gas tank and use restrooms in Fort Stockton before heading north on US-285 into New Mexico (remote desert stretch).",
+          "⏰ Time Zone Boundary: Van Horn / West Texas marks the transition from Central to Mountain Time (gain +1 hour today!).",
+          "🏨 Relax in Carlsbad: Arrive in time to check in, unwind at the indoor heated pool, and rest up for Carlsbad Caverns tomorrow morning."
+        ],
         "timeZoneNote": "⏰ Gain +1 Hour of extra time crossing into Mountain Time today (you arrive 1 hour earlier on the clock)!",
         "driveAlert": "Fill gas & use restrooms in Fort Stockton, TX before heading north on US-285 to Carlsbad (150 miles of remote desert highway).",
         "keyStops": [
@@ -662,7 +877,7 @@
           "Kerrville, TX: Delicious Hill Country Tex-Mex lunch at Mamacita's",
           "Carlsbad, NM: Check in, relax at hotel indoor pool, and prep for caverns tomorrow"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/San+Antonio,+TX/Mamacita's+Restaurant,+Kerrville,+TX/Carlsbad,+NM",
+        "mapUrl": "https://www.google.com/maps/dir/Kimpton+Santo+San+Antonio,+431+S+Alamo+St,+San+Antonio,+TX+78205/Kerrville,+TX/Fort+Stockton,+TX/Sleep+Inn+%26+Suites+Carlsbad+Caverns+Area,+3825+National+Parks+Hwy,+Carlsbad,+NM+88220",
         "schedule": [
           { "time": "8:30 AM", "label": "Free Hotel Breakfast & Depart San Antonio", "detail": "Fuel up on hot breakfast, pack the car, and cruise into the rolling Texas Hill Country on I-10 West." },
           { "time": "10:00 AM – 12:30 PM", "label": "Hill Country Lunch at Mamacita's (Kerrville, TX)", "detail": "Authentic Mexican dining with warm chips, scratch salsa, and fresh spinach enchiladas before heading northwest through West Texas." },
@@ -718,14 +933,14 @@
         "outfitTip": "🧥 Carlsbad Caverns is a constant 56°F (13°C) year-round! Bring a light jacket or cozy cardigan, plus athletic sneakers with good rubber traction for the paved cave trails.",
         "stopGuides": [
           {
-                    "title": "Carlsbad Caverns National Park (The Big Room)",
-                    "desc": "Descend 750 feet below ground into North America's largest underground cavern chamber! Walk the 1.25-mile flat paved loop through the Big Room marveling at towering stalagmites and crystal draperies."
+            "title": "Carlsbad Caverns National Park (The Big Room)",
+            "desc": "Descend 750 feet below ground into North America's largest underground cavern chamber! Walk the 1.25-mile flat paved loop through the Big Room marveling at towering stalagmites and crystal draperies."
           },
           {
-                    "title": "White Sands National Park (Pure Gypsum Dunes)",
-                    "desc": "275 square miles of wave-like, pure white gypsum sand dunes! Grab a saucer at the gift shop and sled down the dunes. Afterward, eat lunch in an 1840s stagecoach courtyard at La Posta de Mesilla."
+            "title": "Guadalupe Mountains NP & Cloudcroft Mountain Pass (8,600 ft)",
+            "desc": "View Texas's highest peaks at Guadalupe Mountains NP for a scenic picnic, then wind through pine forests over Cloudcroft pass (8,600 ft) for fresh green chile apple pie."
           }
-],
+        ],
         "roadCareTips": [
           "\ud83c\udf9f\ufe0f Timed Reservation: Book your timed entry ticket on Recreation.gov (aim for 8:30 AM). Elevator down/up is included.",
           "\ud83e\udde5 Cave Temperature: Carlsbad Caverns is a constant 56\u00b0F (13\u00b0C) year-round with high humidity; wear a light jacket and comfortable walking shoes.",
@@ -741,7 +956,7 @@
           "Cloudcroft, NM (8,600 ft): Stop at Burro Street Bakery for warm Green Chile Apple Pie",
           "Alamogordo, NM: Spotless hotel 12 mins from White Sands"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/Carlsbad,+NM/Carlsbad+Caverns+Visitor+Center,+NM/Pine+Springs+Visitor+Center,+Salt+Flat,+TX/Burro+Street+Bakery,+Cloudcroft,+NM/Alamogordo,+NM",
+        "mapUrl": "https://www.google.com/maps/dir/Sleep+Inn+%26+Suites+Carlsbad+Caverns+Area,+3825+National+Parks+Hwy,+Carlsbad,+NM+88220/Carlsbad+Caverns+National+Park+Visitor+Center,+NM/Pine+Springs+Visitor+Center,+Salt+Flat,+TX/Cloudcroft,+NM/Holiday+Inn+Express+%26+Suites+Alamogordo,+100+Kerry+Ave,+Alamogordo,+NM+88310",
         "schedule": [
           { "time": "8:30 AM – 11:30 AM", "label": "Carlsbad Caverns NP (The Big Room & Natural Entrance)", "detail": "Check in for your 8:30 AM slot. Hike down the awe-inspiring natural cave mouth, stroll the 1.5-mile Big Room loop beneath giant stalactites, then take the elevator back up!" },
           { "time": "12:15 PM – 3:00 PM", "label": "Guadalupe Mountains National Park & Trail Picnic", "detail": "Drive 35 mins south across the Texas border to Pine Springs / McKittrick Canyon. Eat your packed picnic lunch surrounded by Texas's highest peaks and fall colors." },
@@ -797,10 +1012,14 @@
         "outfitTip": "🕶️ White Sands looks like pure snow and reflects sunlight intensely! Wear dark UV sunglasses, sunscreen, and barefoot/sandals for climbing the warm gypsum dunes (it doesn't get scorching like quartz sand).",
         "stopGuides": [
           {
-                    "title": "Tucson Culinary Culture (UNESCO Gastronomy)",
-                    "desc": "Arrive in Tucson for dinner at Tumerico (voted #1 place to eat in the Southwest on Yelp!) featuring vibrant, locally sourced plant-powered Mexican cuisine."
+            "title": "White Sands National Park & Historic Old Mesilla",
+            "desc": "Explore 275 square miles of brilliant white gypsum dunes, sled down the soft slopes, and stroll the boardwalk before lunch in an authentic 1840s stagecoach courtyard at La Posta de Mesilla."
+          },
+          {
+            "title": "Tucson Culinary Culture (UNESCO Gastronomy)",
+            "desc": "Arrive in Tucson for dinner at Tumerico (voted #1 place to eat in the Southwest on Yelp!) featuring vibrant, locally sourced plant-powered Mexican cuisine in America's first UNESCO City of Gastronomy."
           }
-],
+        ],
         "roadCareTips": [
           "\ud83c\udf35 Sonoran Desert Entry: Entering southern Arizona transitions into the lush Sonoran desert with giant saguaro silhouettes against the sky.",
           "\u26fd Las Cruces & Deming Fuel: Great highway pit stops along I-10 West with easy on/off access.",
@@ -813,7 +1032,7 @@
           "Historic Old Mesilla: 1840s stagecoach adobe plaza, shops & courtyard lunch",
           "Tucson, AZ: World-renowned culinary capital (dinner at Tumerico, rated #1 on Yelp in the Southwest!)"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/Alamogordo,+NM/White+Sands+National+Park+Visitor+Center,+NM/La+Posta+de+Mesilla,+Mesilla,+NM/Tumerico,+Tucson,+AZ",
+        "mapUrl": "https://www.google.com/maps/dir/Holiday+Inn+Express+%26+Suites+Alamogordo,+100+Kerry+Ave,+Alamogordo,+NM+88310/White+Sands+National+Park+Visitor+Center,+NM/Historic+Plaza,+Mesilla,+NM/Holiday+Inn+Express+%26+Suites+Tucson,+1564+W+Grant+Rd,+Tucson,+AZ+85745",
         "schedule": [
           { "time": "8:00 AM – 11:00 AM", "label": "White Sands National Park (Dune Sledding & Boardwalk)", "detail": "Grab a plastic saucer and wax at the visitor center, hike up the sparkling white dunes, and sled down! Walk the scenic Interdune Boardwalk." },
           { "time": "12:15 PM – 1:30 PM", "label": "Lunch in Historic Old Mesilla (La Posta de Mesilla)", "detail": "Eat lunch in an authentic 1840s Butterfield Stagecoach adobe courtyard filled with exotic birds, tropical plants, warm chips, and homemade honey sopapillas." },
@@ -890,7 +1109,7 @@
           "Colorado River Crossing (Blythe, CA): Gain +1 hour entering Pacific Time",
           "Desert Hot Springs Inn (67840 Hacienda Ave): Check in & enjoy dinner nearby"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/1564+W+Grant+Rd,+Tucson,+AZ+85745/Signal+Hill+Picnic+Area,+Tucson,+AZ/67840+Hacienda+Ave,+Desert+Hot+Springs,+CA+92240",
+        "mapUrl": "https://www.google.com/maps/dir/Holiday+Inn+Express+%26+Suites+Tucson,+1564+W+Grant+Rd,+Tucson,+AZ+85745/Red+Hills+Visitor+Center,+Tucson,+AZ/Signal+Hill+Picnic+Area,+Tucson,+AZ/Desert+Hot+Springs+Inn,+67840+Hacienda+Ave,+Desert+Hot+Springs,+CA+92240",
         "schedule": [
           { "time": "8:00 AM – 11:00 AM", "label": "Saguaro National Park West (Giant Saguaro Cacti)", "detail": "Drive scenic Bajada Loop, take photos with towering 40-foot saguaros, and walk the easy trail to ancient Native American petroglyphs at Signal Hill." },
           { "time": "11:15 AM – 12:15 PM", "label": "Early Lunch in Tucson (Seis Kitchen at Mercado San Agustin)", "detail": "Eat crispy calabacitas tacos and guacamole in a charming courtyard right near I-10 before heading west." },
@@ -970,7 +1189,7 @@
           "Gaviota Coast: Scenic Pacific ocean vistas heading north on US-101",
           "Pismo Beach Bluffs: Check into Cottage Inn by the Sea, watch ocean sunset & stroll the bluffs"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/67840+Hacienda+Ave,+Desert+Hot+Springs,+CA+92240/Keys+View,+CA/Santa+Barbara,+CA/2351+Price+St,+Pismo+Beach,+CA+93449",
+        "mapUrl": "https://www.google.com/maps/dir/Desert+Hot+Springs+Inn,+67840+Hacienda+Ave,+Desert+Hot+Springs,+CA+92240/Hidden+Valley+Nature+Trail,+CA/Keys+View,+CA/Stearns+Wharf,+Santa+Barbara,+CA/Cottage+Inn+by+the+Sea,+2351+Price+St,+Pismo+Beach,+CA+93449",
         "schedule": [
           { "time": "7:45 AM – 11:30 AM", "label": "Explore Joshua Tree National Park", "detail": "Drive from Desert Hot Springs Inn into Joshua Tree NP. Climb around Skull Rock, take in the breathtaking panorama of the San Andreas Fault at Keys View (5,185 ft), and walk the 1-mile Hidden Valley boulder trail." },
           { "time": "11:45 AM – 3:30 PM", "label": "Drive West to the Pacific Coastline & Santa Barbara", "detail": "Cruise west through the scenic Santa Clara River Valley (CA-126) straight to the ocean in Ventura and Santa Barbara." },
@@ -1012,7 +1231,7 @@
       {
         "dayNum": "10",
         "dayId": "day-10",
-        "date": "Monday, Nov 9, 2026 (Grand Finale)",
+        "date": "Monday, Nov 9, 2026",
         "checkIn": "",
         "checkOut": "",
         "nights": 0,
@@ -1021,7 +1240,7 @@
         "miles": "250 mi total (135 mi Hwy 1 Coastline + 115 mi Pacheco Pass)",
         "driveTime": "~6 hrs total driving spread across the day & evening",
         "driveCategory": "moderate",
-        "driveBadge": "🟢 The Epic Highway 1 Finale & Night Drive Home",
+        "driveBadge": "🟢 Highway 1 Coastline & Evening Drive Home",
         "sleepLocation": "Home Sweet Home in Turlock, CA! 🎉",
         "vibe": "🌊 Crashing Pacific Waves • 🦭 Elephant Seals • 🌉 Iconic Bixby Bridge • 🏰 Fairy Tale Carmel • 🏡 In Your Own Bed Tonight!",
         "outfitTip": "🧥 Warm layers for the breezy Big Sur coastal cliffs (50s–60s°F) and comfy driving clothes for the smooth 2-hour night cruise over Pacheco Pass to Turlock!",
@@ -1060,7 +1279,7 @@
           "Carmel-by-the-Sea: Storybook cottages, white sand Carmel Beach sunset & dinner",
           "Pacheco Pass (CA-152) & Casa de Fruta: Smooth evening highway drive straight home to Turlock!"
         ],
-        "mapUrl": "https://www.google.com/maps/dir/2351+Price+St,+Pismo+Beach,+CA/Morro+Rock,+Morro+Bay,+CA/Piedras+Blancas+Elephant+Seal+Rookery,+San+Simeon,+CA/McWay+Falls,+CA/Bixby+Creek+Bridge,+CA/Carmel-by-the-Sea,+CA/Casa+de+Fruta,+Pacheco+Pass+Hwy,+Hollister,+CA/Turlock,+CA",
+        "mapUrl": "https://www.google.com/maps/dir/Cottage+Inn+by+the+Sea,+2351+Price+St,+Pismo+Beach,+CA+93449/Morro+Rock,+Morro+Bay,+CA/Piedras+Blancas+Elephant+Seal+Rookery,+San+Simeon,+CA/Ragged+Point,+CA/McWay+Falls,+CA/Bixby+Creek+Bridge,+CA/Point+Lobos+State+Natural+Reserve,+CA/Carmel+Beach,+Carmel-By-The-Sea,+CA/Turlock,+CA",
         "schedule": [
           { "time": "8:00 AM – 9:00 AM", "label": "Oceanfront Breakfast & Depart Cottage Inn by the Sea", "detail": "Enjoy complimentary breakfast overlooking the Pacific bluffs, pack up, and cruise 25 minutes north up US-101 / CA-1 toward Morro Rock." },
           { "time": "9:30 AM – 10:15 AM", "label": "Morro Rock & Harbor Sea Otters (Morro Bay)", "detail": "Drive right to Coleman Park at the base of the majestic 576-ft volcanic Morro Rock and spot playful sea otters in the harbor, then grab brown butter cookies in Cayucos." },
@@ -1095,83 +1314,59 @@
     const checklistItems = [
       {
         id: "chk-1",
-        urgent: false,
-        title: "Confirmed: Day 9 Hotel (Cottage Inn by the Sea, Pismo Beach)",
-        detail: "Day 9 (Sun, Nov 8): Cottage Inn by the Sea (2351 Price St, Pismo Beach, CA). Oceanfront bluff setting with heated pool, spa, and in-room fireplace!",
-        link: "#hotels",
-        linkText: "View Confirmed Stay"
-      },
-      {
-        id: "chk-2",
         urgent: true,
         title: "Reserve Carlsbad Caverns Timed Entry for Thu, Nov 5 (8:30 AM Slot)",
-        detail: "Carlsbad Caverns requires a timed entry reservation ticket on Recreation.gov. Book the 8:30 AM entry slot.",
+        detail: "Strictly required by NPS ($1 service fee per person on Recreation.gov). Book the 8:30 AM slot 30 days prior. Elevator and Natural Entrance are both included.",
         link: "https://www.recreation.gov/timed-entry/10086910",
         linkText: "Reserve Timed Slot ↗"
       },
       {
+        id: "chk-2",
+        urgent: false,
+        title: "Buy America the Beautiful Annual Pass at Carlsbad Caverns ($80)",
+        detail: "Purchase at the ticket desk on Thu morning Nov 5. Saves $50 on this trip across 5 National Parks (Carlsbad, Guadalupe, White Sands, Saguaro, Joshua Tree) + 1 year free Yosemite entry.",
+        link: "#parks",
+        linkText: "View Pass Savings ↗"
+      },
+      {
         id: "chk-3",
         urgent: false,
-        title: "Confirmed: Days 1–4 Hotels (Holiday Inn Express Waxahachie & Kimpton Santo San Antonio)",
-        detail: "Day 1: Holiday Inn Express & Suites Waxahachie. Days 2–4: Kimpton Santo San Antonio - Riverwalk by IHG (3 nights).",
-        link: "#hotels",
-        linkText: "View Confirmed Stays"
-      },
-      {
-        id: "chk-4",
-        urgent: false,
-        title: "Confirmed: Days 5–8 Hotels (Carlsbad, Alamogordo, Tucson & Desert Hot Springs)",
-        detail: "Day 5: Sleep Inn & Suites Carlsbad Caverns Area • Day 6: Holiday Inn Express Alamogordo (100 Kerry Ave) • Day 7: Holiday Inn Express Tucson (1564 W. Grant Rd) • Day 8: Desert Hot Springs Inn (67840 Hacienda Ave).",
-        link: "#hotels",
-        linkText: "View Confirmed Stays"
-      },
-      {
-        id: "chk-6",
-        urgent: false,
-        title: "Buy America the Beautiful Pass at Carlsbad Caverns (Nov 5)",
-        detail: "Covers entrance to Carlsbad Caverns, Guadalupe Mountains, White Sands, Saguaro, and Joshua Tree.",
-        link: "https://www.nps.gov/planyourvisit/passes.htm",
-        linkText: "Pass Info ↗"
-      },
-      {
-        id: "chk-7",
-        urgent: false,
-        title: "Check White Sands Missile Range Schedule (For Fri, Nov 6)",
-        detail: "Verify nps.gov/whsa 48 hrs before Friday morning to confirm no missile test gate holds.",
+        title: "Check White Sands Missile Testing Schedule (For Fri, Nov 6)",
+        detail: "Check nps.gov/whsa 24–48 hours ahead to verify US-70 and the dunes have no missile test gate closures on Friday morning.",
         link: "https://www.nps.gov/whsa/planyourvisit/park-closures.htm",
         linkText: "White Sands Alerts ↗"
       },
       {
-        id: "chk-8",
+        id: "chk-4",
         urgent: false,
-        title: "Download Offline Google Maps for West Texas & Big Sur Highway 1",
-        detail: "Cell coverage drops in remote West Texas (US-285), inside Joshua Tree NP, and along Highway 1 in Big Sur.",
-        link: "",
-        linkText: ""
+        title: "Download Offline Google Maps in Advance",
+        detail: "Cell service drops along remote West Texas (US-285), Guadalupe Pass, inside Joshua Tree NP, and along Highway 1 in Big Sur. Download offline maps via Google Maps app.",
+        link: "https://support.google.com/maps/answer/6291838",
+        linkText: "Offline Maps Guide ↗"
       },
       {
-        id: "chk-9",
+        id: "chk-5",
         urgent: false,
-        title: "Pack Cooler for Road Drinks & Guadalupe Mountains Trail Picnic",
-        detail: "Keep snacks, cold water, and lunch handy in the car trunk. All hotel rooms feature mini-fridges.",
-        link: "",
-        linkText: ""
+        title: "Pack Road Trip Cooler & Day 6 Guadalupe Trail Picnic",
+        detail: "Keep drinks and snacks cold in the car. Pick up sandwich deli supplies in Carlsbad for your Thursday picnic lunch in Guadalupe Mountains NP (no food vendors in park).",
+        link: "#day-6",
+        linkText: "View Day 6 Picnic ➔"
       },
       {
-        id: "chk-10",
+        id: "chk-6",
         urgent: false,
-        title: "Pre-Trip Inspection (Tires, Fluids, Wipers for 50 MPG Efficiency)",
-        detail: "Ensures optimal fuel efficiency across the 2,885 total trip miles.",
-        link: "",
-        linkText: ""
+        title: "Pre-Trip Inspection (Tires, Fluids & Wipers for 50 MPG Efficiency)",
+        detail: "Check tire pressures, engine oil, hybrid cooling, and wiper blades before leaving Nashville to ensure optimal 50 MPG efficiency across all 2,885 miles.",
+        link: "#timeline",
+        linkText: "View Mileage Stats ➔"
       },
       {
-        id: "chk-11",
+        id: "chk-7",
         urgent: false,
-        title: "Pack Coastal Windbreaker, Walking Shoes & Polarized Sunglasses",
-        detail: "Bring sturdy sneakers for caverns/desert walks, sunglasses for White Sands, and a warm windproof jacket for Big Sur coastal overlooks.",
-        link: "",
-        linkText: ""
+        title: "Pack Clothing Layers, Cave Fleece & Polarized Sunglasses",
+        detail: "Comfortable rubber-soled walking sneakers, warm fleece/jacket for Carlsbad Caverns (constant 56°F), dark sunglasses for White Sands gypsum glare, and coastal windbreaker for Big Sur cliffs.",
+        link: "#itinerary",
+        linkText: "View Outfit Guide ➔"
       }
     ];
 
@@ -1192,15 +1387,44 @@
       document.getElementById('theme-label').textContent = isDark ? 'Light Mode' : 'Dark Mode';
     }
 
-    // RENDER TAB 1: TIMELINE
+    // RENDER TAB 1: FULL TRIP ROADMAP & CHEAT SHEET
     function renderTimeline() {
-      const container = document.getElementById("timeline-stepper-container");
       const tbody = document.getElementById("timeline-table-tbody");
+      const milestonesContainer = document.getElementById("roadmap-milestones-container");
 
-      let stepperHtml = "";
+      // Populate interactive milestone tracker
+      if (milestonesContainer) {
+        milestonesContainer.innerHTML = tripDays.map(d => `
+          <button onclick="jumpToDay('${d.dayId}')"
+                  class="bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl p-2.5 text-center transition cursor-pointer shadow-2xs group flex flex-col justify-between">
+            <span class="inline-block px-2 py-0.5 rounded-md bg-blue-100 group-hover:bg-blue-600 group-hover:text-white text-blue-800 text-[10px] font-black mx-auto transition">
+              Day ${d.dayNum}
+            </span>
+            <div class="text-xs font-bold text-slate-900 mt-1.5 leading-snug">
+              ${d.sleepLocation.split('(')[0].replace('Home Sweet Home in ', '').trim()}
+            </div>
+            <div class="text-[10px] text-slate-500 font-medium mt-1">
+              ${d.miles}
+            </div>
+          </button>
+        `).join('');
+      }
+
+      // Route metadata mapping for clean origin/destination formatting
+      const routeMeta = {
+        "1": { origin: "Nashville, TN", dest: "Waxahachie, TX", via: "Memphis & Hot Springs NP" },
+        "2–4": { origin: "Waxahachie, TX", dest: "San Antonio, TX", via: "West, TX & Riverwalk Hub (3 Nts)" },
+        "5": { origin: "San Antonio, TX", dest: "Carlsbad, NM", via: "Texas Hill Country & Fort Stockton" },
+        "6": { origin: "Carlsbad, NM", dest: "Alamogordo, NM", via: "Carlsbad Caverns & Guadalupe Mts" },
+        "7": { origin: "Alamogordo, NM", dest: "Tucson, AZ", via: "White Sands NP & Historic Mesilla" },
+        "8": { origin: "Tucson, AZ", dest: "Desert Hot Springs, CA", via: "Saguaro NP West & I-10 West" },
+        "9": { origin: "Desert Hot Springs, CA", dest: "Pismo Beach, CA", via: "Joshua Tree NP & Santa Barbara" },
+        "10": { origin: "Pismo Beach, CA", dest: "Turlock, CA (Home)", via: "Highway 1 Big Sur & Carmel" }
+      };
+
+      // Populate Cheat Sheet Table with enhanced spacing and legible formatting
       let tableHtml = "";
-
-      tripDays.forEach(d => {
+      tripDays.forEach((d, idx) => {
         const selectedHotel = d.hotels.find(h => h.selected);
         const badgeColor = d.driveCategory === 'long' 
           ? 'bg-rose-50 text-rose-700 border-rose-200' 
@@ -1208,105 +1432,130 @@
             ? 'bg-amber-50 text-amber-700 border-amber-200' 
             : 'bg-emerald-50 text-emerald-700 border-emerald-200');
 
-        stepperHtml += `
-          <div class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 shadow-xs hover:border-slate-300 transition relative overflow-hidden">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              
-              <div class="space-y-1.5 flex-1">
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="px-3 py-1 rounded-xl bg-blue-600 text-white text-xs font-black">
-                    Day ${d.dayNum}
-                  </span>
-                  <span class="text-xs font-bold text-slate-500">${d.date}</span>
-                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg border ${badgeColor}">
-                    🚗 ${d.miles} • ${d.driveTime}
-                  </span>
-                </div>
+        const meta = routeMeta[d.dayNum] || {
+          origin: d.routeSummary.split('➔')[0].trim(),
+          dest: d.routeSummary.split('➔').pop().trim(),
+          via: ""
+        };
 
-                <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">
-                  ${d.title}
-                </h3>
-
-                <div class="text-xs font-bold text-indigo-600 pt-0.5">
-                  ✨ Vibe: <span class="text-slate-700 font-medium">${d.vibe}</span>
-                </div>
-
-                <div class="pt-2">
-                  <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Key Fun Stops & Highlights:</div>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs text-slate-700">
-                    ${d.keyStops.map(s => `
-                      <div class="flex items-start gap-1.5">
-                        <span class="text-blue-500 shrink-0">📍</span>
-                        <span>${s}</span>
-                      </div>
-                    `).join('')}
-                  </div>
-                </div>
-
-                <div class="bg-rose-50/70 border border-rose-100 rounded-xl p-2.5 mt-2.5 text-xs text-rose-950 flex items-start gap-2">
-                  <span class="text-sm shrink-0">👗</span>
-                  <div>
-                    <span class="font-bold">What to Wear & Road Tip:</span> ${d.outfitTip}
-                  </div>
-                </div>
-              </div>
-
-              <div class="lg:w-72 shrink-0 bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between gap-3">
-                ${selectedHotel ? `
-                  <div>
-                    <div class="text-[11px] font-bold uppercase text-slate-400">Where We Sleep (${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'}):</div>
-                    <div class="text-xs font-bold text-slate-900 mt-0.5">${selectedHotel.name}</div>
-                    <div class="text-[11px] text-emerald-600 font-bold mt-0.5">⭐ ${selectedHotel.cleanliness}</div>
-                    <div class="text-[11px] text-slate-600 mt-1">🍳 Free Hot Breakfast & Pool</div>
-                    <div class="text-xs font-bold text-emerald-600 mt-1.5">
-                      ✓ Confirmed Stay
-                    </div>
-                  </div>
-                ` : `
-                  <div>
-                    <div class="text-[11px] font-bold uppercase text-slate-400">Tonight's Destination:</div>
-                    <div class="text-sm font-black text-emerald-600 mt-0.5">${d.sleepLocation}</div>
-                    <div class="text-xs text-slate-600 mt-1">Sleeping in your own cozy bed in Turlock tonight! 🎉</div>
-                  </div>
-                `}
-
-                <div class="flex flex-col gap-2 pt-1 border-t border-slate-200/80">
-                  <button onclick="jumpToDay('${d.dayId}')"
-                          class="w-full text-center px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition cursor-pointer">
-                    📖 View Full Day Details & Food ➔
-                  </button>
-                  <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer"
-                     class="w-full text-center px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold transition">
-                    🗺️ Open Google Maps Route ↗
-                  </a>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        `;
+        const rowBg = idx % 2 === 1 ? 'bg-slate-50/50' : 'bg-white';
 
         tableHtml += `
-          <tr class="hover:bg-slate-50 transition cursor-pointer" onclick="jumpToDay('${d.dayId}')">
-            <td class="py-2.5 px-3 font-black text-slate-900 whitespace-nowrap">
-              Day ${d.dayNum}<div class="text-[11px] font-normal text-slate-500">${d.date.split(',')[0]}</div>
+          <tr class="${rowBg} hover:bg-blue-50/60 transition cursor-pointer group" onclick="jumpToDay('${d.dayId}')">
+            
+            <!-- Day & Date Column -->
+            <td class="py-4 px-4 align-top whitespace-nowrap">
+              <div class="flex items-center gap-1.5 mb-1">
+                <span class="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-black tracking-tight shadow-2xs">
+                  Day ${d.dayNum}
+                </span>
+                ${d.nights > 1 ? `<span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[11px] border border-indigo-200">${d.nights} Nts</span>` : ''}
+              </div>
+              <div class="text-xs font-extrabold text-slate-900">${d.date.split(',')[0]}</div>
+              <div class="text-[11px] font-medium text-slate-500">${d.date.split(',')[1] ? d.date.split(',')[1].trim() : ''}</div>
             </td>
-            <td class="py-2.5 px-3 font-semibold text-slate-800">${d.routeSummary}</td>
-            <td class="py-2.5 px-3 whitespace-nowrap font-medium text-slate-700">
-              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-bold ${badgeColor}">
-                ${d.miles} (${d.driveTime.split('(')[0].trim()})
-              </span>
+
+            <!-- Route (From -> To) Column -->
+            <td class="py-4 px-4 align-top">
+              <div class="text-xs font-black text-slate-900 leading-snug">
+                ${meta.origin} <span class="text-blue-500 font-black">➔</span> ${meta.dest}
+              </div>
+              ${meta.via ? `
+                <div class="text-[11px] font-medium text-slate-500 mt-1 flex items-center gap-1">
+                  <span class="text-slate-400 font-bold">via</span>
+                  <span>${meta.via}</span>
+                </div>
+              ` : ''}
             </td>
-            <td class="py-2.5 px-3 text-slate-600 max-w-xs truncate">${d.keyStops.map(s => s.split(':')[0]).join(', ')}</td>
-            <td class="py-2.5 px-3 font-bold text-slate-900 whitespace-nowrap">${d.sleepLocation.split('(')[0].trim()}</td>
+
+            <!-- Driving Distance & Duration Column -->
+            <td class="py-4 px-4 align-top whitespace-nowrap">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${badgeColor} font-black text-xs shadow-2xs">
+                <span>🚗</span>
+                <span>${d.miles.split('(')[0].trim()}</span>
+              </div>
+              <div class="text-[11px] font-semibold text-slate-600 mt-1.5 flex items-center gap-1">
+                <span class="text-slate-400">⏱️</span>
+                <span>${d.driveTime.split('(')[0].replace('total driving', '').replace('driving', '').trim()}</span>
+              </div>
+            </td>
+
+            <!-- Key Stops & Highlights Column (Structured Bold Landmark + Description) -->
+            <td class="py-4 px-4 align-top">
+              <div class="space-y-1.5">
+                ${d.keyStops.map(s => {
+                  const colonIdx = s.indexOf(':');
+                  let title = s;
+                  let desc = '';
+                  if (colonIdx !== -1) {
+                    title = s.substring(0, colonIdx).trim();
+                    desc = s.substring(colonIdx + 1).trim();
+                  }
+                  return `
+                    <div class="flex items-start gap-1.5 leading-snug text-[11px]">
+                      <span class="text-blue-500 font-bold shrink-0 mt-0.5">•</span>
+                      <div>
+                        <span class="font-extrabold text-slate-900">${title}</span>${desc ? `<span class="text-slate-600 font-medium">: ${desc}</span>` : ''}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </td>
+
+            <!-- Where We Sleep & Hotel Column -->
+            <td class="py-4 px-4 align-top">
+              ${selectedHotel ? `
+                <div class="space-y-1">
+                  <div class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                    <span class="text-blue-500">📍</span>
+                    <span>${d.sleepLocation.split('(')[0].trim()}</span>
+                  </div>
+                  <div class="text-[11px] font-bold text-blue-700 leading-snug">
+                    ${selectedHotel.name}
+                  </div>
+                  <div class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                    ✓ Confirmed (${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'})
+                  </div>
+                </div>
+              ` : `
+                <div class="space-y-1">
+                  <div class="text-xs font-black text-emerald-700 flex items-center gap-1.5">
+                    <span>🏡</span>
+                    <span>Home in Turlock, CA!</span>
+                  </div>
+                  <div class="text-[11px] font-medium text-slate-600">
+                    Sleeping in your own cozy bed 🎉
+                  </div>
+                  <div class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                    ✓ Final Destination
+                  </div>
+                </div>
+              `}
+            </td>
+
+            <!-- Links Column -->
+            <td class="py-4 px-4 align-top text-right no-print whitespace-nowrap">
+              <div class="flex flex-col gap-1.5 items-end">
+                <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                   class="w-full text-center px-2.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition shadow-2xs inline-flex items-center justify-center gap-1"
+                   title="Open Hotel-to-Hotel Route in Google Maps">
+                  <span>🗺️</span> <span>Maps ↗</span>
+                </a>
+                <button onclick="event.stopPropagation(); jumpToDay('${d.dayId}')"
+                        class="w-full text-center px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                  <span>Guide</span> <span>➔</span>
+                </button>
+              </div>
+            </td>
+
           </tr>
         `;
       });
 
-      container.innerHTML = stepperHtml;
-      tbody.innerHTML = tableHtml;
+      if (tbody) tbody.innerHTML = tableHtml;
     }
-    // RENDER TAB 3: DETAILED DAILY GUIDE
+
     function renderItinerary() {
       const container = document.getElementById("days-container");
       const pillsContainer = document.getElementById("day-pills-bar");
@@ -1357,6 +1606,31 @@
 
             <div class="p-5 md:p-6 pt-0 border-t border-slate-100 space-y-5">
               
+              <!-- Key Route Stops & Fun Highlights (Moved from Timeline) -->
+              <div class="bg-blue-50/40 border border-blue-200/80 rounded-2xl p-4 mt-4 space-y-2.5">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span class="text-xs font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                    <span>📍 Key Fun Stops & Route Highlights:</span>
+                  </span>
+                  <span class="text-xs font-bold text-indigo-700 bg-white/80 px-2.5 py-1 rounded-lg border border-indigo-100">${d.vibe}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700 pt-0.5">
+                  ${d.keyStops.map(s => `
+                    <div class="flex items-start gap-2 bg-white border border-blue-100/90 p-2.5 rounded-xl shadow-2xs">
+                      <span class="text-blue-500 font-bold shrink-0">📍</span>
+                      <span class="font-medium text-slate-800">${s}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-blue-100/80">
+                  <span class="text-[11px] text-slate-500 font-semibold">🚗 Turn-by-Turn Route: Hotel-to-Hotel with Major Points of Interest (No Food Stops)</span>
+                  <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer"
+                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-2xs">
+                    🗺️ Open Day ${d.dayNum} Google Maps Route ↗
+                  </a>
+                </div>
+              </div>
+
               <!-- Daily Outfit & Drive Care Tip Box -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                 <div class="bg-rose-50 border border-rose-200/80 rounded-2xl p-4 flex items-start gap-3">
@@ -1473,7 +1747,7 @@
                 </div>
               </div>
 
-              <!-- Hotels for this Stop -->
+              <!-- Hotels & Overnight Destination for this Stop -->
               ${d.hotels.length > 0 ? `
                 <div class="space-y-3 pt-3 border-t border-slate-100">
                   <div class="flex flex-wrap items-center justify-between gap-2">
@@ -1510,7 +1784,27 @@
                   })()}
 
                 </div>
-              ` : ''}
+              ` : `
+                <div class="space-y-3 pt-3 border-t border-slate-100">
+                  <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-500/80 rounded-2xl p-4 md:p-5 relative">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                          <span class="px-2.5 py-0.5 rounded-lg bg-emerald-600 text-white text-xs font-black">🎉 Grand Finale Arrival</span>
+                          <span class="text-xs font-bold text-emerald-700">🏡 Home Sweet Home</span>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-black text-slate-900 mt-0.5">${d.sleepLocation}</h4>
+                        <p class="text-xs text-slate-600">No hotel booking needed—sleeping in your own cozy bed in Turlock tonight after the Highway 1 & Pacheco Pass drive!</p>
+                      </div>
+                      <div class="sm:text-right shrink-0">
+                        <span class="inline-block px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold shadow-xs">
+                          ✓ Trip Completed!
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `}
 
             </div>
           </details>
