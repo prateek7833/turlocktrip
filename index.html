@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1d4ed8" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0f19" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>🚗 Coast-to-Coast Road Trip Planner: Nashville → San Antonio → Desert Parks → Pacific Coast → Turlock</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -45,6 +49,36 @@
     }
     details > summary::-webkit-details-marker {
       display: none;
+    }
+
+    /* Mobile Polish & Touch Optimizations */
+    html {
+      -webkit-tap-highlight-color: transparent;
+      scroll-behavior: smooth;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    button, a, summary {
+      touch-action: manipulation;
+    }
+
+    /* Toast Notification Animation */
+    #toast-msg {
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .qf-btn.qf-active {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px -1px rgba(37, 99, 235, 0.35);
+    }
+    html.dark .qf-btn.qf-active {
+      background-color: #3b82f6 !important;
+      color: #ffffff !important;
     }
 
     /* Dark Mode Overrides */
@@ -150,6 +184,20 @@
       background-color: #1e293b !important;
       color: #f8fafc !important;
     }
+    html.dark .sticky-header {
+      background-color: rgba(17, 24, 39, 0.95) !important;
+      border-color: #374151 !important;
+    }
+    html.dark #timeline-cards-mobile > div,
+    html.dark #parks-cards-mobile > div {
+      background-color: #111827 !important;
+      border-color: #334155 !important;
+    }
+    html.dark #timeline-cards-mobile .bg-slate-50,
+    html.dark #parks-cards-mobile .bg-slate-50 {
+      background-color: #1e293b !important;
+      border-color: #334155 !important;
+    }
 
     @media print {
       body { background: white !important; padding: 0 !important; color: black !important; }
@@ -175,89 +223,129 @@
       <div class="relative z-10 space-y-4">
         
         <!-- Top Row: Badges + Light/Dark Toggle -->
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold">
-            <span>🗺️ Complete 10-Day Cross-Country Route (2,885 Miles)</span>
-            <span>•</span>
-            <span>📅 Sat, Oct 31 – Mon, Nov 9, 2026 (9 Hotel Nights)</span>
-            <span>•</span>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-2xl bg-white/20 backdrop-blur-sm text-[11px] sm:text-xs font-semibold leading-relaxed">
+            <span>🗺️ 10-Day Route (2,885 Mi)</span>
+            <span class="hidden sm:inline">•</span>
+            <span>📅 Sat, Oct 31 – Mon, Nov 9, 2026</span>
+            <span class="hidden sm:inline">•</span>
             <span>⚡ 50 MPG Hybrid</span>
-            <span>•</span>
-            <span>⭐ Spotless 3-Star Chains Only</span>
+            <span class="hidden sm:inline">•</span>
+            <span>⭐ Spotless 3-Star Chains</span>
           </div>
 
-          <div class="flex items-center gap-2 no-print">
+          <div class="flex items-center gap-2 no-print shrink-0 self-end sm:self-auto">
             <button onclick="toggleTheme()" id="theme-toggle-btn"
-                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/20 hover:bg-white/30 border border-white/40 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer shadow-xs">
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white/20 hover:bg-white/30 border border-white/40 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer shadow-xs">
               <span id="theme-icon">🌙</span>
               <span id="theme-label">Dark Mode</span>
             </button>
             <button onclick="window.print()" 
-                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer">
-              🖨️ Print / PDF
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer">
+              🖨️ Print
+            </button>
+            <button onclick="shareTrip()" 
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition cursor-pointer active:scale-95"
+                    title="Share trip itinerary">
+              📤 Share
             </button>
           </div>
         </div>
 
         <div>
-          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+          <h1 class="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
             Nashville → San Antonio → Southwest Parks → California Coast → Turlock
           </h1>
-          <p class="text-blue-100 text-sm md:text-base max-w-3xl leading-relaxed mt-1">
+          <p class="text-blue-100 text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed mt-1">
             The complete day-by-day master planner for your 10-day cross-country journey spanning <strong>2,885 miles</strong>. From the music culture of Nashville and Memphis through Hot Springs National Park, 3 nights on the San Antonio Riverwalk, the wonders of Carlsbad Caverns, White Sands, and Saguaro, to the desert boulders of Joshua Tree and California's iconic Highway 1 coastline home to <strong>Turlock</strong>.
           </p>
         </div>
 
         <!-- Highlight Route Banner -->
-        <div class="bg-black/25 backdrop-blur-md border border-white/25 rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm text-blue-100 leading-relaxed space-y-1">
-          <div class="font-black text-amber-300 uppercase tracking-wider text-xs">
+        <div class="bg-black/25 backdrop-blur-md border border-white/25 rounded-2xl p-3 sm:p-4 text-xs sm:text-sm text-blue-100 leading-relaxed space-y-1">
+          <div class="font-black text-amber-300 uppercase tracking-wider text-[11px] sm:text-xs">
             🌟 Complete 10-Day Cross-Country Route:
           </div>
-          <div>
+          <div class="text-[11px] sm:text-xs leading-normal">
             <strong>Nashville, TN</strong> ➔ <strong>Memphis & Hot Springs NP</strong> ➔ <strong>San Antonio Riverwalk (3 Nights)</strong> ➔ <strong>Carlsbad Caverns & Guadalupe Mts</strong> ➔ <strong>White Sands NP</strong> ➔ <strong>Tucson & Saguaro NP</strong> ➔ <strong>Joshua Tree NP & Desert Hot Springs</strong> ➔ <strong>Pismo Beach Bluffs</strong> ➔ <strong>Highway 1 Big Sur & Carmel</strong> ➔ <strong>Turlock, CA</strong>
           </div>
         </div>
 
-        <!-- Master Google Maps Links -->
-        <div class="flex flex-wrap gap-2.5 pt-1 no-print">
+        <!-- Master Google Maps Links (Optimized for Mobile & Desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 no-print">
           <a href="https://www.google.com/maps/dir/Nashville,+TN/Memphis,+TN/Hot+Springs,+AR/Waxahachie,+TX/Henry+B.+Gonz%C3%A1lez+Convention+Center,+San+Antonio,+TX/Carlsbad,+NM/Carlsbad+Caverns+National+Park,+NM/Guadalupe+Mountains+National+Park,+TX/Alamogordo,+NM" 
              target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-blue-700 text-xs font-bold shadow-sm hover:bg-blue-50 transition">
-            🗺️ Google Maps Part 1: Nashville → Alamogordo, NM ↗
+             class="flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-white text-blue-700 text-xs font-bold shadow-sm hover:bg-blue-50 transition active:scale-[0.99]">
+            <span class="flex items-center gap-1.5 truncate">
+              <span class="text-sm">🗺️</span>
+              <span class="truncate">Part 1: Nashville ➔ Alamogordo, NM</span>
+            </span>
+            <span class="shrink-0 text-blue-500 font-extrabold text-sm">↗</span>
           </a>
           <a href="https://www.google.com/maps/dir/Alamogordo,+NM/White+Sands+National+Park,+NM/Tucson,+AZ/Saguaro+National+Park,+AZ/Joshua+Tree+National+Park,+CA/67840+Hacienda+Ave,+Desert+Hot+Springs,+CA/Santa+Barbara,+CA/Morro+Bay,+CA/Big+Sur,+CA/Carmel-by-the-Sea,+CA/Turlock,+CA" 
              target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition">
-            🗺️ Google Maps Part 2: NM → Tucson → Joshua Tree / Desert Hot Springs → Morro Bay → Hwy 1 (Big Sur) → Carmel → Turlock ↗
+             class="flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold backdrop-blur-sm transition active:scale-[0.99]">
+            <span class="flex items-center gap-1.5 truncate">
+              <span class="text-sm">🗺️</span>
+              <span class="truncate">Part 2: NM ➔ Joshua Tree ➔ Hwy 1 ➔ Turlock</span>
+            </span>
+            <span class="shrink-0 text-blue-200 font-extrabold text-sm">↗</span>
           </a>
         </div>
 
       </div>
     </div>
 
-    <!-- Navigation Tabs Bar -->
-    <div class="bg-white border border-slate-200 rounded-2xl p-2 shadow-xs no-print">
-      <div class="flex flex-wrap gap-1 sm:gap-1.5" role="tablist">
+    <!-- Navigation Tabs Bar (Sticky on Desktop & Mobile) -->
+    <div class="sticky top-2 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl p-1.5 sm:p-2 shadow-md no-print transition-all sticky-header">
+      <div class="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar scroll-smooth" role="tablist">
         <button onclick="switchTab('timeline')" id="tab-btn-timeline" 
-                class="tab-active px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 cursor-pointer">
+                class="tab-active px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
           ⏱️ Timeline & Route
         </button>
         <button onclick="switchTab('itinerary')" id="tab-btn-itinerary" 
-                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+                class="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
           📅 Daily Guide & Food
         </button>
         <button onclick="switchTab('hotels')" id="tab-btn-hotels" 
-                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
-          🏨 Confirmed Hotel Stays
+                class="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
+          🏨 Confirmed Hotels
         </button>
         <button onclick="switchTab('parks')" id="tab-btn-parks" 
-                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+                class="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
           🌵 Parks & Passes
         </button>
         <button onclick="switchTab('checklist')" id="tab-btn-checklist" 
-                class="px-3 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer">
+                class="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
           ✅ Checklist (<span id="tab-chk-count">0/7</span>)
         </button>
+      </div>
+    </div>
+
+    <!-- Quick Search & Category Filter Bar (Desktop & Mobile) -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-2.5 sm:p-3 shadow-xs space-y-2 no-print">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+        <div class="relative flex-1">
+          <input type="text" id="route-search-input" oninput="handleRouteSearch(this.value)"
+                 placeholder="🔍 Search stops, parks, food, towns, hotels... (e.g., 'Carlsbad', 'tacos', 'kolache', 'hotel')"
+                 class="w-full pl-8 pr-7 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition placeholder:text-slate-400" />
+          <span class="absolute left-2.5 top-2.5 text-slate-400 text-xs pointer-events-none">🔍</span>
+          <button id="clear-search-btn" onclick="clearRouteSearch()" 
+                  class="hidden absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-bold w-4 h-4 rounded-full bg-slate-200 flex items-center justify-center cursor-pointer">
+            ✕
+          </button>
+        </div>
+        <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 shrink-0 scroll-smooth">
+          <button onclick="setQuickFilter('all')" id="qf-all" class="qf-btn qf-active px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer">All (10 Days)</button>
+          <button onclick="setQuickFilter('parks')" id="qf-parks" class="qf-btn px-2.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">🌲 Parks</button>
+          <button onclick="setQuickFilter('food')" id="qf-food" class="qf-btn px-2.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">🌱 Food</button>
+          <button onclick="setQuickFilter('hotels')" id="qf-hotels" class="qf-btn px-2.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">🏨 Hotels</button>
+          <button onclick="setQuickFilter('long')" id="qf-long" class="qf-btn px-2.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer">🟠 Long Drives</button>
+        </div>
+      </div>
+      <div id="search-feedback" class="hidden text-xs text-blue-600 font-semibold flex items-center justify-between px-1">
+        <span id="search-match-count">Showing matching days</span>
+        <button onclick="clearRouteSearch()" class="underline text-slate-500 hover:text-slate-700 cursor-pointer">Reset Filter</button>
       </div>
     </div>
 
@@ -317,6 +405,58 @@
           </div>
         </div>
 
+        <!-- Interactive 50 MPG Hybrid Fuel & Budget Calculator -->
+        <div class="bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 border border-emerald-200 rounded-2xl p-3.5 sm:p-4.5 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-emerald-200/70 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">⚡</span>
+              <div>
+                <h4 class="text-xs sm:text-sm font-black text-emerald-950 uppercase tracking-wide">Interactive 50 MPG Hybrid Fuel & Gas Budget Calculator</h4>
+                <p class="text-[11px] text-emerald-800">2,885 Total Miles Across Tennessee, Arkansas, Texas, New Mexico, Arizona & California</p>
+              </div>
+            </div>
+            <span class="self-start sm:self-auto px-2.5 py-0.5 rounded-lg bg-emerald-600 text-white text-xs font-black shadow-2xs">50 MPG Hybrid</span>
+          </div>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-0.5">
+            <div class="bg-white/90 p-2.5 rounded-xl border border-emerald-100 shadow-2xs space-y-1">
+              <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Vehicle Efficiency:</label>
+              <div class="flex items-center gap-1.5">
+                <input type="number" id="calc-mpg" value="50" min="15" max="80" oninput="calculateFuelCost()"
+                       class="w-16 px-2 py-1 rounded-lg border border-slate-200 bg-slate-50 text-xs sm:text-sm font-black text-slate-900 text-center" />
+                <span class="text-xs font-bold text-slate-600">MPG</span>
+              </div>
+            </div>
+
+            <div class="bg-white/90 p-2.5 rounded-xl border border-emerald-100 shadow-2xs space-y-1">
+              <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Avg. Gas Price / Gal:</label>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-black text-slate-400">$</span>
+                <input type="number" id="calc-gas-price" value="3.45" step="0.05" min="2.50" max="6.50" oninput="calculateFuelCost()"
+                       class="w-16 px-2 py-1 rounded-lg border border-slate-200 bg-slate-50 text-xs sm:text-sm font-black text-slate-900 text-center" />
+                <span class="text-xs font-bold text-slate-600">/ gal</span>
+              </div>
+            </div>
+
+            <div class="bg-emerald-100/70 p-2.5 rounded-xl border border-emerald-200 text-center flex flex-col justify-center shadow-2xs">
+              <div class="text-[10px] font-bold uppercase text-emerald-800">Est. Fuel Needed</div>
+              <div class="text-base sm:text-lg font-black text-emerald-950 mt-0.5" id="calc-gallons">57.7 gal</div>
+              <div class="text-[10px] text-emerald-700 font-medium">~5 fill-ups total</div>
+            </div>
+
+            <div class="bg-blue-100/70 p-2.5 rounded-xl border border-blue-200 text-center flex flex-col justify-center shadow-2xs">
+              <div class="text-[10px] font-bold uppercase text-blue-800">Est. Total Gas Cost</div>
+              <div class="text-base sm:text-lg font-black text-blue-950 mt-0.5" id="calc-total-cost">~$199</div>
+              <div class="text-[10px] text-blue-700 font-medium" id="calc-cost-per-mi">Just ~$0.07 / mile!</div>
+            </div>
+          </div>
+
+          <div class="text-[11px] text-slate-600 bg-white/80 p-2 rounded-xl border border-emerald-100 flex flex-wrap items-center justify-between gap-1.5">
+            <span>💡 <strong>Hybrid Savings:</strong> A standard 25 MPG SUV burns ~115 gallons (~$398). Your 50 MPG hybrid saves you <strong>~$199 in cash!</strong></span>
+            <span class="font-bold text-emerald-700">⚡ High-Efficiency Travel</span>
+          </div>
+        </div>
+
         <!-- 3-Stage Journey Roadmap Cards -->
         <div class="bg-gradient-to-r from-blue-50 via-indigo-50 to-teal-50 border border-blue-200 rounded-2xl p-4 sm:p-5">
           <div class="flex items-center justify-between">
@@ -340,12 +480,12 @@
         </div>
 
         <!-- Interactive Milestone Journey Tracker -->
-        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 space-y-2">
+        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 sm:p-4 space-y-2">
           <div class="flex items-center justify-between text-xs">
-            <span class="font-black uppercase tracking-wider text-slate-500">📍 10-Day Milestone Tracker:</span>
-            <span class="font-bold text-blue-600">Click any stop to jump directly to its daily guide</span>
+            <span class="font-black uppercase tracking-wider text-slate-500 text-[11px] sm:text-xs">📍 10-Day Milestone Tracker:</span>
+            <span class="font-bold text-blue-600 text-[11px] sm:text-xs">Swipe or click any stop</span>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 pt-1" id="roadmap-milestones-container"></div>
+          <div class="flex overflow-x-auto no-scrollbar gap-2 pb-1 sm:grid sm:grid-cols-4 lg:grid-cols-8 pt-1 scroll-smooth" id="roadmap-milestones-container"></div>
         </div>
       </div>
 
@@ -368,7 +508,8 @@
           </button>
         </div>
         
-        <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs">
+        <!-- Desktop Cheat Sheet Table View (hidden on mobile, visible md+) -->
+        <div class="hidden md:block overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
               <tr class="border-b-2 border-slate-200 text-slate-700 font-black uppercase tracking-wider bg-slate-100/90">
@@ -405,31 +546,31 @@
             </tfoot>
           </table>
         </div>
+
+        <!-- Mobile-Optimized Day Cards Stream (visible on mobile, hidden md+) -->
+        <div class="block md:hidden space-y-3" id="timeline-cards-mobile"></div>
       </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- TAB 2<!-- ========================================== -->
     <!-- TAB 2: DETAILED DAILY GUIDE & FOOD         -->
-    <!-- ========================================== -->
-    <!-- TAB 3: DETAILED DAILY GUIDE & FOOD         -->
     <!-- ========================================== -->
     <div id="tab-itinerary" class="hidden space-y-5">
       
-      <!-- Day Quick-Jump Pills -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs space-y-2 no-print">
+      <!-- Day Quick-Jump Pills (Swipeable on Mobile) -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-2.5 sm:p-3 shadow-xs space-y-2 no-print">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">⚡ Quick Jump to Any Day:</span>
-          <div class="flex items-center gap-2">
-            <button onclick="toggleAllDays(true)" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+          <span class="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">⚡ Quick Jump to Day:</span>
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <button onclick="toggleAllDays(true)" class="text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
               Expand All
             </button>
-            <button onclick="toggleAllDays(false)" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+            <button onclick="toggleAllDays(false)" class="text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
               Collapse All
             </button>
           </div>
         </div>
-        <div class="flex flex-wrap gap-1.5" id="day-pills-bar"></div>
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 scroll-smooth" id="day-pills-bar"></div>
       </div>
 
       <!-- Detailed Day Cards Container -->
@@ -528,8 +669,8 @@
           </div>
         </div>
 
-        <!-- Parks & Passes Table -->
-        <div class="overflow-x-auto">
+        <!-- Parks & Passes: Desktop Table (hidden on mobile, visible lg+) -->
+        <div class="hidden lg:block overflow-x-auto rounded-2xl border border-slate-200">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
               <tr class="border-b-2 border-slate-200 text-slate-600 font-extrabold uppercase tracking-wider bg-slate-50/80">
@@ -639,6 +780,175 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Parks & Passes: Mobile/Tablet Cards (visible on mobile, hidden lg+) -->
+        <div class="block lg:hidden space-y-3" id="parks-cards-mobile">
+          <!-- Hot Springs NP -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Sat, Oct 31</span>
+                <h4 class="text-sm font-black text-slate-900">Hot Springs National Park</h4>
+                <div class="text-[11px] text-slate-500">Hot Springs, Arkansas</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+                Free Public Entry
+              </span>
+            </div>
+            <div class="text-xs text-slate-600 leading-relaxed">
+              <strong>Permits:</strong> None required. Bathhouse Row and Grand Promenade trails are open to the public.
+            </div>
+            <div class="pt-1 flex justify-end">
+              <a href="https://www.nps.gov/hosp/index.htm" target="_blank" rel="noopener noreferrer"
+                 class="w-full text-center px-3 py-2 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 transition">
+                NPS Page ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Carlsbad Caverns NP -->
+          <div class="bg-amber-50/40 border border-amber-200/80 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-amber-200/60 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Thu, Nov 5</span>
+                <h4 class="text-sm font-black text-slate-900">Carlsbad Caverns National Park</h4>
+                <div class="text-[11px] text-slate-500">Eddy County, New Mexico</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black">
+                ✅ Fully Covered ($0)
+              </span>
+            </div>
+            <div class="text-xs text-amber-950 bg-amber-100/60 p-2.5 rounded-xl border border-amber-200">
+              <span class="font-black text-amber-900">⚠️ Timed Entry Ticket Required:</span>
+              Must book 8:30 AM slot on Recreation.gov ($1 service fee/person). Elevator & Natural Entrance included. Buy $80 Annual Pass at ticket desk.
+            </div>
+            <div class="pt-1 flex gap-2">
+              <a href="https://www.recreation.gov/timed-entry/10086910" target="_blank" rel="noopener noreferrer"
+                 class="flex-1 text-center px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-xs hover:bg-blue-700 transition">
+                Book Slot ($1) ↗
+              </a>
+              <a href="https://www.nps.gov/cave/index.htm" target="_blank" rel="noopener noreferrer"
+                 class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold transition">
+                NPS ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Guadalupe Mts NP -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Thu, Nov 5</span>
+                <h4 class="text-sm font-black text-slate-900">Guadalupe Mountains National Park</h4>
+                <div class="text-[11px] text-slate-500">Culberson County, Texas</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black">
+                ✅ Fully Covered ($0)
+              </span>
+            </div>
+            <div class="text-xs text-slate-600 leading-relaxed">
+              Standard gate fee $10/person covered by Annual Pass. Display pass on vehicle dashboard at Pine Springs Visitor Center trailhead parking.
+            </div>
+            <div class="pt-1 flex justify-end">
+              <a href="https://www.nps.gov/gumo/index.htm" target="_blank" rel="noopener noreferrer"
+                 class="w-full text-center px-3 py-2 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 transition">
+                NPS Page ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- White Sands NP -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Fri, Nov 6</span>
+                <h4 class="text-sm font-black text-slate-900">White Sands National Park</h4>
+                <div class="text-[11px] text-slate-500">Otero / Doña Ana County, NM</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black">
+                ✅ Fully Covered ($0)
+              </span>
+            </div>
+            <div class="text-xs text-slate-600 leading-relaxed">
+              Standard vehicle fee $25 covered. Check White Sands missile testing alerts 24–48 hrs prior. Plastic sand saucers & wax sold at visitor gift shop.
+            </div>
+            <div class="pt-1 flex justify-end">
+              <a href="https://www.nps.gov/whsa/index.htm" target="_blank" rel="noopener noreferrer"
+                 class="w-full text-center px-3 py-2 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 transition">
+                NPS Page ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Saguaro NP West -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Sat, Nov 7</span>
+                <h4 class="text-sm font-black text-slate-900">Saguaro National Park West</h4>
+                <div class="text-[11px] text-slate-500">Tucson Mountain District, Arizona</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black">
+                ✅ Fully Covered ($0)
+              </span>
+            </div>
+            <div class="text-xs text-slate-600 leading-relaxed">
+              Standard vehicle fee $25 covered. Red Hills Visitor Center, Bajada Loop drive, and Signal Hill petroglyphs trail are open daily.
+            </div>
+            <div class="pt-1 flex justify-end">
+              <a href="https://www.nps.gov/sagu/index.htm" target="_blank" rel="noopener noreferrer"
+                 class="w-full text-center px-3 py-2 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 transition">
+                NPS Page ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Joshua Tree NP -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Sun, Nov 8</span>
+                <h4 class="text-sm font-black text-slate-900">Joshua Tree National Park</h4>
+                <div class="text-[11px] text-slate-500">San Bernardino / Riverside, CA</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-black">
+                ✅ Fully Covered ($0)
+              </span>
+            </div>
+            <div class="text-xs text-slate-600 leading-relaxed">
+              Standard vehicle fee $30 covered. Enter via West Entrance (Joshua Tree / CA-62) to access Hidden Valley, Keys View, and Skull Rock.
+            </div>
+            <div class="pt-1 flex justify-end">
+              <a href="https://www.nps.gov/jotr/index.htm" target="_blank" rel="noopener noreferrer"
+                 class="w-full text-center px-3 py-2 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 transition">
+                NPS Page ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Point Lobos State Reserve -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 shadow-xs space-y-2.5">
+            <div class="flex items-center justify-between gap-2 border-b border-slate-200 pb-2">
+              <div>
+                <span class="text-xs font-bold text-slate-500">Mon, Nov 9</span>
+                <h4 class="text-sm font-black text-slate-900">Point Lobos State Natural Reserve</h4>
+                <div class="text-[11px] text-slate-500">Carmel-by-the-Sea, California</div>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold">
+                $10 Vehicle Day-Use
+              </span>
+            </div>
+            <div class="text-xs text-slate-600 leading-relaxed">
+              <span class="text-amber-700 font-bold">❌ Not Covered by Federal Pass</span> (State Park). Parking inside is limited; walk-in access from Hwy 1 shoulder is free.
+            </div>
+            <div class="pt-1 flex justify-end">
+              <a href="https://www.parks.ca.gov/?page_id=571" target="_blank" rel="noopener noreferrer"
+                 class="w-full text-center px-3 py-2 rounded-xl bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 transition">
+                Parks CA ↗
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -659,12 +969,26 @@
 
   </div>
 
+  <!-- Floating Back to Top Button (Mobile & Desktop) -->
+  <button id="back-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+          class="fixed bottom-5 right-5 z-50 w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl transition-all duration-300 opacity-0 pointer-events-none translate-y-3 cursor-pointer no-print flex items-center justify-center border border-white/20 active:scale-95"
+          aria-label="Back to top" title="Back to top">
+    <span class="text-base font-black">↑</span>
+  </button>
+
+  <!-- Interactive Toast Notification Popup -->
+  <div id="toast-msg" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 text-white text-xs sm:text-sm font-bold shadow-2xl backdrop-blur-md border border-white/20 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 flex items-center gap-2 select-none no-print">
+    <span id="toast-icon">✓</span>
+    <span id="toast-text">Address copied to clipboard!</span>
+  </div>
+
   <script>
     let currentMpg = 50;
 
     const tripDays = [
       {
         "dayNum": "1",
+        "weather": "🌤️ 68°F / 46°F • Mild autumn sunshine, cool evening in Texas",
         "dayId": "day-1",
         "date": "Saturday, Oct 31, 2026",
         "checkIn": "2026-10-31",
@@ -733,6 +1057,7 @@
         "hotels": [
           {
             "id": "d1-h1",
+            "address": "984 US-287 Bypass, Waxahachie, TX 75165",
             "name": "Holiday Inn Express & Suites Waxahachie by IHG",
             "cleanliness": "9.1/10 Cleanliness Score",
             "amenities": "🍳 Free Express Start Hot Breakfast • 🏊 Indoor Pool • 🅿️ Free Parking • 📍 984 US-287 Bypass, Waxahachie, TX",
@@ -746,6 +1071,7 @@
       },
       {
         "dayNum": "2–4",
+        "weather": "☀️ 74°F / 52°F • Warm & pleasant for Riverwalk & Pearl",
         "dayId": "day-2-4",
         "date": "Sun, Nov 1 – Wed, Nov 4, 2026 (3 Nights)",
         "checkIn": "2026-11-01",
@@ -827,6 +1153,7 @@
         "hotels": [
           {
             "id": "d2-h1",
+            "address": "431 S Alamo St, San Antonio, TX 78205",
             "name": "Kimpton Santo San Antonio - Riverwalk by IHG",
             "cleanliness": "9.4/10 Cleanliness Score",
             "amenities": "🏊 Rooftop Pool & Courtyard • ☕ Morning Coffee/Tea & Evening Social Hour • 🚶 Steps to Convention Center & Riverwalk • 📍 431 S Alamo St, San Antonio, TX 78205",
@@ -840,6 +1167,7 @@
       },
       {
         "dayNum": "5",
+        "weather": "🌤️ 68°F / 42°F • High plains breeze, crisp desert evening",
         "dayId": "day-5",
         "date": "Wednesday, Nov 4, 2026",
         "checkIn": "2026-11-04",
@@ -904,6 +1232,7 @@
         "hotels": [
           {
             "id": "d5-h1",
+            "address": "3825 National Parks Hwy, Carlsbad, NM 88220",
             "name": "Sleep Inn & Suites Carlsbad Caverns Area",
             "cleanliness": "8.8/10 Cleanliness Score",
             "amenities": "🍳 Free Hot Breakfast • 🏊 Heated Indoor Pool & Hot Tub • 🅿️ Free Parking • 📍 3825 National Parks Hwy, Carlsbad, NM",
@@ -917,6 +1246,7 @@
       },
       {
         "dayNum": "6",
+        "weather": "🦇 Cave 56°F constant • Outside 65°F / 39°F • Mountain foliage",
         "dayId": "day-6",
         "date": "Thursday, Nov 5, 2026",
         "checkIn": "2026-11-05",
@@ -983,6 +1313,7 @@
         "hotels": [
           {
             "id": "d6-h1",
+            "address": "100 Kerry Avenue, Alamogordo, NM 88310",
             "name": "Holiday Inn Express & Suites Alamogordo by IHG",
             "cleanliness": "9.0/10 Cleanliness Score",
             "amenities": "🍳 Free Express Start Breakfast • 🏊 Pool • 🅿️ Free Parking • 📍 100 Kerry Avenue, Alamogordo, NM",
@@ -996,6 +1327,7 @@
       },
       {
         "dayNum": "7",
+        "weather": "☀️ 73°F / 45°F • Bright sunny dunes, warm afternoon in Tucson",
         "dayId": "day-7",
         "date": "Friday, Nov 6, 2026",
         "checkIn": "2026-11-06",
@@ -1059,6 +1391,7 @@
         "hotels": [
           {
             "id": "d7-h1",
+            "address": "1564 W. Grant Road, Tucson, AZ 85745",
             "name": "Holiday Inn Express & Suites Tucson by IHG",
             "cleanliness": "9.1/10 Cleanliness Score",
             "amenities": "🍳 Free Hot Express Breakfast • 🏊 Heated Pool & Spa • 🅿️ Free Parking • 📍 1564 W. Grant Road, Tucson, AZ 85745",
@@ -1072,6 +1405,7 @@
       },
       {
         "dayNum": "8",
+        "weather": "☀️ 77°F / 50°F • Sunny Sonoran cacti & warm mineral springs",
         "dayId": "day-8",
         "date": "Saturday, Nov 7, 2026",
         "checkIn": "2026-11-07",
@@ -1137,6 +1471,7 @@
         "hotels": [
           {
             "id": "d8-h1",
+            "address": "67840 Hacienda Avenue, Desert Hot Springs, CA 92240",
             "name": "Desert Hot Springs Inn",
             "cleanliness": "9.0/10 Cleanliness Score",
             "amenities": "♨️ Natural Mineral Hot Spring Pool & Spa • 🌴 Mountain & Valley Views • 🅿️ Free Parking • 📍 67840 Hacienda Avenue, Desert Hot Springs, CA",
@@ -1150,6 +1485,7 @@
       },
       {
         "dayNum": "9",
+        "weather": "🌊 Desert 70°F • Coast 62°F / 48°F • Ocean breeze sunset",
         "dayId": "day-9",
         "date": "Sunday, Nov 8, 2026",
         "checkIn": "2026-11-08",
@@ -1217,6 +1553,7 @@
         "hotels": [
           {
             "id": "d9-h1",
+            "address": "2351 Price St, Pismo Beach, CA 93449",
             "name": "Cottage Inn by the Sea (Pismo Beach)",
             "cleanliness": "9.2/10 Cleanliness Score • 4.5★ Guest Rating",
             "amenities": "🌊 Oceanfront Bluff Setting • 🏊 Heated Ocean-View Pool & Spa • 🍳 Free Coastal Breakfast • 🔥 In-Room Fireplace • 🅿️ Free Parking • 📍 2351 Price St, Pismo Beach, CA",
@@ -1230,6 +1567,7 @@
       },
       {
         "dayNum": "10",
+        "weather": "🌁 63°F / 46°F • Coastal Big Sur cliffs & cozy evening drive home",
         "dayId": "day-10",
         "date": "Monday, Nov 9, 2026",
         "checkIn": "",
@@ -1370,6 +1708,177 @@
       }
     ];
 
+    // SEARCH, FILTER & UTILITY LOGIC
+    let currentSearchTerm = "";
+    let currentQuickFilter = "all";
+
+    function handleRouteSearch(query) {
+      currentSearchTerm = (query || "").trim().toLowerCase();
+      const clearBtn = document.getElementById("clear-search-btn");
+      if (clearBtn) {
+        if (currentSearchTerm.length > 0) {
+          clearBtn.classList.remove("hidden");
+        } else {
+          clearBtn.classList.add("hidden");
+        }
+      }
+      applyFilters();
+    }
+
+    function clearRouteSearch() {
+      const input = document.getElementById("route-search-input");
+      if (input) input.value = "";
+      currentSearchTerm = "";
+      currentQuickFilter = "all";
+      document.querySelectorAll(".qf-btn").forEach(b => {
+        b.classList.remove("qf-active", "bg-blue-600", "text-white");
+        b.classList.add("bg-slate-100", "text-slate-600");
+      });
+      const allBtn = document.getElementById("qf-all");
+      if (allBtn) {
+        allBtn.classList.add("qf-active", "bg-blue-600", "text-white");
+        allBtn.classList.remove("bg-slate-100", "text-slate-600");
+      }
+      const clearBtn = document.getElementById("clear-search-btn");
+      if (clearBtn) clearBtn.classList.add("hidden");
+      applyFilters();
+    }
+
+    function setQuickFilter(category) {
+      currentQuickFilter = category;
+      document.querySelectorAll(".qf-btn").forEach(b => {
+        b.classList.remove("qf-active", "bg-blue-600", "text-white");
+        b.classList.add("bg-slate-100", "text-slate-600");
+      });
+      const activeBtn = document.getElementById(`qf-${category}`);
+      if (activeBtn) {
+        activeBtn.classList.add("qf-active", "bg-blue-600", "text-white");
+        activeBtn.classList.remove("bg-slate-100", "text-slate-600");
+      }
+      applyFilters();
+    }
+
+    function isDayMatching(day) {
+      // Category filter check
+      if (currentQuickFilter === "parks") {
+        const hasPark = day.keyStops.some(s => s.toLowerCase().includes("national park") || s.toLowerCase().includes("reserve")) ||
+                        day.title.toLowerCase().includes("national park") || day.title.toLowerCase().includes("reserve");
+        if (!hasPark) return false;
+      } else if (currentQuickFilter === "food") {
+        if (!day.meals || day.meals.length === 0) return false;
+      } else if (currentQuickFilter === "hotels") {
+        if (!day.hotels || day.hotels.length === 0) return false;
+      } else if (currentQuickFilter === "long") {
+        if (day.driveCategory !== "long") return false;
+      }
+
+      // Search term check
+      if (!currentSearchTerm) return true;
+      const haystack = [
+        day.dayNum,
+        day.title,
+        day.routeSummary,
+        day.sleepLocation,
+        day.vibe,
+        day.weather || '',
+        ...day.keyStops,
+        ...(day.meals || []).map(m => `${m.name} ${m.vegHighlight} ${m.otherHighlight}`),
+        ...(day.hotels || []).map(h => `${h.name} ${h.amenities} ${h.why}`)
+      ].join(" ").toLowerCase();
+
+      return haystack.includes(currentSearchTerm);
+    }
+
+    function applyFilters() {
+      const matchCount = tripDays.filter(d => isDayMatching(d)).length;
+      const feedback = document.getElementById("search-feedback");
+      const matchLabel = document.getElementById("search-match-count");
+      
+      if (currentSearchTerm || currentQuickFilter !== 'all') {
+        if (feedback && matchLabel) {
+          feedback.classList.remove("hidden");
+          matchLabel.textContent = `Showing ${matchCount} of ${tripDays.length} days matching your filter`;
+        }
+      } else {
+        if (feedback) feedback.classList.add("hidden");
+      }
+
+      renderTimeline();
+      renderItinerary();
+    }
+
+    // FUEL & GAS BUDGET CALCULATOR
+    function calculateFuelCost() {
+      const mpgInput = document.getElementById("calc-mpg");
+      const priceInput = document.getElementById("calc-gas-price");
+      const mpg = parseFloat(mpgInput ? mpgInput.value : 50) || 50;
+      const price = parseFloat(priceInput ? priceInput.value : 3.45) || 3.45;
+      const totalMiles = 2885;
+
+      const gallons = totalMiles / mpg;
+      const totalCost = gallons * price;
+      const costPerMile = totalCost / totalMiles;
+
+      const gallonsEl = document.getElementById("calc-gallons");
+      const costEl = document.getElementById("calc-total-cost");
+      const perMiEl = document.getElementById("calc-cost-per-mi");
+
+      if (gallonsEl) gallonsEl.textContent = `${gallons.toFixed(1)} gal`;
+      if (costEl) costEl.textContent = `~$${Math.round(totalCost)}`;
+      if (perMiEl) perMiEl.textContent = `Just ~$${costPerMile.toFixed(2)} / mile!`;
+    }
+
+    // TOAST NOTIFICATIONS & COPY UTILITY
+    function showToast(text, icon = '✓') {
+      const toast = document.getElementById('toast-msg');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+      if (toast && toastText) {
+        toastText.textContent = text;
+        if (toastIcon) toastIcon.textContent = icon;
+        toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+        }, 2200);
+      }
+    }
+
+    function copyToClipboard(text, label = 'Address') {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(`${label} copied to clipboard!`, '📋');
+        }).catch(() => {
+          fallbackCopy(text, label);
+        });
+      } else {
+        fallbackCopy(text, label);
+      }
+    }
+
+    function fallbackCopy(text, label) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(`${label} copied to clipboard!`, '📋');
+    }
+
+    function shareTrip() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Nashville → San Antonio → Desert Parks → Pacific Coast → Turlock',
+          text: 'Complete 10-Day Master Cross-Country Road Trip Planner (2,885 Miles, 6 National Parks, 9 Confirmed Nights)',
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        copyToClipboard(window.location.href, 'Trip Planner link');
+      }
+    }
+
     // THEME TOGGLE
     function initTheme() {
       const saved = localStorage.getItem('roadtrip_theme');
@@ -1390,13 +1899,14 @@
     // RENDER TAB 1: FULL TRIP ROADMAP & CHEAT SHEET
     function renderTimeline() {
       const tbody = document.getElementById("timeline-table-tbody");
+      const mobileContainer = document.getElementById("timeline-cards-mobile");
       const milestonesContainer = document.getElementById("roadmap-milestones-container");
 
       // Populate interactive milestone tracker
       if (milestonesContainer) {
         milestonesContainer.innerHTML = tripDays.map(d => `
           <button onclick="jumpToDay('${d.dayId}')"
-                  class="bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl p-2.5 text-center transition cursor-pointer shadow-2xs group flex flex-col justify-between">
+                  class="bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl p-2.5 text-center transition cursor-pointer shadow-2xs group flex flex-col justify-between shrink-0 min-w-[125px] sm:min-w-0 active:scale-95">
             <span class="inline-block px-2 py-0.5 rounded-md bg-blue-100 group-hover:bg-blue-600 group-hover:text-white text-blue-800 text-[10px] font-black mx-auto transition">
               Day ${d.dayNum}
             </span>
@@ -1422,68 +1932,217 @@
         "10": { origin: "Pismo Beach, CA", dest: "Turlock, CA (Home)", via: "Highway 1 Big Sur & Carmel" }
       };
 
-      // Populate Cheat Sheet Table with enhanced spacing and legible formatting
+      // Filtered days
+      const filteredDays = tripDays.filter(d => isDayMatching(d));
+
+      // 1. Populate Desktop Cheat Sheet Table
       let tableHtml = "";
-      tripDays.forEach((d, idx) => {
-        const selectedHotel = d.hotels.find(h => h.selected);
-        const badgeColor = d.driveCategory === 'long' 
-          ? 'bg-rose-50 text-rose-700 border-rose-200' 
-          : (d.driveCategory === 'moderate' 
-            ? 'bg-amber-50 text-amber-700 border-amber-200' 
-            : 'bg-emerald-50 text-emerald-700 border-emerald-200');
-
-        const meta = routeMeta[d.dayNum] || {
-          origin: d.routeSummary.split('➔')[0].trim(),
-          dest: d.routeSummary.split('➔').pop().trim(),
-          via: ""
-        };
-
-        const rowBg = idx % 2 === 1 ? 'bg-slate-50/50' : 'bg-white';
-
-        tableHtml += `
-          <tr class="${rowBg} hover:bg-blue-50/60 transition cursor-pointer group" onclick="jumpToDay('${d.dayId}')">
-            
-            <!-- Day & Date Column -->
-            <td class="py-4 px-4 align-top whitespace-nowrap">
-              <div class="flex items-center gap-1.5 mb-1">
-                <span class="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-black tracking-tight shadow-2xs">
-                  Day ${d.dayNum}
-                </span>
-                ${d.nights > 1 ? `<span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[11px] border border-indigo-200">${d.nights} Nts</span>` : ''}
-              </div>
-              <div class="text-xs font-extrabold text-slate-900">${d.date.split(',')[0]}</div>
-              <div class="text-[11px] font-medium text-slate-500">${d.date.split(',')[1] ? d.date.split(',')[1].trim() : ''}</div>
+      if (filteredDays.length === 0) {
+        tableHtml = `
+          <tr>
+            <td colspan="6" class="py-8 text-center text-slate-500 font-semibold text-xs">
+              🔍 No days match your filter criteria. <button onclick="clearRouteSearch()" class="text-blue-600 font-bold underline ml-1 cursor-pointer">Clear Filter</button>
             </td>
+          </tr>
+        `;
+      } else {
+        filteredDays.forEach((d, idx) => {
+          const selectedHotel = d.hotels.find(h => h.selected);
+          const badgeColor = d.driveCategory === 'long' 
+            ? 'bg-rose-50 text-rose-700 border-rose-200' 
+            : (d.driveCategory === 'moderate' 
+              ? 'bg-amber-50 text-amber-700 border-amber-200' 
+              : 'bg-emerald-50 text-emerald-700 border-emerald-200');
 
-            <!-- Route (From -> To) Column -->
-            <td class="py-4 px-4 align-top">
-              <div class="text-xs font-black text-slate-900 leading-snug">
-                ${meta.origin} <span class="text-blue-500 font-black">➔</span> ${meta.dest}
-              </div>
-              ${meta.via ? `
-                <div class="text-[11px] font-medium text-slate-500 mt-1 flex items-center gap-1">
-                  <span class="text-slate-400 font-bold">via</span>
-                  <span>${meta.via}</span>
+          const meta = routeMeta[d.dayNum] || {
+            origin: d.routeSummary.split('➔')[0].trim(),
+            dest: d.routeSummary.split('➔').pop().trim(),
+            via: ""
+          };
+
+          const rowBg = idx % 2 === 1 ? 'bg-slate-50/50' : 'bg-white';
+
+          tableHtml += `
+            <tr class="${rowBg} hover:bg-blue-50/60 transition cursor-pointer group" onclick="jumpToDay('${d.dayId}')">
+              
+              <!-- Day & Date Column -->
+              <td class="py-4 px-4 align-top whitespace-nowrap">
+                <div class="flex items-center gap-1.5 mb-1">
+                  <span class="inline-block px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-black tracking-tight shadow-2xs">
+                    Day ${d.dayNum}
+                  </span>
+                  ${d.nights > 1 ? `<span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[11px] border border-indigo-200">${d.nights} Nts</span>` : ''}
                 </div>
-              ` : ''}
-            </td>
+                <div class="text-xs font-extrabold text-slate-900">${d.date.split(',')[0]}</div>
+                <div class="text-[11px] font-medium text-slate-500">${d.date.split(',')[1] ? d.date.split(',')[1].trim() : ''}</div>
+                ${d.weather ? `<div class="text-[10px] text-amber-700 font-semibold mt-1">🌤️ ${d.weather.split('•')[0].trim()}</div>` : ''}
+              </td>
 
-            <!-- Driving Distance & Duration Column -->
-            <td class="py-4 px-4 align-top whitespace-nowrap">
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${badgeColor} font-black text-xs shadow-2xs">
-                <span>🚗</span>
-                <span>${d.miles.split('(')[0].trim()}</span>
-              </div>
-              <div class="text-[11px] font-semibold text-slate-600 mt-1.5 flex items-center gap-1">
-                <span class="text-slate-400">⏱️</span>
-                <span>${d.driveTime.split('(')[0].replace('total driving', '').replace('driving', '').trim()}</span>
-              </div>
-            </td>
+              <!-- Route (From -> To) Column -->
+              <td class="py-4 px-4 align-top">
+                <div class="text-xs font-black text-slate-900 leading-snug">
+                  ${meta.origin} <span class="text-blue-500 font-black">➔</span> ${meta.dest}
+                </div>
+                ${meta.via ? `
+                  <div class="text-[11px] font-medium text-slate-500 mt-1 flex items-center gap-1">
+                    <span class="text-slate-400 font-bold">via</span>
+                    <span>${meta.via}</span>
+                  </div>
+                ` : ''}
+              </td>
 
-            <!-- Key Stops & Highlights Column (Structured Bold Landmark + Description) -->
-            <td class="py-4 px-4 align-top">
-              <div class="space-y-1.5">
-                ${d.keyStops.map(s => {
+              <!-- Driving Distance & Duration Column -->
+              <td class="py-4 px-4 align-top whitespace-nowrap">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${badgeColor} font-black text-xs shadow-2xs">
+                  <span>🚗</span>
+                  <span>${d.miles.split('(')[0].trim()}</span>
+                </div>
+                <div class="text-[11px] font-semibold text-slate-600 mt-1.5 flex items-center gap-1">
+                  <span class="text-slate-400">⏱️</span>
+                  <span>${d.driveTime.split('(')[0].replace('total driving', '').replace('driving', '').trim()}</span>
+                </div>
+              </td>
+
+              <!-- Key Stops & Highlights Column -->
+              <td class="py-4 px-4 align-top">
+                <div class="space-y-1.5">
+                  ${d.keyStops.map(s => {
+                    const colonIdx = s.indexOf(':');
+                    let title = s;
+                    let desc = '';
+                    if (colonIdx !== -1) {
+                      title = s.substring(0, colonIdx).trim();
+                      desc = s.substring(colonIdx + 1).trim();
+                    }
+                    return `
+                      <div class="flex items-start gap-1.5 leading-snug text-[11px]">
+                        <span class="text-blue-500 font-bold shrink-0 mt-0.5">•</span>
+                        <div>
+                          <span class="font-extrabold text-slate-900">${title}</span>${desc ? `<span class="text-slate-600 font-medium">: ${desc}</span>` : ''}
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </td>
+
+              <!-- Where We Sleep & Hotel Column -->
+              <td class="py-4 px-4 align-top">
+                ${selectedHotel ? `
+                  <div class="space-y-1">
+                    <div class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                      <span class="text-blue-500">📍</span>
+                      <span>${d.sleepLocation.split('(')[0].trim()}</span>
+                    </div>
+                    <div class="text-[11px] font-bold text-blue-700 leading-snug">
+                      ${selectedHotel.name}
+                    </div>
+                    <div class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      ✓ Confirmed (${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'})
+                    </div>
+                  </div>
+                ` : `
+                  <div class="space-y-1">
+                    <div class="text-xs font-black text-emerald-700 flex items-center gap-1.5">
+                      <span>🏡</span>
+                      <span>Home in Turlock, CA!</span>
+                    </div>
+                    <div class="text-[11px] font-medium text-slate-600">
+                      Sleeping in your own cozy bed 🎉
+                    </div>
+                    <div class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                      ✓ Final Destination
+                    </div>
+                  </div>
+                `}
+              </td>
+
+              <!-- Links Column -->
+              <td class="py-4 px-4 align-top text-right no-print whitespace-nowrap">
+                <div class="flex flex-col gap-1.5 items-end">
+                  <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                     class="w-full text-center px-2.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition shadow-2xs inline-flex items-center justify-center gap-1"
+                     title="Open Hotel-to-Hotel Route in Google Maps">
+                    <span>🗺️</span> <span>Maps ↗</span>
+                  </a>
+                  <button onclick="event.stopPropagation(); jumpToDay('${d.dayId}')"
+                          class="w-full text-center px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
+                    <span>Guide</span> <span>➔</span>
+                  </button>
+                </div>
+              </td>
+
+            </tr>
+          `;
+        });
+      }
+      if (tbody) tbody.innerHTML = tableHtml;
+
+      // 2. Populate Mobile Cards Stream
+      let mobileCardsHtml = "";
+      if (filteredDays.length === 0) {
+        mobileCardsHtml = `
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 text-center text-slate-500 font-semibold text-xs space-y-2">
+            <div>🔍 No days match your filter criteria.</div>
+            <button onclick="clearRouteSearch()" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white font-bold text-xs">Reset All Filters</button>
+          </div>
+        `;
+      } else {
+        filteredDays.forEach(d => {
+          const selectedHotel = d.hotels.find(h => h.selected);
+          const badgeColor = d.driveCategory === 'long' 
+            ? 'bg-rose-50 text-rose-700 border-rose-200' 
+            : (d.driveCategory === 'moderate' 
+              ? 'bg-amber-50 text-amber-700 border-amber-200' 
+              : 'bg-emerald-50 text-emerald-700 border-emerald-200');
+
+          const meta = routeMeta[d.dayNum] || {
+            origin: d.routeSummary.split('➔')[0].trim(),
+            dest: d.routeSummary.split('➔').pop().trim(),
+            via: ""
+          };
+
+          mobileCardsHtml += `
+            <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-3 hover:border-blue-300 transition cursor-pointer" onclick="jumpToDay('${d.dayId}')">
+              <!-- Header Row -->
+              <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="px-2.5 py-0.5 rounded-md bg-blue-600 text-white text-xs font-black shadow-2xs">
+                    Day ${d.dayNum}
+                  </span>
+                  ${d.nights > 1 ? `<span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-bold text-[11px] border border-indigo-200">${d.nights} Nights</span>` : ''}
+                  <span class="text-xs font-bold text-slate-800">${d.date.split(',')[0]}, ${d.date.split(',')[1] ? d.date.split(',')[1].trim() : ''}</span>
+                </div>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg border ${badgeColor} font-black text-[11px] shrink-0">
+                  🚗 ${d.miles.split('(')[0].trim()}
+                </span>
+              </div>
+
+              <!-- Route Details -->
+              <div>
+                <div class="text-sm font-black text-slate-900 leading-snug">
+                  ${meta.origin} <span class="text-blue-500 font-black">➔</span> ${meta.dest}
+                </div>
+                ${meta.via ? `
+                  <div class="text-xs font-medium text-slate-500 mt-0.5">
+                    <span class="text-slate-400 font-bold">via</span> ${meta.via}
+                  </div>
+                ` : ''}
+                <div class="text-xs font-semibold text-slate-600 mt-1 flex items-center gap-1">
+                  <span>⏱️ Drive time:</span>
+                  <span class="font-bold text-slate-800">${d.driveTime.split('(')[0].replace('total driving', '').replace('driving', '').trim()}</span>
+                </div>
+                ${d.weather ? `
+                  <div class="text-[11px] text-amber-800 bg-amber-50/70 border border-amber-200/60 rounded-lg px-2.5 py-1 mt-1.5 font-medium flex items-center gap-1.5">
+                    <span>${d.weather}</span>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Key Stops Preview -->
+              <div class="bg-slate-50 border border-slate-100 rounded-xl p-2.5 space-y-1 text-xs">
+                <div class="text-[10px] font-black uppercase text-slate-400 tracking-wider">🌟 Highlights & Stops:</div>
+                ${d.keyStops.slice(0, 3).map(s => {
                   const colonIdx = s.indexOf(':');
                   let title = s;
                   let desc = '';
@@ -1492,122 +2151,130 @@
                     desc = s.substring(colonIdx + 1).trim();
                   }
                   return `
-                    <div class="flex items-start gap-1.5 leading-snug text-[11px]">
+                    <div class="flex items-start gap-1.5 text-[11px] leading-tight text-slate-700">
                       <span class="text-blue-500 font-bold shrink-0 mt-0.5">•</span>
-                      <div>
-                        <span class="font-extrabold text-slate-900">${title}</span>${desc ? `<span class="text-slate-600 font-medium">: ${desc}</span>` : ''}
-                      </div>
+                      <div class="truncate"><strong class="text-slate-900">${title}</strong>${desc ? `: ${desc}` : ''}</div>
                     </div>
                   `;
                 }).join('')}
+                ${d.keyStops.length > 3 ? `<div class="text-[10px] text-blue-600 font-bold pl-3">+ ${d.keyStops.length - 3} more stops</div>` : ''}
               </div>
-            </td>
 
-            <!-- Where We Sleep & Hotel Column -->
-            <td class="py-4 px-4 align-top">
-              ${selectedHotel ? `
-                <div class="space-y-1">
-                  <div class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                    <span class="text-blue-500">📍</span>
-                    <span>${d.sleepLocation.split('(')[0].trim()}</span>
-                  </div>
-                  <div class="text-[11px] font-bold text-blue-700 leading-snug">
-                    ${selectedHotel.name}
-                  </div>
-                  <div class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                    ✓ Confirmed (${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'})
-                  </div>
+              <!-- Overnight Stay -->
+              <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-100 text-xs">
+                <div class="truncate">
+                  <span class="text-slate-400 font-medium">🏨 Sleep:</span>
+                  <span class="font-bold text-slate-900 ml-1">${selectedHotel ? selectedHotel.name : 'Home in Turlock, CA!'}</span>
                 </div>
-              ` : `
-                <div class="space-y-1">
-                  <div class="text-xs font-black text-emerald-700 flex items-center gap-1.5">
-                    <span>🏡</span>
-                    <span>Home in Turlock, CA!</span>
-                  </div>
-                  <div class="text-[11px] font-medium text-slate-600">
-                    Sleeping in your own cozy bed 🎉
-                  </div>
-                  <div class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                    ✓ Final Destination
-                  </div>
-                </div>
-              `}
-            </td>
+                <span class="shrink-0 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                  ${selectedHotel ? '✓ Confirmed' : '✓ Final Stop'}
+                </span>
+              </div>
 
-            <!-- Links Column -->
-            <td class="py-4 px-4 align-top text-right no-print whitespace-nowrap">
-              <div class="flex flex-col gap-1.5 items-end">
+              <!-- Action Buttons -->
+              <div class="grid grid-cols-2 gap-2 pt-1">
                 <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
-                   class="w-full text-center px-2.5 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition shadow-2xs inline-flex items-center justify-center gap-1"
-                   title="Open Hotel-to-Hotel Route in Google Maps">
+                   class="py-2.5 px-3 rounded-xl bg-blue-50 hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1.5 active:scale-95">
                   <span>🗺️</span> <span>Maps ↗</span>
                 </a>
                 <button onclick="event.stopPropagation(); jumpToDay('${d.dayId}')"
-                        class="w-full text-center px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1 cursor-pointer">
-                  <span>Guide</span> <span>➔</span>
+                        class="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold transition shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">
+                  <span>Daily Guide</span> <span>➔</span>
                 </button>
               </div>
-            </td>
-
-          </tr>
-        `;
-      });
-
-      if (tbody) tbody.innerHTML = tableHtml;
+            </div>
+          `;
+        });
+      }
+      if (mobileContainer) mobileContainer.innerHTML = mobileCardsHtml;
     }
 
+    // RENDER TAB 2: DETAILED DAILY GUIDE
     function renderItinerary() {
       const container = document.getElementById("days-container");
       const pillsContainer = document.getElementById("day-pills-bar");
 
+      // Filtered days
+      const filteredDays = tripDays.filter(d => isDayMatching(d));
+
       let pillsHtml = "";
-      tripDays.forEach(d => {
+      filteredDays.forEach(d => {
         pillsHtml += `
           <button onclick="scrollToDay('${d.dayId}')" 
-                  class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                  class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap shadow-2xs active:scale-95">
             Day ${d.dayNum}
           </button>
         `;
       });
-      pillsContainer.innerHTML = pillsHtml;
+      pillsContainer.innerHTML = pillsHtml || '<span class="text-xs text-slate-400">No matching days</span>';
 
-      container.innerHTML = tripDays.map(d => {
+      if (filteredDays.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white border border-slate-200 rounded-3xl p-8 text-center text-slate-500 font-semibold text-xs space-y-3">
+            <div class="text-sm">🔍 No itinerary days match your current filter.</div>
+            <button onclick="clearRouteSearch()" class="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs">Reset All Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filteredDays.map((d, index) => {
         const selectedHotel = d.hotels.find(h => h.selected);
+        const prevDay = index > 0 ? filteredDays[index - 1] : null;
+        const nextDay = index < filteredDays.length - 1 ? filteredDays[index + 1] : null;
+
+        // Auto-open if filtering
+        const isOpen = 'open';
 
         return `
-          <details open id="${d.dayId}" class="day-card bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
-            <summary class="cursor-pointer p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/80 transition select-none">
+          <details ${isOpen} id="${d.dayId}" class="day-card group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
+            <summary class="cursor-pointer p-4 sm:p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 hover:bg-slate-50/80 transition select-none">
               <div class="space-y-1.5 flex-1">
                 <div class="flex flex-wrap items-center gap-2">
-                  <span class="px-3 py-1 rounded-xl bg-blue-600 text-white text-xs font-black">
+                  <span class="px-2.5 py-1 rounded-xl bg-blue-600 text-white text-xs font-black shadow-2xs">
                     Day ${d.dayNum}
                   </span>
                   <span class="text-xs font-bold text-slate-500">${d.date}</span>
                   <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700">
                     🚗 ${d.miles} (${d.driveTime})
                   </span>
+                  ${d.weather ? `
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200">
+                      ${d.weather.split('•')[0].trim()}
+                    </span>
+                  ` : ''}
                 </div>
-                <h3 class="text-base sm:text-xl font-black text-slate-900">${d.title}</h3>
+                <h3 class="text-base sm:text-xl font-black text-slate-900 leading-snug">${d.title}</h3>
                 <div class="text-xs text-indigo-600 font-bold">${d.vibe}</div>
               </div>
-              <div class="flex items-center gap-2 self-start md:self-center shrink-0">
+              <div class="flex items-center justify-between md:justify-end gap-2.5 w-full md:w-auto pt-2.5 md:pt-0 border-t md:border-t-0 border-slate-100 shrink-0">
                 ${selectedHotel ? `
-                  <div class="text-right hidden sm:block mr-2">
-                    <div class="text-xs font-semibold text-slate-500">${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'}</div>
+                  <div class="text-left md:text-right mr-1">
+                    <div class="text-[11px] font-semibold text-slate-500">${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'}</div>
                     <div class="text-xs font-bold text-emerald-600">✓ Booked Stay</div>
                   </div>
-                ` : ''}
-                <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
-                   class="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 shadow-xs transition">
-                  📍 Google Maps Route ↗
-                </a>
+                ` : `
+                  <div class="text-left md:text-right mr-1">
+                    <div class="text-[11px] font-semibold text-emerald-600">Final Stop</div>
+                    <div class="text-xs font-bold text-slate-700">Home in Turlock</div>
+                  </div>
+                `}
+                <div class="flex items-center gap-2">
+                  <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"
+                     class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 shadow-xs transition whitespace-nowrap active:scale-95">
+                    <span>📍</span> <span>Maps ↗</span>
+                  </a>
+                  <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform duration-200 shrink-0 text-xs">
+                    ▼
+                  </span>
+                </div>
               </div>
             </summary>
 
-            <div class="p-5 md:p-6 pt-0 border-t border-slate-100 space-y-5">
+            <div class="p-4 sm:p-5 md:p-6 pt-0 border-t border-slate-100 space-y-5">
               
-              <!-- Key Route Stops & Fun Highlights (Moved from Timeline) -->
-              <div class="bg-blue-50/40 border border-blue-200/80 rounded-2xl p-4 mt-4 space-y-2.5">
+              <!-- Key Route Stops & Fun Highlights -->
+              <div class="bg-blue-50/40 border border-blue-200/80 rounded-2xl p-3.5 sm:p-4 mt-4 space-y-2.5">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <span class="text-xs font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
                     <span>📍 Key Fun Stops & Route Highlights:</span>
@@ -1618,25 +2285,26 @@
                   ${d.keyStops.map(s => `
                     <div class="flex items-start gap-2 bg-white border border-blue-100/90 p-2.5 rounded-xl shadow-2xs">
                       <span class="text-blue-500 font-bold shrink-0">📍</span>
-                      <span class="font-medium text-slate-800">${s}</span>
+                      <span class="font-medium text-slate-800 leading-snug">${s}</span>
                     </div>
                   `).join('')}
                 </div>
-                <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-blue-100/80">
+                <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-blue-100/80">
                   <span class="text-[11px] text-slate-500 font-semibold">🚗 Turn-by-Turn Route: Hotel-to-Hotel with Major Points of Interest (No Food Stops)</span>
                   <a href="${d.mapUrl}" target="_blank" rel="noopener noreferrer"
-                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-2xs">
+                     class="inline-flex items-center justify-center gap-1 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition shadow-2xs w-full sm:w-auto active:scale-95">
                     🗺️ Open Day ${d.dayNum} Google Maps Route ↗
                   </a>
                 </div>
               </div>
 
-              <!-- Daily Outfit & Drive Care Tip Box -->
+              <!-- Daily Outfit, Weather & Drive Care Tip Box -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                 <div class="bg-rose-50 border border-rose-200/80 rounded-2xl p-4 flex items-start gap-3">
                   <span class="text-2xl shrink-0">👗</span>
-                  <div class="space-y-0.5">
-                    <div class="text-xs font-black uppercase tracking-wider text-rose-800">What to Wear & Pack Today:</div>
+                  <div class="space-y-1">
+                    <div class="text-xs font-black uppercase tracking-wider text-rose-800">What to Wear & Weather:</div>
+                    ${d.weather ? `<div class="text-xs font-bold text-amber-900 bg-amber-100/70 px-2.5 py-1 rounded-lg border border-amber-200 inline-block">${d.weather}</div>` : ''}
                     <div class="text-xs text-rose-950 font-medium leading-relaxed">${d.outfitTip}</div>
                     ${d.timeZoneNote ? `<div class="text-xs font-bold text-indigo-700 pt-1">${d.timeZoneNote}</div>` : ''}
                   </div>
@@ -1694,8 +2362,10 @@
                 </div>
                 <div class="grid gap-2">
                   ${d.schedule.map(s => `
-                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 bg-slate-50 border border-slate-200/80 rounded-xl p-3.5">
-                      <span class="text-xs font-extrabold text-blue-600 shrink-0 sm:w-36">${s.time}</span>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 bg-slate-50 border border-slate-200/80 rounded-xl p-3 sm:p-3.5">
+                      <span class="text-xs font-extrabold text-blue-600 shrink-0 sm:w-36 flex items-center gap-1">
+                        <span class="sm:hidden text-slate-400">🕒</span> ${s.time}
+                      </span>
                       <div class="space-y-0.5">
                         <div class="text-xs sm:text-sm font-bold text-slate-900">${s.label}</div>
                         <div class="text-xs text-slate-600 leading-relaxed">${s.detail}</div>
@@ -1736,10 +2406,14 @@
                           <strong class="text-slate-700">Also Great For:</strong> ${m.otherHighlight}
                         </div>
                       </div>
-                      <div class="mt-3 pt-2.5 border-t border-slate-200/80 flex justify-end">
+                      <div class="mt-3 pt-2.5 border-t border-slate-200/80 flex items-center justify-between gap-2">
+                        <button onclick="copyToClipboard('${m.name}', '${m.name}')" 
+                                class="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 text-xs font-bold transition active:scale-95 cursor-pointer">
+                          📋 Copy Name
+                        </button>
                         <a href="${m.url}" target="_blank" rel="noopener noreferrer"
-                           class="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 underline">
-                          🗺️ View Menu & Location in Google Maps ↗
+                           class="w-full sm:w-auto text-center py-2 sm:py-1 px-3 rounded-lg bg-blue-50 hover:bg-blue-100 text-xs font-bold text-blue-700 transition inline-flex items-center justify-center gap-1 active:scale-95">
+                          🗺️ View Menu & Map ↗
                         </a>
                       </div>
                     </div>
@@ -1771,12 +2445,21 @@
                             <p class="text-xs text-slate-600">${sel.amenities}</p>
                             <p class="text-xs text-slate-700 font-medium pt-1">${sel.why}</p>
                           </div>
-                          <div class="sm:text-right shrink-0">
+                          <div class="sm:text-right shrink-0 w-full sm:w-auto flex sm:flex-col justify-between sm:justify-start items-center sm:items-end gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-emerald-200">
                             <div class="text-xs font-black text-emerald-600">✓ Confirmed Reservation</div>
-                            <a href="${sel.url}" target="_blank" rel="noopener noreferrer"
-                               class="inline-block mt-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-xs hover:bg-blue-700 transition">
-                              📍 View Hotel Map ↗
-                            </a>
+                            <div class="flex items-center gap-2">
+                              ${sel.address ? `
+                                <button onclick="copyToClipboard('${sel.address}', '${sel.name}')"
+                                        class="px-3 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold shadow-2xs transition active:scale-95 cursor-pointer"
+                                        title="Copy address for GPS navigation">
+                                  📋 Copy Address
+                                </button>
+                              ` : ''}
+                              <a href="${sel.url}" target="_blank" rel="noopener noreferrer"
+                                 class="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-xs hover:bg-blue-700 transition active:scale-95">
+                                📍 View Map ↗
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1806,6 +2489,25 @@
                 </div>
               `}
 
+              <!-- Bottom Prev / Next Day Navigator Bar -->
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                ${prevDay ? `
+                  <button onclick="scrollToDay('${prevDay.dayId}')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
+                    <span>←</span> <span class="hidden sm:inline">Day ${prevDay.dayNum}:</span> <span>${prevDay.sleepLocation.split('(')[0].replace('Home Sweet Home in ', '').trim()}</span>
+                  </button>
+                ` : `<div></div>`}
+                
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-xs font-bold text-slate-400 hover:text-slate-600 px-2 py-1 cursor-pointer">
+                  ↑ Back to Top
+                </button>
+
+                ${nextDay ? `
+                  <button onclick="scrollToDay('${nextDay.dayId}')" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-2xs active:scale-95 cursor-pointer">
+                    <span class="hidden sm:inline">Day ${nextDay.dayNum}:</span> <span>${nextDay.sleepLocation.split('(')[0].replace('Home Sweet Home in ', '').trim()}</span> <span>→</span>
+                  </button>
+                ` : `<div></div>`}
+              </div>
+
             </div>
           </details>
         `;
@@ -1824,7 +2526,7 @@
               <div>
                 <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-emerald-600 text-white mr-2">Day ${d.dayNum} • Booked</span>
                 <span class="text-sm sm:text-base font-black text-slate-900">${d.sleepLocation}</span>
-                <span class="text-xs text-slate-500 font-medium ml-1">(${d.checkIn} → ${d.checkOut} • ${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'})</span>
+                <div class="text-xs text-slate-500 font-medium sm:inline sm:ml-1">(${d.checkIn} → ${d.checkOut} • ${d.nights} ${d.nights > 1 ? 'Nights' : 'Night'})</div>
               </div>
               <div class="text-xs font-black text-emerald-600 flex items-center gap-1">
                 <span>✓ Confirmed Booking</span>
@@ -1840,14 +2542,22 @@
                 <div class="text-xs text-indigo-700 font-semibold mt-1">✨ ${h.vibe}</div>
                 <p class="text-xs text-slate-700 mt-2 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">${h.why}</p>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+              <div class="mt-3 pt-2.5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <span class="text-xs font-black text-emerald-600">
                   ✓ Confirmed Hotel Stay
                 </span>
-                <a href="${h.url}" target="_blank" rel="noopener noreferrer"
-                   class="px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition flex items-center gap-1 shadow-xs">
-                  📍 Map & Details ↗
-                </a>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                  ${h.address ? `
+                    <button onclick="copyToClipboard('${h.address}', '${h.name}')"
+                            class="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1 active:scale-95 shadow-2xs cursor-pointer">
+                      📋 Copy Address
+                    </button>
+                  ` : ''}
+                  <a href="${h.url}" target="_blank" rel="noopener noreferrer"
+                     class="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition flex items-center justify-center gap-1 shadow-xs active:scale-95">
+                    📍 Map & Details ↗
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -1877,10 +2587,10 @@
         if (isChecked) doneCount++;
         return `
           <div onclick="toggleCheck('${item.id}')"
-               class="cursor-pointer flex items-start justify-between gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100/80 transition">
-            <div class="flex items-start gap-3">
+               class="cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100/80 transition select-none active:scale-[0.99]">
+            <div class="flex items-start gap-3 flex-1">
               <input type="checkbox" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); toggleCheck('${item.id}')"
-                     class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                     class="mt-1 h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0" />
               <div>
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="text-xs sm:text-sm font-bold ${isChecked ? 'line-through text-slate-400' : 'text-slate-900'}">
@@ -1888,14 +2598,16 @@
                   </span>
                   ${item.urgent ? `<span class="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-800 text-[11px] font-black">Priority Step</span>` : ''}
                 </div>
-                <p class="text-xs text-slate-500 mt-1">${item.detail}</p>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">${item.detail}</p>
               </div>
             </div>
             ${item.link ? `
-              <a href="${item.link}" ${item.link.startsWith('#') ? `onclick="event.stopPropagation(); switchTab('${item.link.substring(1)}')"` : 'target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"'}
-                 class="shrink-0 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold shadow-xs transition">
-                ${item.linkText}
-              </a>
+              <div class="pl-8 sm:pl-0 shrink-0">
+                <a href="${item.link}" ${item.link.startsWith('#') ? `onclick="event.stopPropagation(); switchTab('${item.link.substring(1)}')"` : 'target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"'}
+                   class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold shadow-xs transition active:scale-95">
+                  ${item.linkText}
+                </a>
+              </div>
             ` : ''}
           </div>
         `;
@@ -1954,12 +2666,48 @@
       }
     }
 
+    // Keyboard Shortcuts for desktop convenience (Escape clears search, Left/Right flips tabs)
+    document.addEventListener('keydown', (e) => {
+      // Don't trigger if user is typing in an input
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        if (e.key === 'Escape') {
+          clearRouteSearch();
+          document.activeElement.blur();
+        }
+        return;
+      }
+      const tabs = ['timeline', 'itinerary', 'hotels', 'parks', 'checklist'];
+      const activeIdx = tabs.findIndex(t => !document.getElementById(`tab-${t}`).classList.contains('hidden'));
+      if (e.key === 'ArrowRight' && activeIdx !== -1 && activeIdx < tabs.length - 1) {
+        switchTab(tabs[activeIdx + 1]);
+      } else if (e.key === 'ArrowLeft' && activeIdx !== -1 && activeIdx > 0) {
+        switchTab(tabs[activeIdx - 1]);
+      } else if (e.key === '/') {
+        e.preventDefault();
+        const searchInput = document.getElementById('route-search-input');
+        if (searchInput) searchInput.focus();
+      }
+    });
+
+    // Floating Back to Top Button visibility
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('back-to-top-btn');
+      if (btn) {
+        if (window.scrollY > 350) {
+          btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+        } else {
+          btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+        }
+      }
+    });
+
     // Initial render calls
     initTheme();
     renderTimeline();
-        renderItinerary();
+    renderItinerary();
     renderHotelMatrix();
     renderChecklist();
+    calculateFuelCost();
   </script>
 </body>
 </html>
